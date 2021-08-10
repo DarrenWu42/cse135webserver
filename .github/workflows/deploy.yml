@@ -32,7 +32,7 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           
           script: |
-            cd /var/www/darrenwu.xyz/
-            git init
-            git remote add origin git@github.com:DarrenWu42/cse135webserver.git
-            git pull origin main
+            cd /var/www/darrenwu.xyz/ # open site path
+            git init                  # initialize git
+            git remote add origin git@github.com:DarrenWu42/cse135webserver.git # add repo
+            git pull origin main      # pull from repo
