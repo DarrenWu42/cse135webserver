@@ -21,7 +21,7 @@
         <p>There, no more ambiguity</p>
     </header>
 
-    <main style="width: 20%; float:right; background-color:darkgrey; padding:1%; margin:2%">
+    <section style="width: 20%; float:right; background-color:darkgrey; padding:1%; margin:2%">
         <h2>TEAM</h2>
         <ul>
             <li>Project Manager, Darren Wu</li>
@@ -33,19 +33,19 @@
             <li>Moral Support, Darren Wu</li>
             <img src="images/darrenwu_moralsupport.jpg"/>
         </ul>
-    </main>
+    </section>
     
-    <main style="width: 70%; float:left; background-color:darkgrey; padding:1%; margin:1%">
+    <section style="width: 70%; float:left; background-color:darkgrey; padding:1%; margin:1%">
         <h2>HOMEWORK(s)</h2>
-    </main>
+    </section>
     
     <script>
         var s = True;
         function changeText(){
-            elmeent = document.getElementById('heading1')
+            element = document.getElementById('heading1');
 
-            elmeent.innerHTML = s ? "CSE 42" : "CSE 135";
-            elmeent.style.color = s ? "#FFD700" : "";
+            element.innerHTML = s ? "CSE 42" : "CSE 135";
+            element.style.color = s ? "#FFD700" : "";
 
             s = !s;
         }
