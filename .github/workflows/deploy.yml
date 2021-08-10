@@ -36,3 +36,5 @@ jobs:
             git init                  # initialize git
             git remote add origin git@github.com:DarrenWu42/cse135webserver.git # add repo
             git pull origin main      # pull from repo
+            cd ..                     # go up one level
+            sudo chgrp -R sudo darrenwu.xyz/ # change group to sudo
