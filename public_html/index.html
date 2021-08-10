@@ -5,37 +5,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Darren Wu Lives!</title>
+  <style>
+      img {
+          width:70%
+      }
+  </style>
 </head>
 
 <body>
-    <div style="width: 70%; float:left; margin:1%">
+    <header style="width: 70%; float:left; margin:1%">
         <h1 id="heading1" onclick='changeText()'>CSE 135</h1>
         <h2>Summer 2021*</h2>
         <p>*2020? idk what weird year system we use. Actually...</p>
         <h2>Summer 2020-2021</h2>
         <p>There, no more ambiguity</p>
-    </div>
+    </header>
 
-    <div style="width: 20%; float:right; background-color:darkgrey; padding:1%; margin:2%">
+    <main style="width: 20%; float:right; background-color:darkgrey; padding:1%; margin:2%">
         <h2>TEAM</h2>
         <ul>
             <li>Project Manager, Darren Wu</li>
-            <li>Full Stack, Darren Wu</li>
+            <img src="images/darrenwu_projmanager.jpg"/>
+            <li>"Full Stack", Darren Wu</li>
+            <img src="images/darrenwu_fullstack.jpg"/>
             <li>Front End, Darren Wu</li>
+            <img src="images/darrenwu_frontend.jpg"/>
             <li>Moral Support, Darren Wu</li>
+            <img src="images/darrenwu_moralsupport.jpg"/>
         </ul>
-    </div>
+    </main>
     
-    <div style="width: 70%; float:left; background-color:darkgrey; padding:1%; margin:1%">
+    <main style="width: 70%; float:left; background-color:darkgrey; padding:1%; margin:1%">
         <h2>HOMEWORK(s)</h2>
-    </div>
+    </main>
     
-
     <script>
         var s = True;
         function changeText(){
-            document.getElementById('heading1').innerHTML = s ? "CSE 42" : "CSE 135";
-            document.getElementById('heading1').style.cssText = s ? "color:#FFD700;" : "";
+            elmeent = document.getElementById('heading1')
+
+            elmeent.innerHTML = s ? "CSE 42" : "CSE 135";
+            elmeent.style.color = s ? "#FFD700" : "";
+
             s = !s;
         }
     </script>
