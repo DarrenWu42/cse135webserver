@@ -24,13 +24,15 @@ jobs:
     steps:
       - name: Deploy Website
         uses: appleboy/ssh-action@v0.1.4
+        env:
+          SITE_PATH: ${{secrets.SITE_PATH}}
         with:
           host: ${{secrets.SSH_HOST}}
           key: ${{secrets.SSH_KEY}}
           username: ${{secrets.SSH_USERNAME}}
           
-          script:
-            cd /var/www/darrenwu.xyz/
+          script: |
+            cd $SITE_PATH
             git init
             git remote add origin git@github.com:DarrenWu42/cse135webserver.git
             git pull origin main
