@@ -6,9 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Darren Wu Lives!</title>
   <style>
-      img {
-          width:70%
-      }
+        img {
+            width:70%
+        }
+        a:link {
+            color: black;
+            background-color: transparent;
+            text-decoration: underline;
+        }
+        a:visited {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        a:hover {
+            color: grey;
+            background-color: lightgray;
+            text-decoration: underline;
+        }
+        a:active {
+            color: lightblue;
+            background-color: transparent;
+            text-decoration: underline;
+        }
   </style>
 </head>
 
@@ -22,25 +42,29 @@
     </header>
 
     <section style="width: 20%; float:right; background-color:darkgrey; padding:1%; margin:2%">
-        <h2>TEAM</h2>
+        <h2><a href="members/index.html">TEAM</a></h2>
         <ul>
-            <li>Project Manager, Darren Wu</li>
+            <li><a href="members/darrenwu.html">Project Manager, Darren Wu</a></li>
             <img src="images/darrenwu_projmanager.webp"/>
-            <li>"Full Stack", Darren Wu</li>
+            <li><a href="members/darrenwu.html">"Full Stack", Darren Wu</a></li>
             <img src="images/darrenwu_fullstack.webp"/>
-            <li>Front End, Darren Wu</li>
+            <li><a href="members/darrenwu.html">Front End, Darren Wu</a></li>
             <img src="images/darrenwu_frontend.webp"/>
-            <li>Moral Support, Darren Wu</li>
-            <img src="images/darrenwu_moralsupport.webp"/>
+            <li><a href="members/darrenwu.html">Moral Support, Darren Wu</a></li>
         </ul>
     </section>
     
     <section style="width: 70%; float:left; background-color:darkgrey; padding:1%; margin:1%">
         <h2>HOMEWORK(s)</h2>
+        <h3>Homework 1</h3>
+        <ul>
+            <li><a href="hw1/hello.php">PHP File</a></li>
+            <li><a href="hw1/hello.php">PHP File</a></li>
+        </ul>
     </section>
     
     <script>
-        var s = True;
+        var s = true;
         function changeText(){
             element = document.getElementById('heading1');
 
