@@ -29,9 +29,9 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           
           script: |
-            cd /var/www/darrenwu.xyz/ # open site path
+            cd /var/www/darrenwu.xyz/ # $SITE_PATH # open site path
             git init                  # initialize git
             git remote add origin git@github.com:DarrenWu42/cse135webserver.git # add repo
             git pull origin main      # pull from repo
             cd ..                     # go up one level
-            sudo chgrp -R sudo darrenwu.xyz/ # change group to sudo
+            sudo chgrp -R sudo /var/www/darrenwu.xyz/ # $SITE_PATH # change group to sudo
