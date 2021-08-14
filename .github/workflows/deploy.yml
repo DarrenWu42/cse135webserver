@@ -23,15 +23,20 @@ jobs:
         uses: appleboy/ssh-action@v0.1.4
         env:
           SITE_PATH: ${{secrets.SITE_PATH}}
+          WWW_PATH: ${{secrets.WWW_PATH}}
+          CGI_PATH: ${{secrets.GCI_PATH}}
         with:
           host: ${{secrets.SSH_HOST}}
           key: ${{secrets.SSH_KEY}}
+          envs: SITE_PATH, WWW_PATH, CGI_PATH
           username: ${{secrets.SSH_USERNAME}}
           
           script: |
-            cd /var/www/darrenwu.xyz/ # $SITE_PATH # open site path
+            cd $SITE_PATH # open site path
             git init                  # initialize git
             git remote add origin git@github.com:DarrenWu42/cse135webserver.git # add repo
             git pull origin main      # pull from repo
             cd ..                     # go up one level
-            sudo chgrp -R sudo /var/www/darrenwu.xyz/ # $SITE_PATH # change group to sudo
+            sudo chgrp -R sudo $SITE_PATH        # change group to sudo
+            sudo chmod -R a=r,ug+w,a+X $www_PATH # change to correct settings
+            sudo chmod -R a+x $CGI_PATH         # allow cgi bin to be executable
