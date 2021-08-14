@@ -35,8 +35,8 @@ jobs:
             cd ${SITE_PATH} # open site path
             git init        # initialize git
             git remote add origin git@github.com:DarrenWu42/cse135webserver.git # add repo, just in case line
-            git pull origin main                     # pull from repo
-            sudo chgrp -R sudo ${SITE_PATH}          # change group to sudo
-            sudo chmod -R a=r,ug+w,a+X ${WWW_PATH}   # change to correct settings
-            sudo ${CGI_PATH}compile-c.sh ${CGI_PATH} # compile all c files to cgi files
-            sudo chmod ug+x ${CGI_PATH}*.cgi          # allow execute only on .cgi files by u and g
+            git pull origin main                   # pull from repo
+            sudo chgrp -R sudo ${SITE_PATH}        # change group to sudo
+            sudo chmod -R a=r,ug+w,a+X ${WWW_PATH} # change to correct settings
+            sudo ${CGI_PATH}compile-c.sh $CGI_PATH # compile all c files to cgi files
+            sudo chmod ug+x ${CGI_PATH}*.cgi       # allow execute only on .cgi files by u and g
