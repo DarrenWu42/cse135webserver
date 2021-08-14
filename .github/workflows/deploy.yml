@@ -32,11 +32,21 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           
           script: |
-            cd $SITE_PATH # open site path
-            git init      # initialize git
+            cd ${SITE_PATH} # open site path
+            git init        # initialize git
             git remote add origin git@github.com:DarrenWu42/cse135webserver.git # add repo, just in case line
             git pull origin main                   # pull from repo
-            sudo chgrp -R sudo $SITE_PATH          # change group to sudo
-            sudo chmod -R a=r,ug+w,a+X $WWW_PATH   # change to correct settings
-            sudo chmod -R a+x $CGI_PATH            # allow cgi bin to be executable
+            sudo chgrp -R sudo ${SITE_PATH}        # change group to sudo
+            sudo chmod -R a=r,ug+w,a+X ${WWW_PATH} # change to correct permissions
+            
+            # allow sh files to be executable, run sh files, then disallow sh files to be executable
+            sudo chmod ug+x ${CGI_PATH}*.sh        # allow all sh files to be executable
             sudo ${CGI_PATH}compile-c.sh $CGI_PATH # compile all c files to cgi files
+            sudo chmod ug-x ${CGI_PATH}*.sh        # disallow all sh files to be executable
+            
+            # set permissions for exectuable files cgi, php, pl
+            sudo chmod a+x ${CGI_PATH}*.cgi # allow execute only on .cgi files by all
+            sudo chmod a+x ${CGI_PATH}*.pl  # allow execute only on .pl files by all
+            
+            # stop github from thinking files have changed just by changing permission
+            git config core.fileMode false
