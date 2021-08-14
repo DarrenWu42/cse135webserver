@@ -24,7 +24,7 @@ jobs:
         env:
           SITE_PATH: ${{secrets.SITE_PATH}}
           WWW_PATH: ${{secrets.WWW_PATH}}
-          CGI_PATH: ${{secrets.GCI_PATH}}
+          CGI_PATH: ${{secrets.CGI_PATH}}
         with:
           host: ${{secrets.SSH_HOST}}
           key: ${{secrets.SSH_KEY}}
@@ -37,5 +37,5 @@ jobs:
             git remote add origin git@github.com:DarrenWu42/cse135webserver.git # add repo
             git pull origin main      # pull from repo
             sudo chgrp -R sudo $SITE_PATH        # change group to sudo
-            sudo chmod -R a=r,ug+w,a+X $www_PATH # change to correct settings
+            sudo chmod -R a=r,ug+w,a+X $WWW_PATH # change to correct settings
             sudo chmod -R a+x $CGI_PATH          # allow cgi bin to be executable
