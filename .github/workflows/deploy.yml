@@ -47,3 +47,6 @@ jobs:
             # set permissions for exectuable files cgi, php, pl
             sudo chmod a+x ${CGI_PATH}*.cgi # allow execute only on .cgi files by all
             sudo chmod a+x ${CGI_PATH}*.pl  # allow execute only on .pl files by all
+            
+            # stop github from thinking files have changed just by changing permission
+            git config core.fileMode false
