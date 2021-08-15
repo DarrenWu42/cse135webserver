@@ -8,9 +8,10 @@
     </head>
     <body>
         <h1 align="center">Environment Variables</h1>
+        <hr/>
         <?php
-            foreach ($_SYSTEM as $k => $v) {
-                echo "<b>$_SYSTEM[$k]<\b>: $v<br/>\n";
+            foreach ($_SERVER as $k => $v) {
+                echo "<b>$_SERVER[$k]<\b>: $v<br/>\n";
             }
         ?>
     </body>
