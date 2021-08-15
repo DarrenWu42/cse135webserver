@@ -43,13 +43,13 @@ jobs:
             
             # allow sh files to be executable, run sh files, then disallow sh files to be executable
             sudo chmod -R ug+x ${CGI_PATH}*.sh             # allow all sh files to be executable
-            sudo ${CGI_PATH}/c/compile-c.sh ${CGI_PATH}/c/ # compile all c files to cgi files
+            sudo ${CGI_PATH}c/compile-c.sh ${CGI_PATH}c/ # compile all c files to cgi files
             sudo chmod -R ug-x ${CGI_PATH}*.sh             # disallow all sh files to be executable
             
             # set permissions for exectuable files cgi, php, pl
-            sudo chmod -R a+x ${CGI_PATH}*.cgi # allow execute on .cgi files by all
-            sudo chmod -R a+x ${CGI_PATH}*.pl  # allow execute on .pl files by all
-            sudo chmod -R a+x ${CGI_PATH}*.php # allow execute on .php files by all
+            sudo chmod a+x ${CGI_PATH}c/*.cgi   # allow execute on .cgi files by all
+            sudo chmod a+x ${CGI_PATH}perl/*.pl # allow execute on .pl files by all
+            sudo chmod a+x ${CGI_PATH}php/*.php # allow execute on .php files by all
             
             # stop github from thinking files have changed just by changing permission
             git config core.fileMode false
