@@ -35,7 +35,8 @@ jobs:
             cd ${SITE_PATH} # open site path
             git init        # initialize git
             git remote add origin git@github.com:DarrenWu42/cse135webserver.git # add repo, just in case line
-            git reset -- hard                      # reset any local changes
+            git stash
+            git stash drop
             git pull origin main                   # pull from repo
             sudo chgrp -R sudo ${SITE_PATH}        # change group to sudo
             sudo chmod -R a=r,ug+w,a+X ${WWW_PATH} # change to correct permissions
