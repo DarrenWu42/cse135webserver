@@ -11,9 +11,7 @@
         <hr/>
         <b>Message Body:</b><br/>
         <?php
-            foreach ($_POST as $k => $v) {
-                echo "<b>$_POST[$k]</b>: $v<br/>\n";
-            }
+            echo "$_POST<br/>\n";
         ?>
     </body>
 </html>
