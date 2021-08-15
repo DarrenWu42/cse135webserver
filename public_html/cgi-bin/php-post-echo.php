@@ -14,6 +14,11 @@
         <?php
             echo var_dump($_POST);
         ?>
+        <?php
+            foreach ($_POST as $k => $v) {
+                echo "<b>$_POST[$k]</b>: $v<br/>\n";
+            }
+        ?>
         </pre>
     </body>
 </html>
