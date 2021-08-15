@@ -11,7 +11,7 @@
         <hr/>
         <?php
             foreach ($_SERVER as $k => $v) {
-                echo "<b>$_SERVER[$k]<\b>: $v<br/>\n";
+                echo "<b>$_SERVER[$k]</b>: $v<br/>\n";
             }
         ?>
     </body>
