@@ -11,8 +11,8 @@
         <hr/>
         Hello, World!<br/>
         <?php
-            echo "This program was generated at: " . date("D M j H:i:s Y") . "<br/>";
-            echo "Your current IP address is: " . $_SERVER['REMOTE_ADDR'] . "<br/>";
+            echo "This program was generated at: " . date("D M j H:i:s Y") . "<br/>\n";
+            echo "Your current IP address is: " . $_SERVER['REMOTE_ADDR'] . "<br/>\n";
         ?>
     </body>
 </html>
