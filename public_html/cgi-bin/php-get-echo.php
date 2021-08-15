@@ -12,7 +12,7 @@
         Query string: <br/>
         <pre>
         <?php
-            echo var_dump($_POST);
+            echo var_dump($_GET);
         ?>
         <?php
             foreach ($_GET as $k => $v) {
