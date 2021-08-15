@@ -4,7 +4,7 @@
 
     $date = date("D M j H:i:s Y");
 
-    $message = ('message' => 'Hello, PHP!', 'date' => $date, 'currentIP' => $_SERVER['REMOTE_ADDR']);
+    $message = array('message' => 'Hello, PHP!', 'date' => $date, 'currentIP' => $_SERVER['REMOTE_ADDR']);
     
     $json = json_encode($message);
     echo $json
