@@ -8,15 +8,17 @@ print "<title>Hello, Perl!</title>";
 print "</head>";
 print "<body>";
 
-print "<h1>Darren was here - Hello, Perl!</h1>";
-print "<p>This page was generated with the Perl programming langauge</p>";
+print "<h1>Hello, Perl!</h1>";
+print "<hr/>";
+
+print "Hello, World!<br/>";
 
 $date = localtime();
-print "<p>Current Time: $date</p>";
+print "This program was generated at: $date<br/>";
 
 # IP Address is an environment variable when using CGI
 $address = $ENV{REMOTE_ADDR};
-print "<p>Your IP Address: $address</p>";
+print "Your current IP address is: $address<br/>";
 
 print "</body>";
 print "</html>";
