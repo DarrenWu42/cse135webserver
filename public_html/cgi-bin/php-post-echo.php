@@ -10,10 +10,10 @@
         <h1 align="center">POST Request Echo</h1>
         <hr/>
         <b>Message Body:</b><br/>
+        <pre>
         <?php
-            foreach ($_POST as $k => $v) {
-                echo "<b>$_POST[$k]</b>: $v<br/>\n";
-            }
+            echo var_dump($_POST);
         ?>
+        </pre>
     </body>
 </html>

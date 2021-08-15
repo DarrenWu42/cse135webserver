@@ -10,10 +10,10 @@
         <h1 align="center">GET Request Echo</h1>
         <hr/>
         Query string: <br/>
+        <pre>
         <?php
-            foreach ($_GET as $k => $v) {
-                echo "<b>$_GET[$k]</b>: $v<br/>\n";
-            }
+            echo var_dump($_GET);
         ?>
+        </pre>
     </body>
 </html>
