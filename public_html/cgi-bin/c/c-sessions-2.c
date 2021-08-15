@@ -28,13 +28,13 @@ int main(int argc, char **argv, char **envp)
 
   // Links for other pages
   printf("<br />");
-  printf("<a href=\"/cgi-bin/c-sessions-1.cgi\">Session Page 1</a>");
+  printf("<a href=\"/cgi-bin/c/c-sessions-1.cgi\">Session Page 1</a>");
   printf("<br />");
-  printf("<a href=\"/c-cgiform.html\">C CGI Form</a>");
+  printf("<a href=\"/cgi-bin/c/c-cgiform.html\">C CGI Form</a>");
   printf("<br /><br />");
 
   // Destroy Cookie button
-  printf("<form action=\"/cgi-bin/c-destroy-session.cgi\" method=\"get\">");
+  printf("<form action=\"/cgi-bin/c/c-destroy-session.cgi\" method=\"get\">");
   printf("<button type=\"submit\">Destroy Session</button>");
   printf("</form>");
 
