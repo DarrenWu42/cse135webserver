@@ -6,19 +6,15 @@ from http import cookies
 
 cookie = cookies.SimpleCookie()
 
-form=cgi.FieldStorage()
-username = form.getvalue('username')
+cookie.load(os.environ.get('HTTP_COOKIE')) # turn cookie string from environ to dict
+username = cookie['username'].value        # get username value from cookie string
 
-if(username == "" or username == "None"): # if username from form is empty
-    cookie_string = os.environ.get('HTTP_COOKIE') # load cookie string from environ
-    cookie.load(cookie_string)                    # turn cookie string to dict
-    username = cookie['username'].value           # get username value from cookie string
+if(username == "" or username == "None"):
+    form=cgi.FieldStorage()
+    username = form.getvalue('username')
     username = "None" if username == "" else username # if username is still empty, set it to none
-else: # else if username from form is not empty
-    cookie['username'] = username # set cookie to username
-    print(cookie)                 # print header to set cookie
-    
 
+print(cookie)    
 print("Cache-Control: no-cache")
 print("Content-type: text/html\n")
 print("<html>")
