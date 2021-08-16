@@ -10,7 +10,7 @@
     <body>
         <h1>PHP Sessions Page 2</h1>
         <p>
-            <b>Name:</b> <?php echo(array_key_exists('name', $_SESSION) ? $_SESSION['name'] : "None")?><br/>
+            <b>Name:</b> <?php echo(empty($_SESSION['name']) ? $_SESSION['name'] : "None")?><br/>
             <a href="/cgi-bin/php/php-sessions-1.php">Session Page 1</a><br/>
             <a href="/hw2/php-cgiform.html">PHP CGI Form</a>
         </p>
