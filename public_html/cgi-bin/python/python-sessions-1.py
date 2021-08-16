@@ -4,14 +4,17 @@ import os
 
 from http import cookies
 
-form=cgi.FieldStorage()
-username = form.getvalue('username')
+cookie = cookies.SimpleCookie()
+
+cookie_string = os.environ.get('HTTP_COOKIE')
+cookie.load(cookie_string)
+username = cookie['username'].value
 
 if(username == ""):
-    username = "None"
+    form=cgi.FieldStorage()
+    username = form.getvalue('username')
 
-cookie = cookies.SimpleCookie()
-cookie['username'] = username
+cookie['username'] = "None" if username == "" else username
 
 print(cookie)
 print("Cache-Control: no-cache")
