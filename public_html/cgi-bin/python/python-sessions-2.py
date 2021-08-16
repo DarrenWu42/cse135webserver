@@ -11,6 +11,7 @@ cookie_string = os.environ.get('HTTP_COOKIE')
 cookie.load(cookie_string)
 username = cookie['username'].value
 
+print(cookie)
 print("Cache-Control: no-cache")
 print("Content-type: text/html\n")
 print("<html>")
