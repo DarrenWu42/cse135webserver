@@ -19,7 +19,9 @@
         ?>
         <b>Query String:</b>
         <?php
-            echo "$_SERVER['QUERY_STRING']<br/>\n";
+            foreach ($_GET as $k => $v) {
+                echo "<b>$k</b>: $v<br/>\n";
+            }
         ?>
         <b>Message Body:</b>
         <?php
