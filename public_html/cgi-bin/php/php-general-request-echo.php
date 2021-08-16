@@ -12,17 +12,17 @@
         <b>Protocol:</b>
         <?php
             echo $_SERVER['SERVER_PROTOCOL'] . "<br/>\n";
-        ?>
+        ?><br/>
         <b>Method:</b>
         <?php
             echo $_SERVER['REQUEST_METHOD'] . "<br/>\n";
-        ?>
+        ?><br/>
         <b>Query String:</b>
         <?php
             foreach ($_GET as $k => $v) {
                 echo "<b>$k</b>: $v<br/>";
             }
-        ?>
+        ?><br/>
         <b>Message Body:</b>
         <?php
             parse_str(file_get_contents('php://input'), $_POST);
