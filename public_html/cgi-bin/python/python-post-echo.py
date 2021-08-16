@@ -14,9 +14,9 @@ print("<h1 align=center>POST Request Echo</h1>")
 print("<hr/>")
 print("<b>Message Body:</b><br/>")
 
-print(cgi.FieldStorage())
-#for key in form:
-#    print(f"<b>{key}</b>: {form.getvalue(key)}<br/>")
+form = cgi.FieldStorage()
+for key in form:
+    print(f"<b>{key}</b>: {form.getvalue(key)}<br/>")
     
 print("</body>")
 print("</html>")
