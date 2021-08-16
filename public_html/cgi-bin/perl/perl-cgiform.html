@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CGI Form</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W3J7L0XQZ6"></script>
     <script>
@@ -30,16 +33,13 @@
     <script src="https://cdn.lr-in.com/LogRocket.min.js" crossorigin="anonymous"></script>
     <script>window.LogRocket && window.LogRocket.init('ernzlk/darrenwuxyz');</script>
     <!-- End LogRocket -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CGI Form</title>
   </head>
 
   <body>
     <h1 align="center">Session Test</h1>
     <hr />
-    <label for="cgi-lang">CGI using Perl</label>
-    <form action="/cgi-bin/perl/perl-sessions-1.pl" method="Post" id="form">
+    <label>CGI using Perl</label>
+    <form action="/cgi-bin/perl/perl-sessions-1.pl" method="POST" id="form">
       <label
         >What is your name?
         <input type="text" name="username" autocomplete="off"
