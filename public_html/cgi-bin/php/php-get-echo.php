@@ -12,12 +12,8 @@
         Query string: <br/>
         <pre>
         <?php
-            parse_str($_SERVER['QUERY_STRING'], $_GET);
-            echo var_dump($_GET);
-        ?>
-        <?php
             foreach ($_GET as $k => $v) {
-                echo "<b>$_GET[$k]</b>: $v<br/>\n";
+                echo "<b>$k</b>: $v<br/>\n";
             }
         ?>
         </pre>
