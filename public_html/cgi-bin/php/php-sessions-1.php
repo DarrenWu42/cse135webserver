@@ -12,7 +12,7 @@
     <body>
         <h1>PHP Sessions Page 1</h1>
         <p>
-            <b>Name:</b> <?php echo(empty($_SESSION['name']) ? $_SESSION['name'] : "None")?><br/>
+            <b>Name:</b> <?php echo(empty($_SESSION['name']) ? "None" : $_SESSION['name'])?><br/>
             <a href="/cgi-bin/php/php-sessions-2.php">Session Page 2</a><br/>
             <a href="/hw2/php-cgiform.html">PHP CGI Form</a>
         </p>
