@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import cgi
-import os
 
 from datetime import date
 
@@ -15,7 +14,8 @@ print("<h1 align=center>POST Request Echo</h1>")
 print("<hr/>")
 print("<b>Message Body:</b><br/>")
 
-form = cgi.FieldStorage() 
+form = cgi.FieldStorage()
+print(form)
 for key in form:
     print(f"<b>{key}</b>: {form.getvalue(key)}<br/>")
     
