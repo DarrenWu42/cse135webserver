@@ -9,11 +9,11 @@ cookie = cookies.SimpleCookie()
 form=cgi.FieldStorage()
 username = form.getvalue('username')
 
-if(username == ""): # if username from form is empty
+if(username == "" or username == "None"): # if username from form is empty
     cookie_string = os.environ.get('HTTP_COOKIE') # load cookie string from environ
     cookie.load(cookie_string)                    # turn cookie string to dict
     username = cookie['username'].value           # get username value from cookie string
-    # username = "None" if username == "" else username # if username is still empty, set it to none
+    username = "None" if username == "" else username # if username is still empty, set it to none
 else: # else if username from form is not empty
     cookie['username'] = username # set cookie to username
     print(cookie)                 # print header to set cookie
