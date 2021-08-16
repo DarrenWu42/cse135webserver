@@ -16,7 +16,8 @@ print("<h1 align=center>GET Request Echo</h1>")
 print("<hr/>")
 print("<b>Query String:</b><br/>")
 
-form = cgi.FieldStorage() 
+form = cgi.FieldStorage()
+print(form)
 for key in form:
     print(f"<b>{key}</b>: {form.getvalue(key)}<br/>")
     
