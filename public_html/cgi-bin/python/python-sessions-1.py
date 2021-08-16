@@ -15,8 +15,8 @@ if(username == "" or username == None): # if the value from form is empty or non
     cookie.load(os.environ.get('HTTP_COOKIE')) # turn cookie string from environ to dict
     username = cookie['username'].value        # get username value from cookie dict
 else: # if form had something
-    cookie['username'] = username
-    print(cookie)
+    cookie['username'] = username # set cookie username equal to form username
+    print(cookie)                 # set cookie header
 
 print("Cache-Control: no-cache")
 print("Content-type: text/html\n")
