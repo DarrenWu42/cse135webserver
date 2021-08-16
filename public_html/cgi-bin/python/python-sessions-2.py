@@ -10,9 +10,7 @@ cookie = cookies.SimpleCookie()
 cookie_string = os.environ.get('HTTP_COOKIE')
 cookie.load(cookie_string)
 username = cookie['username'].value
-cookie['username'] = username
 
-print(cookie)
 print("Cache-Control: no-cache")
 print("Content-type: text/html\n")
 print("<html>")

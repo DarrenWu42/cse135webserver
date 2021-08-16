@@ -6,7 +6,7 @@ from http import cookies
 
 # set username cookie to destroyed
 cookie = cookies.SimpleCookie()
-cookie['username'] = "destroyed"
+cookie['username'] = "None"
 
 print(cookie)
 print("Cache-Control: no-cache")

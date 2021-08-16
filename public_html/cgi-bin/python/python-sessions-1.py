@@ -10,7 +10,7 @@ cookie.load(os.environ.get('HTTP_COOKIE')) # turn cookie string from environ to 
 username = cookie['username'].value        # get username value from cookie string
 
 if(username == "" or username == "None"):
-    form=cgi.FieldStorage()
+    form = cgi.FieldStorage()
     username = form.getvalue('username')
     username = "None" if username == "" else username # if username is still empty, set it to none
 
