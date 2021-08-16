@@ -2,6 +2,18 @@
 import cgi
 import os
 
+from http import cookies
+
+form=cgi.FieldStorage()
+username = form.getvalue('username')
+
+if(username == ""):
+    username = "None"
+
+cookie = cookies.SimpleCookie()
+cookie['username'] = username
+
+print(cookie)
 print("Cache-Control: no-cache")
 print("Content-type: text/html\n")
 print("<html>")
@@ -9,13 +21,9 @@ print("<head>")
 print("<title>Python Sessions</title>")
 print("</head>")
 print("<body>")
-print("<h1 align=center>Python Sessions Page 1</h1>")
+print("<h1>Python Sessions Page 1</h1>")
 print("<hr/>")
-
-form=cgi.FieldStorage()
-print(form.getvalue('username'))
-
-print("<br/><br/>")
+print(f"<b>Name:</b> {username}<br/>")
 print("<a href=\"/cgi-bin/python/python-sessions-2.py\">Session Page 2</a><br/>")
 print("<a href=\"/hw2/python-cgiform.html\">Python CGI Form</a><br/>")
 print("<form style=\"margin-top:30px\" action=\"/cgi-bin/python/python-destroy-session.py\" method=\"get\">")

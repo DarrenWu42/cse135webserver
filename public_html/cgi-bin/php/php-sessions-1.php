@@ -10,7 +10,8 @@
         <title>PHP Sessions</title>
     </head>
     <body>
-        <h1>PHP Sessions Page 1</h1>
+        <h1 align=center>PHP Sessions Page 1</h1>
+        <hr/>
         <p>
             <b>Name:</b> <?php echo(empty($_SESSION['name']) ? "None" : $_SESSION['name'])?><br/>
             <a href="/cgi-bin/php/php-sessions-2.php">Session Page 2</a><br/>

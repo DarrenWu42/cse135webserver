@@ -9,7 +9,8 @@
         <title>PHP Session Destroyed</title>
     </head>
     <body>
-        <h1>PHP Session Destroyed</h1>
+        <h1 align=center>PHP Session Destroyed</h1>
+        <hr/>
         <a href="/cgi-bin/php/php-sessions-1.php">Back to Page 1</a><br/>
         <a href="/cgi-bin/php/php-sessions-2.php">Back to Page 2</a><br/>
         <a href="/hw2/php-cgiform.html">PHP CGI Form</a>
