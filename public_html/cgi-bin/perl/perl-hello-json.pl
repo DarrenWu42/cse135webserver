@@ -8,7 +8,7 @@ print "Content-type: application/json\n\n";
 $date = localtime();
 $address = $ENV{REMOTE_ADDR};
 
-my %message = ('message' => 'Hello, Perl!', 'date' => $date, 'cuurentIP' => $address);
+my %message = ('message' => 'Hello, Perl!', 'date' => $date, 'currentIP' => $address);
 
 my $json = encode_json \%message;
 print "$json\n";

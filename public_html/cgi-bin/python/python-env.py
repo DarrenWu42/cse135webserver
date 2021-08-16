@@ -11,8 +11,8 @@ print("<body>")
 print("<h1 align=center>Environment Variables</h1>")
 print("<hr/>")
 
-for param, value in os.environ():
-   print(f"<b>{param}</b>: {value}<\br>")
+for param in os.environ.keys():
+   print(f"<b>{param}</b>: {os.environ[param]}<\br>")
 
 print("</body>")
 print("</html>")
