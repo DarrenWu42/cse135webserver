@@ -13,6 +13,7 @@ if(username == "" or username == "None"):
     form = cgi.FieldStorage()
     username = form.getvalue('username')
     username = "None" if username == "" else username # if username is still empty, set it to none
+    cookie['username'] = username
 
 print(cookie)    
 print("Cache-Control: no-cache")
