@@ -4,6 +4,7 @@ import os
 
 from http import cookies
 
+# load cookie, when reaching here, cookie will always (hopefully) be either None, destroyed, or entered username
 cookie = cookies.SimpleCookie()
 
 cookie_string = os.environ.get('HTTP_COOKIE')

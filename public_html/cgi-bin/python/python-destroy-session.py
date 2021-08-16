@@ -4,6 +4,7 @@ import os
 
 from http import cookies
 
+# set username cookie to destroyed
 cookie = cookies.SimpleCookie()
 cookie['username'] = "destroyed"
 
