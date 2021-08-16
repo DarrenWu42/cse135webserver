@@ -1,7 +1,7 @@
 <?php
     header("Cache-Control: no-cache");
     header("Content-type: text/html");
-    unset($_SESSION['name']);
+    $_SESSION = [];
 ?>
 <html>
     <head>

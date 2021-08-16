@@ -3,7 +3,7 @@
     header("Content-type: text/html");
     session_start();
     parse_str(file_get_contents('php://input'), $_POST);
-    $_SESSION['name'] = $_POST['username'];
+    $_SESSION['name'] = empty($_POST['username']) ? $_SESSION['name'] : $_POST['username'];
 ?>
 <html>
     <head>
