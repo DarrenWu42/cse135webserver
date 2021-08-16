@@ -12,11 +12,9 @@
         <b>Message Body:</b><br/>
         <pre>
         <?php
-            echo var_dump($_POST);
-        ?>
-        <?php
+            parse_str(file_get_contents('php://input'), $_POST);
             foreach ($_POST as $k => $v) {
-                echo "<b>$_POST[$k]</b>: $v<br/>\n";
+                echo "<b>$k</b>: $v<br/>\n";
             }
         ?>
         </pre>
