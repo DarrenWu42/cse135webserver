@@ -12,8 +12,8 @@ print("<body>")
 print("<h1 align=center>Python Sessions Page 1</h1>")
 print("<hr/>")
 
-form=cgi.FieldStorage()
-print(form.getvalue('username'))
+#form=cgi.FieldStorage()
+#print(form.getvalue('username'))
 
 print("<br/><br/>")
 print("<a href=\"/cgi-bin/python/python-sessions-2.py\">Session Page 2</a><br/>")
