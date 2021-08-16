@@ -9,9 +9,23 @@
     <body>
         <h1 align="center">General Request Echo</h1>
         <hr/>
+        <b>Protocol:</b>
         <?php
-            foreach ($_SERVER as $k => $v) {
-                echo "<b>$_SERVER[$k]</b>: $v<br/>\n";
+            echo "$_SERVER['SERVER_PROTOCOL']<br/>\n";
+        ?>
+        <b>Method:</b>
+        <?php
+            echo "$_SERVER['REQUEST_METHOD']<br/>\n";
+        ?>
+        <b>Query String:</b>
+        <?php
+            echo "$_SERVER['QUERY_STRING']<br/>\n";
+        ?>
+        <b>Message Body:</b>
+        <?php
+            parse_str(file_get_contents('php://input'), $_POST);
+            foreach ($_POST as $k => $v) {
+                echo "<b>$k</b>: $v<br/>\n";
             }
         ?>
     </body>

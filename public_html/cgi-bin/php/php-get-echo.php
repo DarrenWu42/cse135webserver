@@ -12,6 +12,7 @@
         Query string: <br/>
         <pre>
         <?php
+            parse_str($_SERVER['QUERY_STRING'], $_GET);
             echo var_dump($_GET);
         ?>
         <?php
