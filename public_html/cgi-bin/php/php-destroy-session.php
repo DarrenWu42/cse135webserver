@@ -1,6 +1,7 @@
 <?php
     header("Cache-Control: no-cache");
     header("Content-type: text/html");
+    $_SESSION['name'] = "None";
     session_destroy();
 ?>
 <html>
