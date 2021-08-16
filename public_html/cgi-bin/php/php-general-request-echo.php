@@ -11,11 +11,11 @@
         <hr/>
         <b>Protocol:</b>
         <?php
-            echo "$_SERVER['SERVER_PROTOCOL']<br/>\n";
+            echo $_SERVER['SERVER_PROTOCOL'] . "<br/>\n";
         ?>
         <b>Method:</b>
         <?php
-            echo "$_SERVER['REQUEST_METHOD']<br/>\n";
+            echo $_SERVER['REQUEST_METHOD'] . "<br/>\n";
         ?>
         <b>Query String:</b>
         <?php
