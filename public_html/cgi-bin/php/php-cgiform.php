@@ -1,4 +1,7 @@
-<!doctype html>
+<?php
+    header("Cache-Control: no-cache");
+    header("Content-type: text/html");
+?>
 <html>
 
 <head>
@@ -8,8 +11,8 @@
 <body>
   <h1 align="center">Session Test</h1>
   <hr>
-  <label for="cgi-lang">CGI using C</label>
-  <form action="/cgi-bin/c/c-sessions-1.cgi" method="Post" id="form">
+  <label for="cgi-lang">CGI using PHP</label>
+  <form action="/cgi-bin/php/php-sessions-1.cgi" method="Post" id="form">
     <label>What is your name? <input type="text" name="username" autocomplete="off"></label>
     <br>
     <input type="submit" value="Test Sessioning">
