@@ -1,14 +1,10 @@
 #!/usr/bin/python3
-import cgi
-import cgitb
 import os
 
 from datetime import date
 
-cgitb.enable()
-
-print("Cache-Control: no-cache\n")
-print("Content-type: text/html\n\n")
+print("Cache-Control: no-cache")
+print("Content-type: text/html\n")
 print("<html>")
 print("<head>")
 print("<title>Hello, Python!</title>")
