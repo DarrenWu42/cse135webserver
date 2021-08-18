@@ -8,7 +8,10 @@ print "<title>Hello, Perl!</title>";
 print "</head>";
 print "<body>";
 
-print "<h1 align=center'>Hello, Perl!</h1>";
+print <<END;
+<h1 align="center">Hello, Perl!</h1>
+END
+
 print "<hr/>";
 
 print "Hello, World!<br/>";
