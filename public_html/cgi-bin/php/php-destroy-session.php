@@ -3,6 +3,7 @@
     header("Content-type: text/html");
     session_start();
     $_SESSION = [];
+    session_destroy();
 ?>
 <html>
     <head>
