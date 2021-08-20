@@ -51,6 +51,9 @@ jobs:
             sudo chmod a+x ${CGI_PATH}perl/*.pl   # allow execute on .pl files by all
             sudo chmod a+x ${CGI_PATH}php/*.php   # allow execute on .php files by all
             sudo chmod a+x ${CGI_PATH}python/*.py # allow execute on .py files by all
+
+            # set permissions for db files .json
+            sudo chmod a+w ${SITE_PATH}public_html/*.json # allow write on .json files by all
             
             # stop github from thinking files have changed just by changing permission
             git config core.fileMode false
