@@ -41,13 +41,19 @@ jobs:
             sudo chgrp -R sudo ${SITE_PATH}        # change group to sudo
             sudo chmod -R a=r,ug+w,a+X ${WWW_PATH} # change to correct permissions
             
+            # BUILD STEP
             # allow sh files to be executable, run sh files, then disallow sh files to be executable
             find ${CGI_PATH} -type f -iname "*.sh" -exec sudo chmod ug+x {} \; # allow all sh files in cgi-bin to be executable
             sudo ${CGI_PATH}c/compile-c.sh ${CGI_PATH}c/                       # compile all c files to cgi files
             find ${CGI_PATH} -type f -iname "*.sh" -exec sudo chmod ug-x {} \; # disallow all sh in cgi-bin files to be executable
             
+            # PERMISSIONS STEP
             # set permissions for exectuable files cgi, php, pl
             sudo chmod a+x ${CGI_PATH}c/*.cgi     # allow execute on .cgi files by all
+            # sudo chmod a+x ${CGI_PATH}go/*.go     # allow execute on .go files by all
+            sudo chmod a+x ${CGI_PATH}*.js        # allow execute on .js files by all
+            sudo chmod a+x ${CGI_PATH}js/*.jss    # allow execute on .jss files by all
+            sudo chmod a+x ${CGI_PATH}jse/*.jss   # allow execute on .jss files by all
             sudo chmod a+x ${CGI_PATH}perl/*.pl   # allow execute on .pl files by all
             sudo chmod a+x ${CGI_PATH}php/*.php   # allow execute on .php files by all
             sudo chmod a+x ${CGI_PATH}python/*.py # allow execute on .py files by all
