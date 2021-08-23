@@ -113,7 +113,7 @@ static int general_request_echo(request_rec *r){
 
 static int print_kv(void *data, const char *key, const char *value){
     request_rec *r = data;
-    ap_rprintf(r, "<b>%s</b> = %s<br/>", key, value);
+    ap_rprintf(r, "<b>%s</b> : %s<br/>", key, value);
     return TRUE;
 }
 
@@ -176,14 +176,19 @@ static int hello_json(request_rec *r){
 
 // source: https://httpd.apache.org/docs/trunk/developer/modguide.html#get_post
 static int post_echo(request_rec *r){
-    ap_set_content_type(r, "text/html");
     
-    apr_array_header_t* POST;
+    
+    apr_table_t* POST = r->body_table;
+    ap_set_content_type(r, "text/html");
     ap_parse_form_data(r, NULL, &POST, -1, 8192);
 
     printf("<html><head><title>POST Message Body</title></head>\
         <body><h1 align=center>POST Message Body</h1>\
         <hr/>\n");
+
+    // Get and format query string
+    ap_rprintf(r, "<h2>Message Body:</h2><br/>");
+    apr_table_do(print_kv, r, POST, NULL);
 
     // Print HTML footer
     printf("</body>");
