@@ -21,6 +21,9 @@ static int post_echo(request_rec *r);
 static int sessions_1(request_rec *r);
 static int sessions_2(request_rec *r);
 
+FunctionCallback functions[] = {&destroy_session, &env, &general_request_echo, &get_echo,
+                                &hello_html, &hello_json, &post_echo, &sessions_1, &sessions_2};
+
 module AP_MODULE_DECLARE_DATA   c_programs_module = { 
     STANDARD20_MODULE_STUFF,
     NULL, /* Per-directory configuration handler */
@@ -31,10 +34,8 @@ module AP_MODULE_DECLARE_DATA   c_programs_module = {
     register_hooks   /* Our hook registering function */
 };
 
-FunctionCallback functions[] = {&destroy_session, &env, &general_request_echo, &get_echo,
-                                &hello_html, &hello_json, &post_echo, &sessions_1, &sessions_2};
-
 static void register_hooks(apr_pool_t *pool){
+    printf("test register_hooks");
     ap_hook_handler(page_caller, NULL, NULL, APR_HOOK_LAST);
     /*
     ap_hook_handler(destroy_session, NULL, NULL, APR_HOOK_LAST);
@@ -52,6 +53,8 @@ static void register_hooks(apr_pool_t *pool){
 ///*
 static int page_caller(request_rec *r){
     if (!r->handler || strcmp(r->handler, "page-caller-handler")) return (DECLINED);
+
+    printf("test page_caller");
 
     char* filename;
     char* filename_prefix;
