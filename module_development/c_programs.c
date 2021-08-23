@@ -182,7 +182,7 @@ static int post_echo(request_rec *r){
     ap_set_content_type(r, "text/html");
     //ap_parse_form_data(r, NULL, &POST, -1, 8192);
 
-    printf("<html><head><title>POST Message Body</title></head>\
+    ap_rprintf(r, "<html><head><title>POST Message Body</title></head>\
         <body><h1 align=center>POST Message Body</h1>\
         <hr/>\n");
 
@@ -191,8 +191,8 @@ static int post_echo(request_rec *r){
     apr_table_do(print_kv, r, POST, NULL);
 
     // Print HTML footer
-    printf("</body>");
-    printf("</html>");
+    ap_rprintf(r, "</body>");
+    ap_rprintf(r, "</html>");
 
     return OK;
 }
