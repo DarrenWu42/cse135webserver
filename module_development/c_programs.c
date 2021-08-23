@@ -57,7 +57,7 @@ static int page_caller(request_rec *r){
     char* directory = "/var/www/darrenwu.xyz/public_html/";
 
     filename = apr_pstrdup(r->pool, r->filename);
-    filename = filename[strlen(directory)];
+    filename = filename + (strlen(directory))*sizeof(char*);
     filename[strlen(filename)-4] = 0; // Cut off the last 4 characters (.mod)
 
     if(strcmp(filename, "destroy_session") == 0)
