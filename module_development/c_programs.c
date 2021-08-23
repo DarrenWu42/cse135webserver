@@ -15,7 +15,7 @@ module AP_MODULE_DECLARE_DATA   c_programs = {
     register_hooks   /* Our hook registering function */
 };
 
-typedef void (*FunctionCallback)(request_rec);
+typedef int (*FunctionCallback)(request_rec);
 FunctionCallback functions[] = {&destroy_session, &env, &general_request_echo, &get_echo,
                                 &hello_html, &hello_json, &post_echo, &sessions_1, &sessions_2};
 
