@@ -136,7 +136,7 @@ static int get_echo(request_rec *r){
     // Get and format query string
     ap_rprintf(r, "Raw query string: %s<br/><br/>", r->args);
     ap_rprintf(r, "Formatted Query String:<br/>");
-    apr_table_do(print_kv, NULL, GET);
+    apr_table_do(print_kv, NULL, GET, NULL);
 
     // Print HTML footer  
     ap_rprintf(r, "</body>");
