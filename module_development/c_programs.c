@@ -180,7 +180,7 @@ static int post_echo(request_rec *r){
     
     apr_table_t* POST = r->body_table;
     ap_set_content_type(r, "text/html");
-    ap_parse_form_data(r, NULL, &POST, -1, 8192);
+    //ap_parse_form_data(r, NULL, &POST, -1, 8192);
 
     printf("<html><head><title>POST Message Body</title></head>\
         <body><h1 align=center>POST Message Body</h1>\
