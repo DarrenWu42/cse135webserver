@@ -57,7 +57,7 @@ static int page_caller(request_rec *r){
     char* directory = "/var/www/darrenwu.xyz/public_html/";
 
     filename = apr_pstrdup(r->pool, r->filename);
-    filename = filename + (strlen(directory))*sizeof(char*);
+    filename = filename + strlen(directory);
     filename[strlen(filename)-4] = 0; // Cut off the last 4 characters (.mod)
 
     if(strcmp(filename, "destroy_session") == 0)
@@ -80,13 +80,12 @@ static int page_caller(request_rec *r){
         return sessions_2(r);
     else{
         ap_set_content_type(r, "text/html");
-        ap_rprintf(r, "Cache-Control: no-cache\n\n");
 
         ap_rprintf(r, "<html><head><title>Apache Module Error!</title></head>\
             <body><h1 align=center>Apache Module Error!</h1>\
             <hr/>\n");
 
-        ap_rprintf(r, "%s", filename);
+        ap_rprintf(r, "<b>Filename: </b>%s", filename);
         ap_rprintf(r, "<br/>\n");
         ap_rprintf(r, "</body></html>");
         return OK;
@@ -133,7 +132,6 @@ static int hello_html(request_rec *r){
     time(&t);
 
     ap_set_content_type(r, "text/html");
-    ap_rprintf(r, "Cache-Control: no-cache\n\n");
 
     ap_rprintf(r, "<html><head><title>Hello, Apache!</title></head>\
         <body><h1 align=center>Hello, Apache!</h1>\
