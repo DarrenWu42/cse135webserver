@@ -88,24 +88,18 @@ static int page_caller(request_rec *r){
 }
 
 static int destroy_session(request_rec *r){
-    if (!r->handler || strcmp(r->handler, "destroy-session-handler")) return (DECLINED);
-    
     ap_set_content_type(r, "text/html");
 
     return OK;
 }
 
 static int env(request_rec *r){
-    if (!r->handler || strcmp(r->handler, "env-handler")) return (DECLINED);
-    
     ap_set_content_type(r, "text/html");
 
     return OK;
 }
 
 static int general_request_echo(request_rec *r){
-    if (!r->handler || strcmp(r->handler, "general-request-echo-handler")) return (DECLINED);
-    
     apr_table_t* GET; 
     apr_array_header_t* POST;
 
@@ -123,8 +117,6 @@ static int print_kv(void *data, const char *key, const char *value){
 }
 
 static int get_echo(request_rec *r){
-    if (!r->handler || strcmp(r->handler, "get-echo-handler")) return (DECLINED);
-
     apr_table_t* GET;
     ap_args_to_table(r, &GET);
     
@@ -146,8 +138,6 @@ static int get_echo(request_rec *r){
 }
 
 static int hello_html(request_rec *r){
-    //if (!r->handler || strcmp(r->handler, "hello-html-handler")) return (DECLINED);
-    
     time_t t;
     time(&t);
 
@@ -169,8 +159,6 @@ static int hello_html(request_rec *r){
 }
 
 static int hello_json(request_rec *r){
-    if (!r->handler || strcmp(r->handler, "hello-json-handler")) return (DECLINED);
-    
     time_t t;
 	time(&t);
 
@@ -187,8 +175,6 @@ static int hello_json(request_rec *r){
 
 // source: https://httpd.apache.org/docs/trunk/developer/modguide.html#get_post
 static int post_echo(request_rec *r){
-    if (!r->handler || strcmp(r->handler, "post-echo-handler")) return (DECLINED);
-    
     ap_set_content_type(r, "text/html");
     
     apr_array_header_t* POST;
@@ -206,16 +192,12 @@ static int post_echo(request_rec *r){
 }
 
 static int sessions_1(request_rec *r){
-    if (!r->handler || strcmp(r->handler, "sessions-1-handler")) return (DECLINED);
-    
     ap_set_content_type(r, "text/html");
 
     return OK;
 }
 
 static int sessions_2(request_rec *r){
-    if (!r->handler || strcmp(r->handler, "sessions-2-handler")) return (DECLINED);
-    
     ap_set_content_type(r, "text/html");
 
     return OK;
