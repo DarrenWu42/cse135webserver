@@ -7,6 +7,45 @@
 
 typedef int (*FunctionCallback)(request_rec*);
 
+static void register_hooks(apr_pool_t *pool);
+static int destroy_session(request_rec *r);
+static int env(request_rec *r);
+static int general_request_echo(request_rec *r);
+static int get_echo(request_rec *r);
+static int hello_html(request_rec *r);
+static int hello_json(request_rec *r);
+static int post_echo(request_rec *r);
+static int sessions_1(request_rec *r);
+static int sessions_2(request_rec *r);
+
+module AP_MODULE_DECLARE_DATA   c_programs = { 
+    STANDARD20_MODULE_STUFF,
+    NULL, /* Per-directory configuration handler */
+    NULL,  /* Merge handler for per-directory configurations */
+    NULL, /* Per-server configuration handler */
+    NULL,  /* Merge handler for per-server configurations */
+    NULL,      /* Any directives we may have for httpd */
+    register_hooks   /* Our hook registering function */
+};
+
+FunctionCallback functions[] = {&destroy_session, &env, &general_request_echo, &get_echo,
+                                &hello_html, &hello_json, &post_echo, &sessions_1, &sessions_2};
+
+static void register_hooks(apr_pool_t *pool){
+    //ap_hook_handler(page_caller, NULL, NULL, APR_HOOK_LAST);
+    ///*
+    ap_hook_handler(destroy_session, NULL, NULL, APR_HOOK_LAST);
+    ap_hook_handler(env, NULL, NULL, APR_HOOK_LAST);
+    ap_hook_handler(general_request_echo, NULL, NULL, APR_HOOK_LAST);
+    ap_hook_handler(get_echo, NULL, NULL, APR_HOOK_LAST);
+    ap_hook_handler(hello_html, NULL, NULL, APR_HOOK_LAST);
+    ap_hook_handler(hello_json, NULL, NULL, APR_HOOK_LAST);
+    ap_hook_handler(post_echo, NULL, NULL, APR_HOOK_LAST);
+    ap_hook_handler(sessions_1, NULL, NULL, APR_HOOK_LAST);
+    ap_hook_handler(sessions_2, NULL, NULL, APR_HOOK_LAST);
+    //*/
+}
+
 /*
 static int page_caller(request_rec *r){
     if (!r->handler || strcmp(r->handler, "page-caller-handler")) return (DECLINED);
@@ -128,31 +167,3 @@ static int sessions_2(request_rec *r){
 
     return OK;
 }
-
-FunctionCallback functions[] = {&destroy_session, &env, &general_request_echo, &get_echo,
-                                &hello_html, &hello_json, &post_echo, &sessions_1, &sessions_2};
-
-static void register_hooks(apr_pool_t *pool){
-    //ap_hook_handler(page_caller, NULL, NULL, APR_HOOK_LAST);
-    ///*
-    ap_hook_handler(destroy_session, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(env, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(general_request_echo, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(get_echo, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(hello_html, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(hello_json, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(post_echo, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(sessions_1, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(sessions_2, NULL, NULL, APR_HOOK_LAST);
-    //*/
-}
-
-module AP_MODULE_DECLARE_DATA   c_programs = { 
-    STANDARD20_MODULE_STUFF,
-    NULL, /* Per-directory configuration handler */
-    NULL,  /* Merge handler for per-directory configurations */
-    NULL, /* Per-server configuration handler */
-    NULL,  /* Merge handler for per-server configurations */
-    NULL,      /* Any directives we may have for httpd */
-    register_hooks   /* Our hook registering function */
-};
