@@ -49,7 +49,7 @@ jobs:
             sudo ${CGI_PATH}go/build-go.sh ${CGI_PATH}go/                      # build all go files to cgi files
             find ${CGI_PATH} -type f -iname "*.sh" -exec sudo chmod ug-x {} \; # disallow all sh in cgi-bin files to be executable
 
-            apxs -i -a -c -n c_programs ${SITE_PATH}/module_development/c_programs.c # build c file to apache module
+            sudo apxs -i -a -c -n c_programs ${SITE_PATH}/module_development/c_programs.c # build c file to apache module
             
             # PERMISSIONS STEP
             # set permissions for exectuable files cgi, php, pl
