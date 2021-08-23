@@ -45,7 +45,7 @@ jobs:
             # allow sh files to be executable, run sh files, then disallow sh files to be executable
             find ${CGI_PATH} -type f -iname "*.sh" -exec sudo chmod ug+x {} \; # allow all sh files in cgi-bin to be executable
             sudo ${CGI_PATH}c/compile-c.sh ${CGI_PATH}c/                       # compile all c files to cgi files
-            sudo ${CGI_PATH}go/compile-go.sh ${CGI_PATH}go/                    # build all go files to cgi files
+            sudo ${CGI_PATH}go/build-go.sh ${CGI_PATH}go/                    # build all go files to cgi files
             find ${CGI_PATH} -type f -iname "*.sh" -exec sudo chmod ug-x {} \; # disallow all sh in cgi-bin files to be executable
             
             # PERMISSIONS STEP
