@@ -113,7 +113,7 @@ static int general_request_echo(request_rec *r){
 
 static int print_kv(void *data, const char *key, const char *value){
     request_rec *r = data;
-    ap_rprintf("<b>%s</b> = %s<br/>", key, value);
+    ap_rprintf(r, "<b>%s</b> = %s<br/>", key, value);
     return TRUE;
 }
 
