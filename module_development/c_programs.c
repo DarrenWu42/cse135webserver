@@ -19,7 +19,7 @@ static int post_echo(request_rec *r);
 static int sessions_1(request_rec *r);
 static int sessions_2(request_rec *r);
 
-module AP_MODULE_DECLARE_DATA   c_programs = { 
+module AP_MODULE_DECLARE_DATA   c_programs_module = { 
     STANDARD20_MODULE_STUFF,
     NULL, /* Per-directory configuration handler */
     NULL,  /* Merge handler for per-directory configurations */
