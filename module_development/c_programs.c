@@ -112,7 +112,8 @@ static int general_request_echo(request_rec *r){
 }
 
 static int print_kv(void *data, const char *key, const char *value){
-    printf("<b>%s</b> = %s\n", key, value);
+    request_rec *r = data;
+    ap_rprintf("<b>%s</b> = %s<br/>", key, value);
     return TRUE;
 }
 
@@ -128,7 +129,7 @@ static int get_echo(request_rec *r){
     // Get and format query string
     ap_rprintf(r, "Raw query string: %s<br/><br/>", r->args);
     ap_rprintf(r, "Formatted Query String:<br/>");
-    apr_table_do(print_kv, NULL, GET, NULL);
+    apr_table_do(print_kv, r, GET, NULL);
 
     // Print HTML footer  
     ap_rprintf(r, "</body>");
