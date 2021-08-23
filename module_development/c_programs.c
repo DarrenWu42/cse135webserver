@@ -78,8 +78,18 @@ static int page_caller(request_rec *r){
         return sessions_1(r);
     else if(strcmp(filename, "sessions_2") == 0)
         return sessions_2(r);
-    else
-        return HTTP_NOT_FOUND;
+    else{
+        ap_set_content_type(r, "text/html");
+        ap_rprintf(r, "Cache-Control: no-cache\n\n");
+
+        ap_rprintf(r, "<html><head><title>Apache Module Error!</title></head>\
+            <body><h1 align=center>Apache Module Error!</h1>\
+            <hr/>\n");
+
+        ap_rprintf(r, strcat(filename,"<br/>\n"));
+        ap_rprintf(r, "</body></html>");
+        return OK;
+    }
 }
 //*/
 
