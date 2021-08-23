@@ -32,7 +32,6 @@ module AP_MODULE_DECLARE_DATA   c_programs_module = {
 };
 
 static void register_hooks(apr_pool_t *pool){
-    printf("test register_hooks");
     ap_hook_handler(page_caller, NULL, NULL, APR_HOOK_LAST);
     /*
     ap_hook_handler(destroy_session, NULL, NULL, APR_HOOK_LAST);
@@ -51,8 +50,6 @@ static void register_hooks(apr_pool_t *pool){
 static int page_caller(request_rec *r){
     if (!r->handler || strcmp(r->handler, "page-caller-handler")) return (DECLINED);
 
-    printf("test page_caller");
-
     char* filename;
     char* filename_prefix;
     int function_index;
@@ -60,25 +57,26 @@ static int page_caller(request_rec *r){
     char* directory = "/var/www/darrenwu.xyz/public_html/";
 
     filename = apr_pstrdup(r->pool, r->filename);
+    filename = filename[strlen(directory)];
     filename[strlen(filename)-4] = 0; // Cut off the last 4 characters (.mod)
 
-    if(strcmp(filename, strcat(directory,"destroy_session")) == 0)
+    if(strcmp(filename, "destroy_session") == 0)
         return destroy_session(r);
-    else if(strcmp(filename, strcat(directory,"env")) == 0)
+    else if(strcmp(filename, "env") == 0)
         return env(r);
-    else if(strcmp(filename, strcat(directory,"general_request_echo")) == 0)
+    else if(strcmp(filename, "general_request_echo") == 0)
         return general_request_echo(r);
-    else if(strcmp(filename, strcat(directory,"get_echo")) == 0)
+    else if(strcmp(filename, "get_echo") == 0)
         return get_echo(r);
-    else if(strcmp(filename, strcat(directory,"hello_html")) == 0)
+    else if(strcmp(filename, "hello_html") == 0)
         return hello_html(r);
-    else if(strcmp(filename, strcat(directory,"hello_json")) == 0)
+    else if(strcmp(filename, "hello_json") == 0)
         return hello_json(r);
-    else if(strcmp(filename, strcat(directory,"post_echo")) == 0)
+    else if(strcmp(filename, "post_echo") == 0)
         return post_echo(r);
-    else if(strcmp(filename, strcat(directory,"sessions_1")) == 0)
+    else if(strcmp(filename, "sessions_1") == 0)
         return sessions_1(r);
-    else if(strcmp(filename, strcat(directory,"sessions_2")) == 0)
+    else if(strcmp(filename, "sessions_2") == 0)
         return sessions_2(r);
     else
         return HTTP_NOT_FOUND;
