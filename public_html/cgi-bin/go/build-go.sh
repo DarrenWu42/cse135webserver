@@ -1,0 +1,9 @@
+go build ${1}go-destroy-session.go -o ${1}go-destroy-session.cgi
+go build ${1}go-env.go -o ${1}go-env.cgi
+go build ${1}go-general-request-echo.go -o ${1}go-general-request-echo.cgi
+go build ${1}go-get-echo.go -o ${1}go-get-echo.cgi
+go build ${1}go-hello-html.go -o ${1}go-hello-html.cgi
+go build ${1}go-hello-json.go -o ${1}go-hello-json.cgi
+go build ${1}go-post-echo.go -o ${1}go-post-echo.cgi
+go build ${1}go-sessions-1.go -o ${1}go-sessions-1.cgi
+go build ${1}go-sessions-2.go -o ${1}go-sessions-2.cgi

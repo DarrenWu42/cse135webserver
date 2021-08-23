@@ -2,6 +2,7 @@ public_html/hw1/report.html
 reporting_html/matomo
 public_html/matomo
 public_html/cgi-bin/c/*.cgi
+public_html/cgi-bin/go/*.cgi
 public_html/node_modules
 module_development/*
 !module_development/c_programs.c
