@@ -86,7 +86,8 @@ static int page_caller(request_rec *r){
             <body><h1 align=center>Apache Module Error!</h1>\
             <hr/>\n");
 
-        ap_rprintf(r, strcat(filename,"<br/>\n"));
+        ap_rprintf(r, filename);
+        ap_rprintf("<br/>\n");
         ap_rprintf(r, "</body></html>");
         return OK;
     }
