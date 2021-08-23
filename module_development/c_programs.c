@@ -11,6 +11,9 @@ typedef int (*FunctionCallback)(request_rec*);
 
 static void register_hooks(apr_pool_t *pool);
 static int page_caller(request_rec *r);
+
+static int print_kv(void *data, const char *key, const char *value);
+
 static int destroy_session(request_rec *r);
 static int env(request_rec *r);
 static int general_request_echo(request_rec *r);
@@ -33,20 +36,8 @@ module AP_MODULE_DECLARE_DATA   c_programs_module = {
 
 static void register_hooks(apr_pool_t *pool){
     ap_hook_handler(page_caller, NULL, NULL, APR_HOOK_LAST);
-    /*
-    ap_hook_handler(destroy_session, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(env, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(general_request_echo, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(get_echo, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(hello_html, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(hello_json, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(post_echo, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(sessions_1, NULL, NULL, APR_HOOK_LAST);
-    ap_hook_handler(sessions_2, NULL, NULL, APR_HOOK_LAST);
-    //*/
 }
 
-///*
 static int page_caller(request_rec *r){
     if (!r->handler || strcmp(r->handler, "page-caller-handler")) return (DECLINED);
 
@@ -79,6 +70,7 @@ static int page_caller(request_rec *r){
     else if(strcmp(filename, "sessions-2") == 0)
         return sessions_2(r);
     else{
+        /*
         ap_set_content_type(r, "text/html");
 
         ap_rprintf(r, "<html><head><title>Apache Module Error!</title></head>\
@@ -88,10 +80,10 @@ static int page_caller(request_rec *r){
         ap_rprintf(r, "<b>Filename: </b>%s", filename);
         ap_rprintf(r, "<br/>\n");
         ap_rprintf(r, "</body></html>");
-        return OK;
+        //*/
+        return HTTP_NOT_FOUND;
     }
 }
-//*/
 
 static int destroy_session(request_rec *r){
     if (!r->handler || strcmp(r->handler, "destroy-session-handler")) return (DECLINED);
@@ -112,15 +104,41 @@ static int env(request_rec *r){
 static int general_request_echo(request_rec *r){
     if (!r->handler || strcmp(r->handler, "general-request-echo-handler")) return (DECLINED);
     
+    apr_table_t* GET; 
+    apr_array_header_t* POST;
+
+    ap_args_to_table(r, &GET); 
+    ap_parse_form_data(r, NULL, &POST, -1, 8192);
+
     ap_set_content_type(r, "text/html");
 
     return OK;
 }
 
+static int print_kv(void *data, const char *key, const char *value){
+    printf("<b>%s</b> = %s\n", key, value);
+    return TRUE;
+}
+
 static int get_echo(request_rec *r){
     if (!r->handler || strcmp(r->handler, "get-echo-handler")) return (DECLINED);
+
+    apr_table_t* GET;
+    ap_args_to_table(r, &GET);
     
     ap_set_content_type(r, "text/html");
+    ap_rprintf(r, "<html><head><title>GET Request Echo</title></head>\
+        <body><h1 align=center>GET Request Echo</h1>\
+        <hr/>\n");
+
+    // Get and format query string
+    ap_rprintf(r, "Raw query string: %s<br/><br/>", r->args);
+    ap_rprintf(r, "Formatted Query String:<br/>");
+    apr_table_do(print_kv, NULL, GET);
+
+    // Print HTML footer  
+    ap_rprintf(r, "</body>");
+    ap_rprintf(r, "</html>");
 
     return OK;
 }
@@ -151,15 +169,36 @@ static int hello_html(request_rec *r){
 static int hello_json(request_rec *r){
     if (!r->handler || strcmp(r->handler, "hello-json-handler")) return (DECLINED);
     
-    ap_set_content_type(r, "text/html");
+    time_t t;
+	time(&t);
+
+    char *buffer = ctime(&t);
+	buffer[strlen(buffer) - 1] = '\0';
+
+    ap_set_content_type(r, "application/json");
+	ap_rprintf(r, "{\n\t\"message\": \"Hello, C!\",\n");
+	ap_rprintf(r, "\t\"date\": \"%s\",\n", buffer);
+	ap_rprintf(r, "\t\"currentIP\": \"%s\"\n}\n", r->useragent_ip);
 
     return OK;
 }
 
+// source: https://httpd.apache.org/docs/trunk/developer/modguide.html#get_post
 static int post_echo(request_rec *r){
     if (!r->handler || strcmp(r->handler, "post-echo-handler")) return (DECLINED);
     
     ap_set_content_type(r, "text/html");
+    
+    apr_array_header_t* POST;
+    ap_parse_form_data(r, NULL, &POST, -1, 8192);
+
+    printf("<html><head><title>POST Message Body</title></head>\
+        <body><h1 align=center>POST Message Body</h1>\
+        <hr/>\n");
+
+    // Print HTML footer
+    printf("</body>");
+    printf("</html>");
 
     return OK;
 }
