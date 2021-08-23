@@ -15,7 +15,7 @@ module AP_MODULE_DECLARE_DATA   c_programs = {
     register_hooks   /* Our hook registering function */
 };
 
-typedef int (*FunctionCallback)(request_rec);
+typedef int (*FunctionCallback)(request_rec*);
 FunctionCallback functions[] = {&destroy_session, &env, &general_request_echo, &get_echo,
                                 &hello_html, &hello_json, &post_echo, &sessions_1, &sessions_2};
 
@@ -34,8 +34,9 @@ static void register_hooks(apr_pool_t *pool){
     //*/
 }
 
+/*
 static int page_caller(request_rec *r){
-    //if (!r->handler || strcmp(r->handler, "page-caller-handler")) return (DECLINED);
+    if (!r->handler || strcmp(r->handler, "page-caller-handler")) return (DECLINED);
 
     char* filename;
     char* filename_prefix;
@@ -65,6 +66,7 @@ static int page_caller(request_rec *r){
     else
         return HTTP_NOT_FOUND;
 }
+//*/
 
 static int destroy_session(request_rec *r){
     if (!r->handler || strcmp(r->handler, "destroy-session-handler")) return (DECLINED);
