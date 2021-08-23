@@ -4,6 +4,7 @@
 
 #include "httpd.h" 
 #include "http_config.h"
+#include "http_protocol.h"
 
 typedef int (*FunctionCallback)(request_rec*);
 
@@ -131,7 +132,7 @@ static int hello_html(request_rec *r){
     ap_rprintf(r, "Your current IP address is: %s<br/>", r->useragent_ip);
     
     // Print HTML footer
-    ap_rprintf("</body></html>");
+    ap_rprintf(r, "</body></html>");
 
     return OK;
 }
