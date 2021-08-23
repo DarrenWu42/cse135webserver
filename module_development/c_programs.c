@@ -60,23 +60,23 @@ static int page_caller(request_rec *r){
     filename = filename + strlen(directory);
     filename[strlen(filename)-4] = 0; // Cut off the last 4 characters (.mod)
 
-    if(strcmp(filename, "destroy_session") == 0)
+    if(strcmp(filename, "destroy-session") == 0)
         return destroy_session(r);
     else if(strcmp(filename, "env") == 0)
         return env(r);
-    else if(strcmp(filename, "general_request_echo") == 0)
+    else if(strcmp(filename, "general-request-echo") == 0)
         return general_request_echo(r);
-    else if(strcmp(filename, "get_echo") == 0)
+    else if(strcmp(filename, "get-echo") == 0)
         return get_echo(r);
-    else if(strcmp(filename, "hello_html") == 0)
+    else if(strcmp(filename, "hello-html") == 0)
         return hello_html(r);
-    else if(strcmp(filename, "hello_json") == 0)
+    else if(strcmp(filename, "hello-json") == 0)
         return hello_json(r);
-    else if(strcmp(filename, "post_echo") == 0)
+    else if(strcmp(filename, "post-echo") == 0)
         return post_echo(r);
-    else if(strcmp(filename, "sessions_1") == 0)
+    else if(strcmp(filename, "sessions-1") == 0)
         return sessions_1(r);
-    else if(strcmp(filename, "sessions_2") == 0)
+    else if(strcmp(filename, "sessions-2") == 0)
         return sessions_2(r);
     else{
         ap_set_content_type(r, "text/html");
