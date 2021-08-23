@@ -9,6 +9,7 @@
 typedef int (*FunctionCallback)(request_rec*);
 
 static void register_hooks(apr_pool_t *pool);
+static int page_caller(request_rec *r);
 static int destroy_session(request_rec *r);
 static int env(request_rec *r);
 static int general_request_echo(request_rec *r);
@@ -33,8 +34,8 @@ FunctionCallback functions[] = {&destroy_session, &env, &general_request_echo, &
                                 &hello_html, &hello_json, &post_echo, &sessions_1, &sessions_2};
 
 static void register_hooks(apr_pool_t *pool){
-    //ap_hook_handler(page_caller, NULL, NULL, APR_HOOK_LAST);
-    ///*
+    ap_hook_handler(page_caller, NULL, NULL, APR_HOOK_LAST);
+    /*
     ap_hook_handler(destroy_session, NULL, NULL, APR_HOOK_LAST);
     ap_hook_handler(env, NULL, NULL, APR_HOOK_LAST);
     ap_hook_handler(general_request_echo, NULL, NULL, APR_HOOK_LAST);
@@ -47,7 +48,7 @@ static void register_hooks(apr_pool_t *pool){
     //*/
 }
 
-/*
+///*
 static int page_caller(request_rec *r){
     if (!r->handler || strcmp(r->handler, "page-caller-handler")) return (DECLINED);
 
@@ -55,26 +56,28 @@ static int page_caller(request_rec *r){
     char* filename_prefix;
     int function_index;
 
+    char* directory = "/var/www/darrenwu.xyz/public_html/";
+
     filename = apr_pstrdup(r->pool, r->filename);
     filename[strlen(filename)-3] = 0; // Cut off the last 3 characters (.cm)
 
-    if(strcmp(filename, "destroy_session") == 0)
+    if(strcmp(filename, strcat(directory,"destroy_session")) == 0)
         return functions[0](r);
-    else if(strcmp(filename, "env") == 0)
+    else if(strcmp(filename, strcat(directory,"env")) == 0)
         return functions[1](r);
-    else if(strcmp(filename, "general_request_echo") == 0)
+    else if(strcmp(filename, strcat(directory,"general_request_echo")) == 0)
         return functions[2](r);
-    else if(strcmp(filename, "get_echo") == 0)
+    else if(strcmp(filename, strcat(directory,"get_echo")) == 0)
         return functions[3](r);
-    else if(strcmp(filename, "hello_html") == 0)
+    else if(strcmp(filename, strcat(directory,"hello_html")) == 0)
         return functions[4](r);
-    else if(strcmp(filename, "hello_json") == 0)
+    else if(strcmp(filename, strcat(directory,"hello_json")) == 0)
         return functions[5](r);
-    else if(strcmp(filename, "post_echo") == 0)
+    else if(strcmp(filename, strcat(directory,"post_echo")) == 0)
         return functions[6](r);
-    else if(strcmp(filename, "sessions_1") == 0)
+    else if(strcmp(filename, strcat(directory,"sessions_1")) == 0)
         return functions[7](r);
-    else if(strcmp(filename, "sessions_2") == 0)
+    else if(strcmp(filename, strcat(directory,"sessions_2")) == 0)
         return functions[8](r);
     else
         return HTTP_NOT_FOUND;
@@ -114,7 +117,7 @@ static int get_echo(request_rec *r){
 }
 
 static int hello_html(request_rec *r){
-    if (!r->handler || strcmp(r->handler, "hello-html-handler")) return (DECLINED);
+    //if (!r->handler || strcmp(r->handler, "hello-html-handler")) return (DECLINED);
     
     time_t t;
     time(&t);
@@ -122,8 +125,8 @@ static int hello_html(request_rec *r){
     ap_set_content_type(r, "text/html");
     ap_rprintf(r, "Cache-Control: no-cache\n\n");
 
-    ap_rprintf(r, "<html><head><title>Hello, C!</title></head>\
-        <body><h1 align=center>Hello, C!</h1>\
+    ap_rprintf(r, "<html><head><title>Hello, Apache!</title></head>\
+        <body><h1 align=center>Hello, Apache!</h1>\
         <hr/>\n");
 
     ap_rprintf(r, "Hello, World!<br/>\n");
