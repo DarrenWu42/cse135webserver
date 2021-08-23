@@ -32,6 +32,7 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           
           script: |
+            # GIT and BASE PERMISSIONS STEP
             cd ${SITE_PATH} # open site path
             git init        # initialize git
             git remote add origin git@github.com:DarrenWu42/cse135webserver.git # add repo, just in case line
@@ -45,8 +46,10 @@ jobs:
             # allow sh files to be executable, run sh files, then disallow sh files to be executable
             find ${CGI_PATH} -type f -iname "*.sh" -exec sudo chmod ug+x {} \; # allow all sh files in cgi-bin to be executable
             sudo ${CGI_PATH}c/compile-c.sh ${CGI_PATH}c/                       # compile all c files to cgi files
-            sudo ${CGI_PATH}go/build-go.sh ${CGI_PATH}go/                    # build all go files to cgi files
+            sudo ${CGI_PATH}go/build-go.sh ${CGI_PATH}go/                      # build all go files to cgi files
             find ${CGI_PATH} -type f -iname "*.sh" -exec sudo chmod ug-x {} \; # disallow all sh in cgi-bin files to be executable
+
+            apxs -i -a -c -n c_programs ${SITE_PATH}/module_development/c_programs.c # build c file to apache module
             
             # PERMISSIONS STEP
             # set permissions for exectuable files cgi, php, pl
@@ -64,3 +67,6 @@ jobs:
             
             # stop github from thinking files have changed just by changing permission
             git config core.fileMode false
+
+            # restart apache server
+            sudo systemctl restart apache2
