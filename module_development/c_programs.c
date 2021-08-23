@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "apr_tables.h"
 #include "apr_strings.h"
 #include "httpd.h" 
 #include "http_config.h"
 #include "http_protocol.h"
+#include "util_script.h"
 
 typedef int (*FunctionCallback)(request_rec*);
 
