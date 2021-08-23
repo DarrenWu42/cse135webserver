@@ -3,3 +3,5 @@ reporting_html/matomo
 public_html/matomo
 public_html/cgi-bin/c/*.cgi
 public_html/node_modules
+module_development/*
+!module_development/c_programs.c
