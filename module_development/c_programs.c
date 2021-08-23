@@ -21,9 +21,6 @@ static int post_echo(request_rec *r);
 static int sessions_1(request_rec *r);
 static int sessions_2(request_rec *r);
 
-FunctionCallback functions[] = {&destroy_session, &env, &general_request_echo, &get_echo,
-                                &hello_html, &hello_json, &post_echo, &sessions_1, &sessions_2};
-
 module AP_MODULE_DECLARE_DATA   c_programs_module = { 
     STANDARD20_MODULE_STUFF,
     NULL, /* Per-directory configuration handler */
@@ -66,23 +63,23 @@ static int page_caller(request_rec *r){
     filename[strlen(filename)-4] = 0; // Cut off the last 4 characters (.mod)
 
     if(strcmp(filename, strcat(directory,"destroy_session")) == 0)
-        return functions[0](r);
+        return destroy_session(r);
     else if(strcmp(filename, strcat(directory,"env")) == 0)
-        return functions[1](r);
+        return env(r);
     else if(strcmp(filename, strcat(directory,"general_request_echo")) == 0)
-        return functions[2](r);
+        return general_request_echo(r);
     else if(strcmp(filename, strcat(directory,"get_echo")) == 0)
-        return functions[3](r);
+        return get_echo(r);
     else if(strcmp(filename, strcat(directory,"hello_html")) == 0)
-        return functions[4](r);
+        return hello_html(r);
     else if(strcmp(filename, strcat(directory,"hello_json")) == 0)
-        return functions[5](r);
+        return hello_json(r);
     else if(strcmp(filename, strcat(directory,"post_echo")) == 0)
-        return functions[6](r);
+        return post_echo(r);
     else if(strcmp(filename, strcat(directory,"sessions_1")) == 0)
-        return functions[7](r);
+        return sessions_1(r);
     else if(strcmp(filename, strcat(directory,"sessions_2")) == 0)
-        return functions[8](r);
+        return sessions_2(r);
     else
         return HTTP_NOT_FOUND;
 }
