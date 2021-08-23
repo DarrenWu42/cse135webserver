@@ -1,3 +1,1 @@
 ErrorDocument 404 /error404.html
-Action cgi-node /cgi-bin/cgi-node.js 
-AddHandler cgi-node .jss
