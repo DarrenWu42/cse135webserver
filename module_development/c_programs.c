@@ -274,9 +274,11 @@ static int general_request_echo(request_rec *r){
 }
 
 static int sessions_1(request_rec *r){
+    const char* key = "username";
+
     apr_table_t* GET;
     ap_args_to_table(r, &GET);
-    const char* username = apr_table_get(GET, "username");
+    const char* username = apr_table_get(GET, key);
 
     if(!username || strcmp(username, "")) // if the value from form is NULL or empty
         ap_cookie_read(r, "username", &username, 0); // get cookie username value from request
