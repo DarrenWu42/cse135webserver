@@ -7,6 +7,7 @@
 #include "httpd.h" 
 #include "http_config.h"
 #include "http_protocol.h"
+#include "util_cookies.h"
 #include "util_script.h"
 
 typedef int (*FunctionCallback)(request_rec*);
@@ -198,6 +199,7 @@ static int post_echo(request_rec *r){
 
     // Get and format query string
     ap_rprintf(r, "Message Body:<br/>");
+    /*
     keyValuePair* formData = readPost(r);
     if(formData){
         int i;
@@ -211,6 +213,13 @@ static int post_echo(request_rec *r){
             else
                 break;
         }
+    }*/
+
+    if(ap_should_client_block(r)){
+        char argsbuffer[HUGE_STRING_LEN];
+
+        while(ap_get_client_block(r, argsbuffer, sizeof(argsbuffer)) > 0)
+            ap_rprintf(r, "%s<br/>", argsbuffer);
     }
 
     // Print HTML footer
@@ -260,6 +269,15 @@ static int general_request_echo(request_rec *r){
 }
 
 static int sessions_1(request_rec *r){
+    const char* username;
+
+    apr_table_t* GET;
+    ap_args_to_table(r, &GET);
+
+    if(!username || strcmp(username, "")) // if the value from form is NULL or empty
+        ap_cookie_read(r, "username", &username, 0); // get cookie username value from request
+    else // if form had something
+        ap_cookie_write(r, "username", username, NULL, 0, NULL); // write cookie to response
     ap_set_content_type(r, "text/html");
 
     return OK;
