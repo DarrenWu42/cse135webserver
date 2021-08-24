@@ -1,3 +1,4 @@
+// source: https://gist.github.com/larryli/8299764
 package main
 
 import (

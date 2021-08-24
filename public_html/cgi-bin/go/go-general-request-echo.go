@@ -9,6 +9,8 @@ import (
 func main() {
 	cgi.Serve(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		header := w.Header()
+		header.Set("Cache-Control", "no-cache")
+		header.Set("Content-Type", "text/html")
 		fmt.Fprintf(w, "<html><head><title>General Request Echo</title></head><body><h1 align=center>General Request Echo</h1><hr/>")
 
 		fmt.Fprintf(w, "<b>Protocol:</b> %s<br/>\n", r.Proto)
