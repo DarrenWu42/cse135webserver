@@ -10,8 +10,6 @@
 #include "util_cookies.h"
 #include "util_script.h"
 
-typedef int (*FunctionCallback)(request_rec*);
-
 static void register_hooks(apr_pool_t *pool);
 static int page_caller(request_rec *r);
 
@@ -41,6 +39,7 @@ static void register_hooks(apr_pool_t *pool){
     ap_hook_handler(page_caller, NULL, NULL, APR_HOOK_LAST);
 }
 
+// important reference: https://ci.apache.org/projects/httpd/trunk/doxygen/structrequest__rec.html
 static int page_caller(request_rec *r){
     if (!r->handler || strcmp(r->handler, "page-caller-handler")) return (DECLINED);
 
@@ -177,6 +176,7 @@ typedef struct {
     const char* value;
 } keyValuePair;
 
+// source: https://httpd.apache.org/docs/trunk/developer/modguide.html#get_post
 keyValuePair* readPost(request_rec *r) {
     apr_array_header_t* pairs = NULL;
     apr_off_t len;
@@ -207,6 +207,8 @@ keyValuePair* readPost(request_rec *r) {
 static int post_echo(request_rec *r){
     ap_set_content_type(r, "text/html");
     //ap_parse_form_data(r, NULL, &POST, -1, 8192);
+
+    // apr_table_t* POST = r->body_table // something I tried to cheese this function, didn't work in the end
 
     ap_rprintf(r, "<html><head><title>POST Message Body</title></head>\
         <body><h1 align=center>POST Message Body</h1>\
@@ -274,6 +276,8 @@ static int general_request_echo(request_rec *r){
     return OK;
 }
 
+// reference: https://ci.apache.org/projects/httpd/trunk/doxygen/group__APACHE__CORE__COOKIE.html
+// cookie logic similar to python cookie logic from before
 static int sessions_1(request_rec *r){
     apr_table_t* GET;
     ap_args_to_table(r, &GET);
@@ -282,6 +286,8 @@ static int sessions_1(request_rec *r){
     if(!username || !strcmp(username, "")) // if the value from form is NULL or empty
         ap_cookie_read(r, "username", &username, 0); // get cookie username value from request
     else // if form had something
+    // this helped me figure out i needed to add r->headers_out to this line of code: 
+    // https://stackoverflow.com/questions/36892699/set-custom-header-to-apache-response-within-a-module
         ap_cookie_write(r, "username", username, NULL, 0, r->headers_out); // write cookie to response
     ap_set_content_type(r, "text/html");
 
