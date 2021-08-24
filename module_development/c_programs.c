@@ -87,57 +87,6 @@ static int page_caller(request_rec *r){
     }
 }
 
-static int destroy_session(request_rec *r){
-    ap_set_content_type(r, "text/html");
-
-    return OK;
-}
-
-static int env(request_rec *r){
-    ap_set_content_type(r, "text/html");
-
-    return OK;
-}
-
-static int general_request_echo(request_rec *r){
-    apr_table_t* GET; 
-    apr_array_header_t* POST;
-
-    ap_args_to_table(r, &GET); 
-    ap_parse_form_data(r, NULL, &POST, -1, 8192);
-
-    ap_set_content_type(r, "text/html");
-
-    return OK;
-}
-
-static int print_kv(void *data, const char *key, const char *value){
-    request_rec *r = data;
-    ap_rprintf(r, "<b>%s</b> : %s<br/>", key, value);
-    return TRUE;
-}
-
-static int get_echo(request_rec *r){
-    apr_table_t* GET;
-    ap_args_to_table(r, &GET);
-    
-    ap_set_content_type(r, "text/html");
-    ap_rprintf(r, "<html><head><title>GET Request Echo</title></head>\
-        <body><h1 align=center>GET Request Echo</h1>\
-        <hr/>\n");
-
-    // Get and format query string
-    ap_rprintf(r, "Raw query string: %s<br/><br/>", r->args);
-    ap_rprintf(r, "Formatted Query String:<br/>");
-    apr_table_do(print_kv, r, GET, NULL);
-
-    // Print HTML footer  
-    ap_rprintf(r, "</body>");
-    ap_rprintf(r, "</html>");
-
-    return OK;
-}
-
 static int hello_html(request_rec *r){
     time_t t;
     time(&t);
@@ -174,11 +123,72 @@ static int hello_json(request_rec *r){
     return OK;
 }
 
+static int env(request_rec *r){
+    ap_set_content_type(r, "text/html");
+
+    return OK;
+}
+
+static int print_kv(void *data, const char *key, const char *value){
+    request_rec *r = data;
+    ap_rprintf(r, "<b>%s</b> : %s<br/>", key, value);
+    return TRUE;
+}
+
+static int get_echo(request_rec *r){
+    apr_table_t* GET;
+    ap_args_to_table(r, &GET);
+    
+    ap_set_content_type(r, "text/html");
+    ap_rprintf(r, "<html><head><title>GET Request Echo</title></head>\
+        <body><h1 align=center>GET Request Echo</h1>\
+        <hr/>\n");
+
+    // Get and format query string
+    ap_rprintf(r, "Raw query string: %s<br/><br/>", r->args);
+    ap_rprintf(r, "Formatted Query String:<br/>");
+    apr_table_do(print_kv, r, GET, NULL);
+
+    // Print HTML footer  
+    ap_rprintf(r, "</body>");
+    ap_rprintf(r, "</html>");
+
+    return OK;
+}
+
+typedef struct {
+    const char* key;
+    const char* value;
+} keyValuePair;
+
+keyValuePair* readPost(request_rec *r) {
+    apr_array_header_t* pairs = NULL;
+    apr_off_t len;
+    apr_size_t size;
+    int res;
+    int i = 0;
+    char* buffer;
+    keyValuePair* kvp;
+
+    res = ap_parse_form_data(r, NULL, &pairs, -1, HUGE_STRING_LEN);
+    if (res != OK || !pairs) return NULL; /* Return NULL if we failed or if there are is no POST data */
+    kvp = apr_pcalloc(r->pool, sizeof(keyValuePair) * (pairs->nelts + 1));
+    while (pairs && !apr_is_empty_array(pairs)) {
+        ap_form_pair_t *pair = (ap_form_pair_t *) apr_array_pop(pairs);
+        apr_brigade_length(pair->value, 1, &len);
+        size = (apr_size_t) len;
+        buffer = apr_palloc(r->pool, size + 1);
+        apr_brigade_flatten(pair->value, buffer, &size);
+        buffer[len] = 0;
+        kvp[i].key = apr_pstrdup(r->pool, pair->name);
+        kvp[i].value = buffer;
+        i++;
+    }
+    return kvp;
+}
+
 // source: https://httpd.apache.org/docs/trunk/developer/modguide.html#get_post
 static int post_echo(request_rec *r){
-    
-    
-    apr_table_t* POST = r->body_table;
     ap_set_content_type(r, "text/html");
     //ap_parse_form_data(r, NULL, &POST, -1, 8192);
 
@@ -188,11 +198,36 @@ static int post_echo(request_rec *r){
 
     // Get and format query string
     ap_rprintf(r, "<h2>Message Body:</h2><br/>");
-    apr_table_do(print_kv, r, POST, NULL);
+    keyValuePair* formData = readPost(r);
+    if(formData){
+        int i;
+        for (i = 0; &formData[i]; i++) {
+            if (formData[i].key && formData[i].value)
+                ap_rprintf(r, "%s = %s<br/>", formData[i].key, formData[i].value);
+            else if (formData[i].key)
+                ap_rprintf(r, "%s<br/>", formData[i].key);
+            else if (formData[i].value)
+                ap_rprintf(r, "= %s<br/>", formData[i].value);
+            else
+                break;
+        }
+    }
 
     // Print HTML footer
     ap_rprintf(r, "</body>");
     ap_rprintf(r, "</html>");
+
+    return OK;
+}
+
+static int general_request_echo(request_rec *r){
+    apr_table_t* GET; 
+    apr_array_header_t* POST;
+
+    ap_args_to_table(r, &GET); 
+    ap_parse_form_data(r, NULL, &POST, -1, 8192);
+
+    ap_set_content_type(r, "text/html");
 
     return OK;
 }
@@ -204,6 +239,12 @@ static int sessions_1(request_rec *r){
 }
 
 static int sessions_2(request_rec *r){
+    ap_set_content_type(r, "text/html");
+
+    return OK;
+}
+
+static int destroy_session(request_rec *r){
     ap_set_content_type(r, "text/html");
 
     return OK;
