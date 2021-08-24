@@ -9,31 +9,19 @@ import (
 func main() {
 	cgi.Serve(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		header := w.Header()
-		header.Set("Content-Type", "text/plain; charset=utf-8")
-		fmt.Fprintln(w, "Method:", r.Method)
-		fmt.Fprintln(w, "URL:", r.URL.String())
-		query := r.URL.Query()
-		for k := range query {
-			fmt.Fprintln(w, "Query", k+":", query.Get(k))
-		}
+		fmt.Fprintf(w, "<html><head><title>General Request Echo</title></head><body><h1 align=center>General Request Echo</h1><hr/>")
+
+		fmt.Fprintf(w, "<b>Protocol:</b> %s<br/>\n", r.Proto)
+		fmt.Fprintf(w, "<b>Method:</b> %s<br/>\n", r.Method)
+		fmt.Fprintf(w, "<b>Query String and/or Message Body:</b><br/>\n")
+
 		r.ParseForm()
 		form := r.Form
 		for k := range form {
-			fmt.Fprintln(w, "Form", k+":", form.Get(k))
+			fmt.Fprintf(w, "<b>%s</b> : %s<br/>", k, form.Get(k))
 		}
-		post := r.PostForm
-		for k := range post {
-			fmt.Fprintln(w, "PostForm", k+":", post.Get(k))
-		}
-		fmt.Fprintln(w, "RemoteAddr:", r.RemoteAddr)
-		if referer := r.Referer(); len(referer) > 0 {
-			fmt.Fprintln(w, "Referer:", referer)
-		}
-		if ua := r.UserAgent(); len(ua) > 0 {
-			fmt.Fprintln(w, "UserAgent:", ua)
-		}
-		for _, cookie := range r.Cookies() {
-			fmt.Fprintln(w, "Cookie", cookie.Name+":", cookie.Value, cookie.Path, cookie.Domain, cookie.RawExpires)
-		}
+
+		fmt.Fprintf(w, "</body>")
+		fmt.Fprintf(w, "</html>")
 	}))
 }
