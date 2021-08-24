@@ -4,8 +4,6 @@ import os
 
 from http import cookies
 
-# has the problem of not setting cookie from form again
-
 cookie = cookies.SimpleCookie()
 
 form = cgi.FieldStorage()
