@@ -197,7 +197,7 @@ static int post_echo(request_rec *r){
         <hr/>\n");
 
     // Get and format query string
-    ap_rprintf(r, "<h2>Message Body:</h2><br/>");
+    ap_rprintf(r, "Message Body:<br/>");
     keyValuePair* formData = readPost(r);
     if(formData){
         int i;
@@ -221,14 +221,41 @@ static int post_echo(request_rec *r){
 }
 
 static int general_request_echo(request_rec *r){
-    apr_table_t* GET; 
-    apr_array_header_t* POST;
-
-    ap_args_to_table(r, &GET); 
-    ap_parse_form_data(r, NULL, &POST, -1, 8192);
-
     ap_set_content_type(r, "text/html");
+    ap_rprintf(r, "<html><head><title>General Request Echo</title></head> \
+	<body><h1 align=center>General Request Echo</h1> \
+  	<hr/>\n");
 
+    // Get environment vars
+    ap_rprintf(r, "<b>Protocol:</b> %s<br/>\n", r->protocol);
+    ap_rprintf(r, "<b>Method:</b> %s<br/>\n", r->method);
+    ap_rprintf(r, "<b>Query String and/or Message Body:</b><br/>\n");
+
+    apr_table_t* GET;
+    ap_args_to_table(r, &GET);
+
+    keyValuePair* formData = readPost(r);
+
+    if(GET)
+        apr_table_do(print_kv, r, GET, NULL);
+    
+    if(formData){
+        int i;
+        for (i = 0; &formData[i]; i++) {
+            if (formData[i].key && formData[i].value)
+                ap_rprintf(r, "%s = %s<br/>", formData[i].key, formData[i].value);
+            else if (formData[i].key)
+                ap_rprintf(r, "%s<br/>", formData[i].key);
+            else if (formData[i].value)
+                ap_rprintf(r, "= %s<br/>", formData[i].value);
+            else
+                break;
+        }
+    }
+    
+    // Print HTML footer
+    ap_rprintf(r, "</body>");
+    ap_rprintf(r, "</html>");
     return OK;
 }
 
