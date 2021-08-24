@@ -123,16 +123,30 @@ static int hello_json(request_rec *r){
     return OK;
 }
 
-static int env(request_rec *r){
-    ap_set_content_type(r, "text/html");
-
-    return OK;
-}
-
 static int print_kv(void *data, const char *key, const char *value){
     request_rec *r = data;
     ap_rprintf(r, "<b>%s</b> : %s<br/>", key, value);
     return TRUE;
+}
+
+// source: Nick Kew's Apache Modules Book
+static int env(request_rec *r){
+    apr_table_t* REQ_HEADERS = r->headers_in;
+    apr_table_t* RES_HEADERS = r->headers_out;
+    apr_table_t* ENV_HEADERS = r->subprocess_env;
+
+    ap_set_content_type(r, "text/html");
+
+    ap_rprintf(r, "<html><head><title>Environment Variables</title></head> \
+	<body><h1 align=center>Environment Variables</h1> \
+  	<hr/>\n");
+
+    apr_table_do(print_kv, r, REQ_HEADERS, NULL);
+    apr_table_do(print_kv, r, RES_HEADERS, NULL);
+    apr_table_do(print_kv, r, ENV_HEADERS, NULL);
+    
+    printf("</body></html>");
+    return OK;
 }
 
 static int get_echo(request_rec *r){
