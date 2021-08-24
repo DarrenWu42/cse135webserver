@@ -31,6 +31,21 @@
     <script src="https://cdn.lr-in.com/LogRocket.min.js" crossorigin="anonymous"></script>
     <script>window.LogRocket && window.LogRocket.init('ernzlk/darrenwuxyz');</script>
     <!-- End LogRocket -->
+    <!-- Collector Script -->
+    <script src="collector.js" type="module"></script>
+    <script>
+        window.analyticsData = window.analyticsData || [];
+
+        analyticsData.push(data.static)
+        analyticsData.push(data.performance)
+
+        document.addEventListener('visibilitychange', function logData() {
+            if (document.visibilityState === 'hidden') {
+                navigator.sendBeacon('/log', analyticsData);
+            }
+        });
+    </script>
+    <!-- End Collector Script -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Darren Wu Lives!</title>
