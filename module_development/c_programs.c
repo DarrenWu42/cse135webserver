@@ -274,13 +274,11 @@ static int general_request_echo(request_rec *r){
 }
 
 static int sessions_1(request_rec *r){
-    const char* key = "username";
-
     apr_table_t* GET;
     ap_args_to_table(r, &GET);
-    const char* username = apr_table_get(GET, key);
+    const char* username = apr_table_get(GET, "username");
 
-    if(!username || strcmp(username, "")) // if the value from form is NULL or empty
+    if(!username || !strcmp(username, "")) // if the value from form is NULL or empty
         ap_cookie_read(r, "username", &username, 0); // get cookie username value from request
     else // if form had something
         ap_cookie_write(r, "username", username, NULL, 0, NULL); // write cookie to response
@@ -293,9 +291,6 @@ static int sessions_1(request_rec *r){
     ap_rprintf(r, "<body>");
     ap_rprintf(r, "<h1>Apache Modules Page 1</h1>");
     ap_rprintf(r, "<hr/>");
-    ap_rprintf(r, "Raw query string: %s<br/><br/>", r->args);
-    ap_rprintf(r, "Formatted Query String:<br/>");
-    apr_table_do(print_kv, r, GET, NULL);
     ap_rprintf(r, "<b>Name:</b> %s<br/>", username);
     ap_rprintf(r, "<a href=\"/sessions-2.mod\">Session Page 2</a><br/>");
     ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Apache CGI Form</a><br/>");
