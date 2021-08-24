@@ -54,6 +54,8 @@ static int page_caller(request_rec *r){
     filename = filename + strlen(directory); // skip over directory part of file name
     filename[strlen(filename)-4] = 0; // Cut off the last 4 characters (.mod)
 
+    apr_table_mergen(r->headers_out, "Cache-Control", "no-cache");
+
     if(strcmp(filename, "destroy-session") == 0)
         return destroy_session(r);
     else if(strcmp(filename, "env") == 0)
@@ -281,7 +283,7 @@ static int sessions_1(request_rec *r){
     if(!username || !strcmp(username, "")) // if the value from form is NULL or empty
         ap_cookie_read(r, "username", &username, 0); // get cookie username value from request
     else // if form had something
-        ap_cookie_write(r, "username", username, NULL, 0, NULL); // write cookie to response
+        ap_cookie_write(r, "username", username, NULL, 0, r->headers_out); // write cookie to response
     ap_set_content_type(r, "text/html");
 
     ap_rprintf(r, "<html>");
@@ -330,7 +332,7 @@ static int sessions_2(request_rec *r){
 }
 
 static int destroy_session(request_rec *r){
-    ap_cookie_write(r, "username", "None", NULL, 0, NULL);
+    ap_cookie_write(r, "username", "None", NULL, 0, r->headers_out);
 
     ap_set_content_type(r, "text/html");
 
