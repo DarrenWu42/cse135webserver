@@ -215,12 +215,12 @@ static int post_echo(request_rec *r){
         }
     }*/
 
-    if(ap_should_client_block(r)){
+    //if(ap_should_client_block(r)){
         char argsbuffer[HUGE_STRING_LEN];
 
         while(ap_get_client_block(r, argsbuffer, sizeof(argsbuffer)) > 0)
             ap_rprintf(r, "%s<br/>", argsbuffer);
-    }
+    //}
 
     // Print HTML footer
     ap_rprintf(r, "</body>");
