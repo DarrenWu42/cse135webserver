@@ -100,7 +100,6 @@ static int hello_html(request_rec *r){
 
     ap_rprintf(r, "Hello, World!<br/>\n");
     ap_rprintf(r, "This program was generated at: %s\n<br/>", ctime(&t));
-    ap_rprintf(r, "This program filename is: %s\n<br/>", r->filename);
     ap_rprintf(r, "Your current IP address is: %s<br/>", r->useragent_ip);
     
     // Print HTML footer
@@ -199,7 +198,6 @@ static int post_echo(request_rec *r){
 
     // Get and format query string
     ap_rprintf(r, "Message Body:<br/>");
-    /*
     keyValuePair* formData = readPost(r);
     if(formData){
         int i;
@@ -213,14 +211,7 @@ static int post_echo(request_rec *r){
             else
                 break;
         }
-    }*/
-
-    //if(ap_should_client_block(r)){
-        char argsbuffer[HUGE_STRING_LEN];
-
-        while(ap_get_client_block(r, argsbuffer, sizeof(argsbuffer)) > 0)
-            ap_rprintf(r, "%s<br/>", argsbuffer);
-    //}
+    }
 
     // Print HTML footer
     ap_rprintf(r, "</body>");
@@ -273,6 +264,7 @@ static int sessions_1(request_rec *r){
 
     apr_table_t* GET;
     ap_args_to_table(r, &GET);
+    username = apr_table_get(GET, "username");
 
     if(!username || strcmp(username, "")) // if the value from form is NULL or empty
         ap_cookie_read(r, "username", &username, 0); // get cookie username value from request
@@ -280,17 +272,68 @@ static int sessions_1(request_rec *r){
         ap_cookie_write(r, "username", username, NULL, 0, NULL); // write cookie to response
     ap_set_content_type(r, "text/html");
 
+    ap_rprintf(r, "<html>");
+    ap_rprintf(r, "<head>");
+    ap_rprintf(r, "<title>Apache Modules Sessions</title>");
+    ap_rprintf(r, "</head>");
+    ap_rprintf(r, "<body>");
+    ap_rprintf(r, "<h1>Apache Modules Page 1</h1>");
+    ap_rprintf(r, "<hr/>");
+    ap_rprintf(r, "<b>Name:</b> %s<br/>", username);
+    ap_rprintf(r, "<a href=\"/sessions-2.mod\">Session Page 2</a><br/>");
+    ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Apache CGI Form</a><br/>");
+    ap_rprintf(r, "<form style=\"margin-top:30px\" action=\"/destroy-session.mod\" method=\"get\">");
+    ap_rprintf(r, "<button type=\"submit\">Destroy Session</button>");
+    ap_rprintf(r, "</form>");
+
+    ap_rprintf(r, "</body>");
+    ap_rprintf(r, "</html>");
+
     return OK;
 }
 
 static int sessions_2(request_rec *r){
+    const char* username;
+    ap_cookie_read(r, "username", &username, 0);
+
     ap_set_content_type(r, "text/html");
+
+    ap_rprintf(r, "<html>");
+    ap_rprintf(r, "<head>");
+    ap_rprintf(r, "<title>Apache Modules Sessions</title>");
+    ap_rprintf(r, "</head>");
+    ap_rprintf(r, "<body>");
+    ap_rprintf(r, "<h1>Apache Modules Page 2</h1>");
+    ap_rprintf(r, "<hr/>");
+    ap_rprintf(r, "<b>Name:</b> %s<br/>", username);
+    ap_rprintf(r, "<a href=\"/sessions-1.mod\">Session Page 1</a><br/>");
+    ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Apache CGI Form</a><br/>");
+    ap_rprintf(r, "<form style=\"margin-top:30px\" action=\"/destroy-session.mod\" method=\"get\">");
+    ap_rprintf(r, "<button type=\"submit\">Destroy Session</button>");
+    ap_rprintf(r, "</form>");
+    ap_rprintf(r, "</body>");
+    ap_rprintf(r, "</html>");
 
     return OK;
 }
 
 static int destroy_session(request_rec *r){
+    ap_cookie_write(r, "username", "None", NULL, 0, NULL);
+
     ap_set_content_type(r, "text/html");
+
+    ap_rprintf(r, "<html>");
+    ap_rprintf(r, "<head>");
+    ap_rprintf(r, "<title>Apache Session Destroyed</title>");
+    ap_rprintf(r, "</head>");
+    ap_rprintf(r, "<body>");
+    ap_rprintf(r, "<h1>Apache Session Destroyed</h1>");
+    ap_rprintf(r, "<hr/>");
+    ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Back to the Apache CGI Form</a><br/>");
+    ap_rprintf(r, "<a href=\"/sessions-1.mod\">Session Page 1</a><br />");
+    ap_rprintf(r, "<a href=\"/sessions-2.mod\">Session Page 2</a><br/>");
+    ap_rprintf(r, "</body>");
+    ap_rprintf(r, "</html>");
 
     return OK;
 }
