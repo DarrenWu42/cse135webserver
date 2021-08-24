@@ -252,8 +252,7 @@ static int general_request_echo(request_rec *r){
 
     keyValuePair* formData = readPost(r);
 
-    if(GET)
-        apr_table_do(print_kv, r, GET, NULL);
+    apr_table_do(print_kv, r, GET, NULL);
     
     if(formData){
         int i;
