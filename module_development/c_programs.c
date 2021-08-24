@@ -124,6 +124,8 @@ static int hello_json(request_rec *r){
     return OK;
 }
 
+// reference: https://ci.apache.org/projects/httpd/trunk/doxygen/group__apr__tables.html#gabac50c7b2bae5f8cef6245d1959f8b06
+// based on: http://dev.ariel-networks.com/apr/apr-tutorial/html/apr-tutorial-19.html#ss19.2
 static int print_kv(void *data, const char *key, const char *value){
     request_rec *r = data;
     ap_rprintf(r, "<b>%s</b> : %s<br/>", key, value);
@@ -142,6 +144,7 @@ static int env(request_rec *r){
 	<body><h1 align=center>Environment Variables</h1> \
   	<hr/>\n");
 
+    // https://ci.apache.org/projects/httpd/trunk/doxygen/group__apr__tables.html#ga5917e542ae910961ee48b0ec2d09a879
     apr_table_do(print_kv, r, REQ_HEADERS, NULL);
     apr_table_do(print_kv, r, RES_HEADERS, NULL);
     apr_table_do(print_kv, r, ENV_HEADERS, NULL);
