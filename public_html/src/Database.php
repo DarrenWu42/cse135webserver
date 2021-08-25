@@ -5,8 +5,7 @@ class Database {
 
   private $dbConnection = null;
 
-  public function __construct()
-  {
+  public function __construct(){
     $host = $_ENV['DB_HOST'];
     $port = $_ENV['DB_PORT'];
     $db   = $_ENV['DB_DATABASE'];
@@ -24,8 +23,7 @@ class Database {
     }
   }
 
-  public function connet()
-  {
+  public function connect(){
     return $this->dbConnection;
   }
 }
