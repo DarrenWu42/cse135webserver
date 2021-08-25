@@ -38,10 +38,11 @@
 
         analyticsData.push(data.static)
         analyticsData.push(data.performance)
+        anallyticsData.push(data.activity)
 
         document.addEventListener('visibilitychange', function logData() {
             if (document.visibilityState === 'hidden') {
-                navigator.sendBeacon('/log', analyticsData);
+                //navigator.sendBeacon('/log', analyticsData);
             }
         });
     </script>
