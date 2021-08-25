@@ -294,13 +294,9 @@ static int sessions_1(request_rec *r){
         ap_cookie_write(r, "username", username, NULL, 0, r->headers_out); // write cookie to response
     ap_set_content_type(r, "text/html");
 
-    ap_rprintf(r, "<html>");
-    ap_rprintf(r, "<head>");
-    ap_rprintf(r, "<title>Apache Modules Sessions</title>");
-    ap_rprintf(r, "</head>");
-    ap_rprintf(r, "<body>");
-    ap_rprintf(r, "<h1>Apache Modules Page 1</h1>");
-    ap_rprintf(r, "<hr/>");
+    ap_rprintf(r, "<html><head><title>Apache Modules Sessions</title></head> \
+	<body><h1>Apache Modules Page 1</h1> \
+  	<hr/>\n");
     ap_rprintf(r, "<b>Name:</b> %s<br/>", username);
     ap_rprintf(r, "<a href=\"/sessions-2.mod\">Session Page 2</a><br/>");
     ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Apache CGI Form</a><br/>");
@@ -320,13 +316,9 @@ static int sessions_2(request_rec *r){
 
     ap_set_content_type(r, "text/html");
 
-    ap_rprintf(r, "<html>");
-    ap_rprintf(r, "<head>");
-    ap_rprintf(r, "<title>Apache Modules Sessions</title>");
-    ap_rprintf(r, "</head>");
-    ap_rprintf(r, "<body>");
-    ap_rprintf(r, "<h1>Apache Modules Page 2</h1>");
-    ap_rprintf(r, "<hr/>");
+    ap_rprintf(r, "<html><head><title>Apache Modules Sessions</title></head> \
+	<body><h1>Apache Modules Page 2</h1> \
+  	<hr/>\n");
     ap_rprintf(r, "<b>Name:</b> %s<br/>", username);
     ap_rprintf(r, "<a href=\"/sessions-1.mod\">Session Page 1</a><br/>");
     ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Apache CGI Form</a><br/>");
@@ -344,13 +336,9 @@ static int destroy_session(request_rec *r){
 
     ap_set_content_type(r, "text/html");
 
-    ap_rprintf(r, "<html>");
-    ap_rprintf(r, "<head>");
-    ap_rprintf(r, "<title>Apache Session Destroyed</title>");
-    ap_rprintf(r, "</head>");
-    ap_rprintf(r, "<body>");
-    ap_rprintf(r, "<h1>Apache Session Destroyed</h1>");
-    ap_rprintf(r, "<hr/>");
+    ap_rprintf(r, "<html><head><title>Apache Session Destroyed</title></head> \
+	<body><h1>Apache Session Destroyed</h1> \
+  	<hr/>\n");
     ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Back to the Apache CGI Form</a><br/>");
     ap_rprintf(r, "<a href=\"/sessions-1.mod\">Session Page 1</a><br />");
     ap_rprintf(r, "<a href=\"/sessions-2.mod\">Session Page 2</a><br/>");
