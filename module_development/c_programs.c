@@ -91,7 +91,7 @@ static int page_caller(request_rec *r){
 
 static void print_header(request_rec *r, const char* title, const char* heading, int centered){
     const char* alignment = centered ? "align=center" : "";
-    ap_rprintf(r, "<html><head><title>%s</title></head><body><h1 %s>%s</h1><hr/>\n", title, heading, alignment);
+    ap_rprintf(r, "<html><head><title>%s</title></head><body><h1 %s>%s</h1><hr/>\n", title, alignment, heading);
 }
 
 static void print_footer(request_rec *r){
