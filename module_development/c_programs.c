@@ -89,22 +89,28 @@ static int page_caller(request_rec *r){
     }
 }
 
+static void print_header(request_rec *r, const char* title, const char* heading, int centered){
+    const char* alignment = centered ? "align=center" : "";
+    ap_rprintf(r, "<html><head><title>%s</title></head><body><h1 %s>%s</h1><hr/>\n", title, heading, alignment);
+}
+
+static void print_footer(request_rec *r){
+    ap_rprintf(r, "</body></html>");
+}
+
 static int hello_html(request_rec *r){
     time_t t;
     time(&t);
 
     ap_set_content_type(r, "text/html");
-
-    ap_rprintf(r, "<html><head><title>Hello, Apache!</title></head>\
-        <body><h1 align=center>Hello, Apache!</h1>\
-        <hr/>\n");
+    print_header(r, "Hello, Apache!", "Hello, Apache!", 1);
 
     ap_rprintf(r, "Hello, World!<br/>\n");
     ap_rprintf(r, "This program was generated at: %s\n<br/>", ctime(&t));
     ap_rprintf(r, "Your current IP address is: %s<br/>", r->useragent_ip);
     
     // Print HTML footer
-    ap_rprintf(r, "</body></html>");
+    print_footer(r);
 
     return OK;
 }
@@ -149,7 +155,7 @@ static int env(request_rec *r){
     apr_table_do(print_kv, r, RES_HEADERS, NULL);
     apr_table_do(print_kv, r, ENV_HEADERS, NULL);
     
-    printf("</body></html>");
+    print_footer(r);
     return OK;
 }
 
@@ -158,18 +164,14 @@ static int get_echo(request_rec *r){
     ap_args_to_table(r, &GET);
     
     ap_set_content_type(r, "text/html");
-    ap_rprintf(r, "<html><head><title>GET Request Echo</title></head>\
-        <body><h1 align=center>GET Request Echo</h1>\
-        <hr/>\n");
+    print_header(r, "GET Request Echo", "GET Request Echo", 1);
 
     // Get and format query string
     ap_rprintf(r, "Raw query string: %s<br/><br/>", r->args);
     ap_rprintf(r, "Formatted Query String:<br/>");
     apr_table_do(print_kv, r, GET, NULL);
 
-    // Print HTML footer  
-    ap_rprintf(r, "</body>");
-    ap_rprintf(r, "</html>");
+    print_footer(r);
 
     return OK;
 }
@@ -206,6 +208,20 @@ keyValuePair* readPost(request_rec *r) {
     return kvp;
 }
 
+static void print_form_data(request_rec* r, keyValuePair* formData){
+    int i;
+    for (i = 0; &formData[i]; i++) {
+        if (formData[i].key && formData[i].value)
+            ap_rprintf(r, "%s = %s<br/>", formData[i].key, formData[i].value);
+        else if (formData[i].key)
+            ap_rprintf(r, "%s<br/>", formData[i].key);
+        else if (formData[i].value)
+            ap_rprintf(r, "= %s<br/>", formData[i].value);
+        else
+            break;
+    }
+}
+
 // source: https://httpd.apache.org/docs/trunk/developer/modguide.html#get_post
 static int post_echo(request_rec *r){
     ap_set_content_type(r, "text/html");
@@ -213,69 +229,39 @@ static int post_echo(request_rec *r){
 
     // apr_table_t* POST = r->body_table // something I tried to cheese this function, didn't work in the end
 
-    ap_rprintf(r, "<html><head><title>POST Message Body</title></head>\
-        <body><h1 align=center>POST Message Body</h1>\
-        <hr/>\n");
+    print_header(r, "POST Message Body", "POST Message Body", 1);
 
     // Get and format query string
     ap_rprintf(r, "Message Body:<br/>");
-    keyValuePair* formData = readPost(r);
-    if(formData){
-        int i;
-        for (i = 0; &formData[i]; i++) {
-            if (formData[i].key && formData[i].value)
-                ap_rprintf(r, "%s = %s<br/>", formData[i].key, formData[i].value);
-            else if (formData[i].key)
-                ap_rprintf(r, "%s<br/>", formData[i].key);
-            else if (formData[i].value)
-                ap_rprintf(r, "= %s<br/>", formData[i].value);
-            else
-                break;
-        }
-    }
 
-    // Print HTML footer
-    ap_rprintf(r, "</body>");
-    ap_rprintf(r, "</html>");
+    keyValuePair* formData = readPost(r);
+
+    if(formData)
+        print_form_data(r, formData);
+
+    print_footer(r);
 
     return OK;
 }
 
 static int general_request_echo(request_rec *r){
     ap_set_content_type(r, "text/html");
-    ap_rprintf(r, "<html><head><title>General Request Echo</title></head> \
-	<body><h1 align=center>General Request Echo</h1> \
-  	<hr/>\n");
+    print_header(r, "General Request Echo", "General Request Echo", 1);
 
-    // Get environment vars
+    // get request vars
     ap_rprintf(r, "<b>Protocol:</b> %s<br/>\n", r->protocol);
     ap_rprintf(r, "<b>Method:</b> %s<br/>\n", r->method);
     ap_rprintf(r, "<b>Query String and/or Message Body:</b><br/>\n");
 
     apr_table_t* GET;
     ap_args_to_table(r, &GET);
-
     keyValuePair* formData = readPost(r);
 
     apr_table_do(print_kv, r, GET, NULL);
+    if(formData)
+        print_form_data(r, formData);
     
-    if(formData){
-        int i;
-        for (i = 0; &formData[i]; i++) {
-            if (formData[i].key && formData[i].value)
-                ap_rprintf(r, "%s = %s<br/>", formData[i].key, formData[i].value);
-            else if (formData[i].key)
-                ap_rprintf(r, "%s<br/>", formData[i].key);
-            else if (formData[i].value)
-                ap_rprintf(r, "= %s<br/>", formData[i].value);
-            else
-                break;
-        }
-    }
-    
-    // Print HTML footer
-    ap_rprintf(r, "</body>");
-    ap_rprintf(r, "</html>");
+    print_footer(r);
     return OK;
 }
 
@@ -294,9 +280,7 @@ static int sessions_1(request_rec *r){
         ap_cookie_write(r, "username", username, NULL, 0, r->headers_out); // write cookie to response
     ap_set_content_type(r, "text/html");
 
-    ap_rprintf(r, "<html><head><title>Apache Modules Sessions</title></head> \
-	<body><h1>Apache Modules Page 1</h1> \
-  	<hr/>\n");
+    print_header(r, "Apache Modules Sessions", "Apache Modules Page 1", 0);
     ap_rprintf(r, "<b>Name:</b> %s<br/>", username);
     ap_rprintf(r, "<a href=\"/sessions-2.mod\">Session Page 2</a><br/>");
     ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Apache CGI Form</a><br/>");
@@ -304,8 +288,7 @@ static int sessions_1(request_rec *r){
     ap_rprintf(r, "<button type=\"submit\">Destroy Session</button>");
     ap_rprintf(r, "</form>");
 
-    ap_rprintf(r, "</body>");
-    ap_rprintf(r, "</html>");
+    print_footer(r);
 
     return OK;
 }
@@ -316,17 +299,15 @@ static int sessions_2(request_rec *r){
 
     ap_set_content_type(r, "text/html");
 
-    ap_rprintf(r, "<html><head><title>Apache Modules Sessions</title></head> \
-	<body><h1>Apache Modules Page 2</h1> \
-  	<hr/>\n");
+    print_header(r, "Apache Modules Sessions", "Apache Modules Page 2", 0);
     ap_rprintf(r, "<b>Name:</b> %s<br/>", username);
     ap_rprintf(r, "<a href=\"/sessions-1.mod\">Session Page 1</a><br/>");
     ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Apache CGI Form</a><br/>");
     ap_rprintf(r, "<form style=\"margin-top:30px\" action=\"/destroy-session.mod\" method=\"get\">");
     ap_rprintf(r, "<button type=\"submit\">Destroy Session</button>");
     ap_rprintf(r, "</form>");
-    ap_rprintf(r, "</body>");
-    ap_rprintf(r, "</html>");
+    
+    print_footer(r);
 
     return OK;
 }
@@ -336,14 +317,12 @@ static int destroy_session(request_rec *r){
 
     ap_set_content_type(r, "text/html");
 
-    ap_rprintf(r, "<html><head><title>Apache Session Destroyed</title></head> \
-	<body><h1>Apache Session Destroyed</h1> \
-  	<hr/>\n");
+    print_header(r, "Apache Session Destroyed", "Apache Session Destroyed", 0);
     ap_rprintf(r, "<a href=\"/hw2/apache-cgiform.html\">Back to the Apache CGI Form</a><br/>");
     ap_rprintf(r, "<a href=\"/sessions-1.mod\">Session Page 1</a><br />");
     ap_rprintf(r, "<a href=\"/sessions-2.mod\">Session Page 2</a><br/>");
-    ap_rprintf(r, "</body>");
-    ap_rprintf(r, "</html>");
+    
+    print_footer(r);
 
     return OK;
 }
