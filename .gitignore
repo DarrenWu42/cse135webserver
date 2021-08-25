@@ -6,5 +6,5 @@ public_html/cgi-bin/go/*.cgi
 public_html/node_modules
 module_development/*
 !module_development/c_programs.c
-public_html/src/vendor
-public_html/src/.env
+public_html/vendor
+public_html/.env
