@@ -157,7 +157,7 @@ class ActivityAPI {
         return $response;
     }
 
-    public function find($id)
+    public function find($sess_id)
     {
         $query = "
         SELECT
