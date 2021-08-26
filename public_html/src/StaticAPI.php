@@ -203,7 +203,7 @@ class StaticAPI {
         return true;
     }
 
-    private function executeSet($query, $input){
+    private function executeSet($query, $input_array){
         $statement = $this->db->prepare($query);
         $statement->execute($input_array);
         $statement->rowCount();
