@@ -1,6 +1,9 @@
 <?php
 require "../start.php";
-use Src\Post;
+
+use Src\StaticAPI;
+use Src\PerformanceAPI;
+use Src\ActivityAPI;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -14,6 +17,10 @@ $uri = explode( '/', $uri );
 $routes = ["static","statics","performance","performances","activity","activities"];
 $get_only_routes = ["statics","performances","activites"];
 
+$static_routes = ["static","statics"];
+$perf_routes = ["performance","performances"];
+$act_routes = ["activity","activities"];
+
 // endpoints starting with valid routes for GET shows all
 // everything else results in a 404 Not Found
 if (!in_array($uri[1], $routes)) {
@@ -22,14 +29,20 @@ if (!in_array($uri[1], $routes)) {
 }
 
 // endpoints starting with statics, performances, or activities for POST/PUT/DELETE results in a 404 Not Found
-if (in_array($uri[1],$get_only_routes) && isset($uri[2])) {
+if (in_array($uri[1], $get_only_routes) && isset($uri[2])) {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
 
-$postId = isset($uri[2]) ? $uri[2] : null;
+$sess_id = isset($uri[2]) ? $uri[2] : null;
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-// pass the request method and post ID to the Post and process the HTTP request:
-$controller = new Post($dbConnection, $requestMethod, $postId);
-$controller->processRequest();
+if(in_array($uri[1], $static_routes)){
+    $controller = new StaticAPI($dbConnection, $requestMethod, $sess_id);
+    $controller->processRequest();
+}
+
+if(in_array($uri[1], $perf_routes)){
+    $controller = new PerformanceAPI($dbConnection, $requestMethod, $sess_id);
+    $controller->processRequest();
+}

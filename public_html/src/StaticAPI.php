@@ -1,33 +1,33 @@
 <?php
 namespace Src;
 
-class Static {
+class StaticAPI {
     private $db;
     private $requestMethod;
-    private $performanceId;
+    private $staticId;
 
-    public function __construct($db, $requestMethod, $performanceId){
+    public function __construct($db, $requestMethod, $staticId){
         $this->db = $db;
         $this->requestMethod = $requestMethod;
-        $this->performanceId = $performanceId;
+        $this->staticId = $staticId;
     }
 
     public function processRequest(){
         switch ($this->requestMethod) {
         case 'GET':
-            if ($this->performanceId)
-                $response = $this->getPerformance($this->performanceId);
+            if ($this->staticId)
+                $response = $this->getStatic($this->staticId);
             else
-                $response = $this->getAllPerformances();
+                $response = $this->getAllStatics();
             break;
         case 'POST':
-            $response = $this->createPerformance();
+            $response = $this->createStatic();
             break;
         case 'PUT':
-            $response = $this->updatePerformance($this->performanceId);
+            $response = $this->updateStatic($this->staticId);
             break;
         case 'DELETE':
-            $response = $this->deletePerformance($this->performanceId);
+            $response = $this->deleteStatic($this->StaticId);
             break;
         default:
             $response = $this->notFoundResponse();
@@ -38,12 +38,12 @@ class Static {
             echo $response['body'];
     }
 
-    private function getAllPerformances(){
+    private function getAllStatics(){
         $query = "
         SELECT 
             * 
         FROM 
-            performance
+            static
         ";
 
         try {
@@ -58,7 +58,7 @@ class Static {
         return $response;
     }
 
-    private function getPerformance($sess_id){
+    private function getStatic($sess_id){
         $result = $this->find($sess_id);
         if (! $result) 
             return $this->notFoundResponse();
@@ -68,7 +68,7 @@ class Static {
         return $response;
     }
 
-    private function createPerformance(){
+    private function createStatic(){
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
         $input_array = $this->createArray($input);
@@ -77,10 +77,10 @@ class Static {
             return $this->unprocessableEntityResponse();
 
         $query = "
-        INSERT INTO performance
-            (sess_id, start_time, fetch_start, request_start, response_start, response_end, dom_interactive, dom_loaded_start, dom_loaded_end, dom_complete, load_event_start, load_event_end, duration, transfer_size, decoded_body_size)
+        INSERT INTO static
+            (sess_id, user_agent, language, cookies, inner_width, inner_height, outer_width, outer_height, downlink, effective_type, rtt, save_data)
         VALUES
-            (:sess_id, :start_time, :fetch_start, :request_start, :response_start, :response_end, :dom_interactive, :dom_loaded_start, :dom_loaded_end, :dom_complete, :load_event_start, :load_event_end, :duration, :transfer_size, :decoded_body_size);
+            (:sess_id, :user_agent, :language, :cookies, :inner_width, :inner_height, :outer_width, :outer_height, :downlink, :effective_type, :rtt, :save_data);
         ";
 
         try {
@@ -94,7 +94,7 @@ class Static {
         return $response;
     }
 
-    private function updatePerformance($sess_id){
+    private function updateStatic($sess_id){
         $result = $this->find($sess_id);
         if (!$result)
             return $this->notFoundResponse();
@@ -105,24 +105,21 @@ class Static {
 
         if (!$this->validateInput($input_array))
             return $this->unprocessableEntityResponse();
-
+        
         $query = "
-        UPDATE performance
+        UPDATE static
         SET
-            start_time = :start_time
-            fetch_start = :fetch_start
-            request_start = :request_start
-            response_start = :response_start
-            response_end = :response_end
-            dom_interactive = :dom_interactive
-            dom_loaded_start = :dom_loaded_start
-            dom_loaded_end = :dom_loaded_end
-            dom_complete = :dom_complete
-            load_event_start = :load_event_start
-            load_event_end = :load_event_end
-            duration = :duration
-            transfer_size = :transfer_size
-            decoded_body_size = :decoded_body_size
+            user_agent = :user_agent,
+            language = :language,
+            cookies = :cookies,
+            inner_width = :inner_width,
+            inner_height = :inner_height,
+            outer_width = :outer_width,
+            outer_height = :outer_height,
+            downlink = :downlink,
+            effective_type = :effective_type,
+            rtt = :rtt,
+            save_data = :save_data
         WHERE sess_id = :sess_id;
         ";
 
@@ -137,14 +134,13 @@ class Static {
         return $response;
     }
 
-    private function deletePerformance($sess_id)
-    {
+    private function deleteStatic($sess_id){
         $result = $this->find($sess_id);
         if (!$result)
             return $this->notFoundResponse();
 
         $query = "
-        DELETE FROM performance
+        DELETE FROM static
         WHERE sess_id = :sess_id;
         ";
 
@@ -167,7 +163,7 @@ class Static {
         SELECT
             *
         FROM
-            performance
+            static
         WHERE sess_id = :sess_id;
         ";
 
@@ -183,21 +179,18 @@ class Static {
 
     private function createArray($input){
         $input_array = [
-            'sess_id'           => $input['sess_id'],
-            'start_time'        => $input['startTime'],
-            'fetch_start'       => $input['fetchStart'],
-            'request_start'     => $input['requestStart'],
-            'response_start'    => $input['responseStart'],
-            'response_end'      => $input['responseEnd'],
-            'dom_interactive'   => $input['domInteractive'],
-            'dom_loaded_start'  => $input['domContentLoadedEventStart'],
-            'dom_loaded_end'    => $input['domContentLoadedEventEnd'],
-            'dom_complete'      => $input['domComplete'],
-            'load_event_start'  => $input['loadEventStart'],
-            'load_event_end'    => $input['loadEventEnd'],
-            'duration'          => $input['duration'],
-            'transfer_size'     => $input['transferSize'],
-            'decoded_body_size' => $input['decodedBodySize']
+            'sess_id'        => $input['sess_id'],
+            'user_agent'     => $input['userAgent'],
+            'language'       => $input['language'],
+            'cookies'        => (int) $input['acceptsCookies'],
+            'inner_width'    => (int) $input['screenDimensions']['inner']['innerWidth'],
+            'inner_height'   => (int) $input['screenDimensions']['inner']['innerHeight'],
+            'outer_width'    => (int) $input['screenDimensions']['outer']['outerWidth'],
+            'outer_height'   => (int) $input['screenDimensions']['outer']['outerWidth'],
+            'downlink'       => floatval($input['connection']['downlink']),
+            'effective_type' => $input['connection']['effectiveType'],
+            'rtt'            => (int) $input['connection']['rtt'],
+            'save_data'      => (int) $input['connection']['saveData']
         ];
         return $input_array;
     }
