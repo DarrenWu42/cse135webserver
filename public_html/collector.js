@@ -125,7 +125,7 @@ function collectStaticData() {
 function collectPerformanceData() {
   let perf = performance.getEntriesByType('navigation')[0];
   // Safari doesn't support the new PerformanceNavigationTiming API yet
-  perf ||= performance.timing;
+  perf = performance.timing || perf;
   // Call this method every 250ms to check if loading has finished
   if (perf.loadEventEnd == 0) {
     setTimeout(collectPerformanceData, 250);
@@ -147,7 +147,22 @@ function collectPerformanceData() {
     data.performance.ready = true;
   }
 }
+/*
+// current timestamp in seconds
+var current_ts = Math.floor(Date.now() / 1000);
 
+// if session-id local storage item does not exist
+// if expiry-ts local storage item does not exist
+// if session time has expired
+if(localStorage.getItem('session-id') === null || localStorage.getItem('expiry-ts') === null || current_ts > parseInt(localStorage.getItem('expiry-ts'), 10)) {
+	// create a new session with a random id and store
+	// random id here is a concat of rand(11111111, 99999999) and timestamp
+	var session_id = [(Math.floor(Math.random() * (99999999 - 11111111 + 1)) + 11111111), Date.now()].join('');
+	localStorage.setItem('session-id', session_id);
+}*/
+
+// set expiry to current timestamp + 30 minutes
+localStorage.setItem('expiry-ts', current_ts + 1800);
 /**
  * Binds all of the event listeners for mouse clicks and keystrokes
  */

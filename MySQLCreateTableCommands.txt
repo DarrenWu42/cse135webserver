@@ -1,0 +1,19 @@
+CREATE TABLE `performance`(
+	`id` MEDIUMINT(5) NOT NULL UNIQUE,
+	`start_time` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`fetch_start` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`request_start` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`response_start` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`response_end` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`dom_interactive` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`dom_loaded_start` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`dom_loaded_end` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`dom_complete` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`load_event_start` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`load_event_end` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`duration` DECIMAL(14, 3) UNSIGNED NOT NULL,
+	`transfer_size` MEDIUMINT(6) UNSIGNED NOT NULL,
+	`decoded_body_size` MEDIUMINT(6) UNSIGNED NOT NULL,
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`id`) REFERENCES static(`id`)
+);
