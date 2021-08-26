@@ -90,7 +90,7 @@ class ActivityAPI {
         }
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = json_encode['message' => 'Post Created']);
+        $response['body'] = json_encode(['message' => 'Post Created']);
         return $response;
     }
 
