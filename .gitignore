@@ -8,3 +8,4 @@ module_development/*
 !module_development/c_programs.c
 public_html/vendor
 public_html/.env
+public_html/php_api.log
