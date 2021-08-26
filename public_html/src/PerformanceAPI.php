@@ -1,7 +1,7 @@
 <?php
 namespace Src;
 
-class StaticAPI {
+class PerformanceAPI {
     private $db;
     private $requestMethod;
     private $performanceId;
