@@ -27,7 +27,7 @@ class StaticAPI {
             $response = $this->updateStatic($this->staticId);
             break;
         case 'DELETE':
-            $response = $this->deleteStatic($this->StaticId);
+            $response = $this->deleteStatic($this->staticId);
             break;
         default:
             $response = $this->notFoundResponse();
