@@ -37,19 +37,6 @@
     <!-- End LogRocket -->
     <!-- Collector Script -->
     <script src="collector.js" type="module"></script>
-    <script>
-        window.analyticsData = window.analyticsData || [];
-
-        analyticsData.push(data.static)
-        analyticsData.push(data.performance)
-        anallyticsData.push(data.activity)
-
-        document.addEventListener('visibilitychange', function logData() {
-            if (document.visibilityState === 'hidden') {
-                //navigator.sendBeacon('/log', analyticsData);
-            }
-        });
-    </script>
     <!-- End Collector Script -->
 </head>
 

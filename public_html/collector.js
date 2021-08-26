@@ -32,7 +32,7 @@ export const data = {
     userAgent: null,
     language: null,
     acceptsCookies: null,
-    screenDimmensions: {
+    screenDimensions: {
       inner: {
         innerWidth: null,
         innerHeight: null
@@ -98,7 +98,7 @@ function collectStaticData() {
   data.static.userAgent = navigator.userAgent;
   data.static.language = navigator.language;
   data.static.acceptsCookies = navigator.cookieEnabled;
-  data.static.screenDimmensions = {
+  data.static.screenDimensions = {
     inner: {
       innerWidth: window.innerWidth,
       innerHeight: window.innerHeight
