@@ -29,6 +29,7 @@
  */
 export const data = {
   static: {
+    sess_id: null,
     userAgent: null,
     language: null,
     acceptsCookies: null,
@@ -51,6 +52,7 @@ export const data = {
     ready: false
   },
   performance: {
+    sess_id: null,
     startTime: null,
     fetchStart: null,
     requestStart: null,
@@ -75,12 +77,34 @@ export const data = {
       keyup: []
     },
     timing: {
-      pageEnter: null,
-      pageLeave: null,
-      currPage: null
+      sess_id : localStorage.getItem('session-id'),
+      activityType : "timing",
+      activityInfo : {
+        pageEnter: null,
+        pageLeave: null,
+        currPage: null
+      }
     }
   }
 };
+
+var dataQueue = [];
+var static_url = "https://darrenwu.xyz/api/static";
+var performance_url = "https://darrenwu.xyz/api/performance";
+var activity_url = "https://darrenwu.xyz/api/activity";
+
+let headers = {
+  type: 'application/json'
+};
+
+var current_ts = Math.floor(Date.now() / 1000);
+
+if(localStorage.getItem('session-id') === null || localStorage.getItem('expiry-ts') === null || current_ts > parseInt(localStorage.getItem('expiry-ts'), 10)) {
+	var session_id = [(Math.floor(Math.random() * (99999999 - 11111111 + 1)) + 11111111), Date.now()].join('');
+	localStorage.setItem('session-id', session_id);
+}
+
+localStorage.setItem('expiry-ts', current_ts + 1800);
 
 // Get the current time as soon as this script loads for an accurate page enter
 data.activity.timing.pageEnter = new Date().getTime();
@@ -89,12 +113,16 @@ data.activity.timing.currPage = window.location.pathname;
 // Right before the user leaves the page, capture the time and store it
 window.addEventListener('beforeunload', () => {
   data.activity.timing.pageLeave = new Date().getTime();
+
+  let blob = new Blob([JSON.stringify(data.activity.timing)], headers);
+  while(!navigator.sendBeacon(activity_url, blob)){}
 });
 
 /**
  * Collects all of the static data outlined in the data object above
  */
 function collectStaticData() {
+  data.static.sess_id = localStorage.getItem('session-id');
   data.static.userAgent = navigator.userAgent;
   data.static.language = navigator.language;
   data.static.acceptsCookies = navigator.cookieEnabled;
@@ -117,6 +145,9 @@ function collectStaticData() {
     };
   }
   data.static.ready = true;
+
+  let blob = new Blob([JSON.stringify(data.static)], headers);
+  while(!navigator.sendBeacon(static_url, blob)){}
 }
 
 /**
@@ -130,6 +161,7 @@ function collectPerformanceData() {
   if (perf.loadEventEnd == 0) {
     setTimeout(collectPerformanceData, 250);
   } else {
+    data.performance.sess_id = localStorage.getItem('session-id');
     data.performance.startTime = perf.startTime;
     data.performance.fetchStart = perf.fetchStart;
     data.performance.requestStart = perf.requestStart;
@@ -146,23 +178,11 @@ function collectPerformanceData() {
     data.performance.decodedBodySize = perf.decodedBodySize;
     data.performance.ready = true;
   }
+
+  let blob = new Blob([JSON.stringify(data.performance)], headers);
+  while(!navigator.sendBeacon(performance_url, blob)){}
 }
-/*
-// current timestamp in seconds
-var current_ts = Math.floor(Date.now() / 1000);
 
-// if session-id local storage item does not exist
-// if expiry-ts local storage item does not exist
-// if session time has expired
-if(localStorage.getItem('session-id') === null || localStorage.getItem('expiry-ts') === null || current_ts > parseInt(localStorage.getItem('expiry-ts'), 10)) {
-	// create a new session with a random id and store
-	// random id here is a concat of rand(11111111, 99999999) and timestamp
-	var session_id = [(Math.floor(Math.random() * (99999999 - 11111111 + 1)) + 11111111), Date.now()].join('');
-	localStorage.setItem('session-id', session_id);
-}*/
-
-// set expiry to current timestamp + 30 minutes
-localStorage.setItem('expiry-ts', current_ts + 1800);
 /**
  * Binds all of the event listeners for mouse clicks and keystrokes
  */
@@ -174,7 +194,9 @@ function bindActivityEvents() {
     mousemoveEvents += 1;
     if (mousemoveEvents % 10 != 0) return;
     let newMouseMove = {
-      coordinates: {
+      sess_id : localStorage.getItem('session-id'),
+      activityType: "mouse_position",
+      activityInfo: {
         clientX: e.clientX,
         clientY: e.clientY,
         layerX: e.layerX,
@@ -194,12 +216,15 @@ function bindActivityEvents() {
       timestamp: e.timeStamp
     };
     data.activity.mousePosition.push(newMouseMove);
+    dataQueue.push(newMouseMove);
   });
 
   // Record all mouse clicks inside the window
   window.addEventListener('click', e => {
     let newClick = {
-      coordinates: {
+      sess_id : localStorage.getItem('session-id'),
+      activityType: "mouse_click",
+      activityInfo: {
         clientX: e.clientX,
         clientY: e.clientY,
         layerX: e.layerX,
@@ -219,33 +244,53 @@ function bindActivityEvents() {
       timestamp: e.timeStamp
     };
     data.activity.mouseClicks.push(newClick);
+    dataQueue.push(newClick);
   });
 
   // Record all keydowns inside the window
   window.addEventListener('keydown', e => {
     let newKeydown = {
-      key: e.key,
-      code: e.code,
+      sess_id : localStorage.getItem('session-id'),
+      activityType : "key_down",
+      activityInfo: {
+        key: e.key,
+        code: e.code
+      },
       altKey: e.altKey,
       ctrlKey: e.ctrlKey,
       shiftKey: e.shiftKey,
       timestamp: e.timeStamp
     };
     data.activity.keystrokes.keydown.push(newKeydown);
+    dataQueue.push(newKeydown);
   });
 
   // Record all keyups inside the window
   window.addEventListener('keyup', e => {
     let newKeyup = {
-      key: e.key,
-      code: e.code,
+      sess_id : localStorage.getItem('session-id'),
+      activityType : "key_up",
+      activityInfo: {
+        key: e.key,
+        code: e.code
+      },
       altKey: e.altKey,
       ctrlKey: e.ctrlKey,
       shiftKey: e.shiftKey,
       timestamp: e.timeStamp
     };
     data.activity.keystrokes.keyup.push(newKeyup);
+    dataQueue.push(newKeyup);
   });
+}
+
+function sendInfoToREST(){
+  while(dataQueue.length){
+    var dataToSend = dataQueue.shift();
+    let blob = new Blob([JSON.stringify(dataToSend)], headers);
+    while(!navigator.sendBeacon(activity_url, blob)){}
+  }
+  setTimeout(sendInfoToREST, 500);
 }
 
 /**
@@ -257,6 +302,7 @@ function init() {
   collectStaticData();
   collectPerformanceData();
   bindActivityEvents();
+  sendInfoToREST();
 }
 
 // The initilize function will run once the DOM has been parsed which gives

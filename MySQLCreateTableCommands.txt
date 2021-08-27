@@ -35,6 +35,7 @@ CREATE TABLE `performance`(
 );
 
 CREATE TABLE `activity`(
+	`id` INT(10) SERIAL DEFAULT VALUE,
 	`sess_id` VARCHAR(32),
 	`activity_type` ENUM('mouse_position','mouse_clicks','key_down','key_up','timing'),
 	`activity_info` JSON,
@@ -42,5 +43,6 @@ CREATE TABLE `activity`(
 	`ctrl_key` TINYINT(1) NULL,
 	`shift_key` TINYINT(1) NULL,
 	`timestamp` DECIMAL(10, 3) UNSIGNED NULL,
+	PRIMARY KEY (`id`),
 	FOREIGN KEY (`sess_id`) REFERENCES static(`sess_id`)
 );

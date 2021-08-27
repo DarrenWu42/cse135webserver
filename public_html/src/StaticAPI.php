@@ -90,7 +90,7 @@ class StaticAPI {
         }
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = json_encode(['message' => 'Post Created']);
+        $response['body'] = json_encode(['message' => 'Static Created']);
         return $response;
     }
 
@@ -130,7 +130,7 @@ class StaticAPI {
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(['message' => 'Post Updated!']);
+        $response['body'] = json_encode(['message' => 'Static Updated!']);
         return $response;
     }
 
@@ -153,7 +153,7 @@ class StaticAPI {
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(['message' => 'Post Deleted!']);
+        $response['body'] = json_encode(['message' => 'Static Deleted!']);
         return $response;
     }
 
@@ -196,8 +196,9 @@ class StaticAPI {
     }
 
     private function validateInput($input_array){
-        foreach ($input_array as $value)
-            if(!isset($value))
+        $can_be_null = ['downlink', 'effective_type', 'rtt', 'save_data'];
+        foreach ($input_array as $key => $value)
+            if(!in_array($key, $can_be_null) && !isset($value))
                 return false;
         
         return true;

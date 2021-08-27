@@ -4,30 +4,30 @@ namespace Src;
 class ActivityAPI {
     private $db;
     private $requestMethod;
-    private $staticId;
+    private $activityId;
 
-    public function __construct($db, $requestMethod, $staticId){
+    public function __construct($db, $requestMethod, $activityId){
         $this->db = $db;
         $this->requestMethod = $requestMethod;
-        $this->staticId = $staticId;
+        $this->activityId = $activityId;
     }
 
     public function processRequest(){
         switch ($this->requestMethod) {
         case 'GET':
-            if ($this->staticId)
-                $response = $this->getStatic($this->staticId);
+            if ($this->activityId)
+                $response = $this->getActivity($this->activityId);
             else
-                $response = $this->getAllStatics();
+                $response = $this->getAllActivities();
             break;
         case 'POST':
-            $response = $this->createStatic();
+            $response = $this->createActivity();
             break;
         case 'PUT':
-            $response = $this->updateStatic($this->staticId);
+            $response = $this->updateActivity($this->activityId);
             break;
         case 'DELETE':
-            $response = $this->deleteStatic($this->StaticId);
+            $response = $this->deleteActivity($this->activityId);
             break;
         default:
             $response = $this->notFoundResponse();
@@ -38,12 +38,12 @@ class ActivityAPI {
             echo $response['body'];
     }
 
-    private function getAllStatics(){
+    private function getAllActivities(){
         $query = "
         SELECT 
             * 
         FROM 
-            static
+            activity
         ";
 
         try {
@@ -58,8 +58,8 @@ class ActivityAPI {
         return $response;
     }
 
-    private function getStatic($sess_id){
-        $result = $this->find($sess_id);
+    private function getActivity($id){
+        $result = $this->find($id);
         if (! $result) 
             return $this->notFoundResponse();
 
@@ -68,7 +68,7 @@ class ActivityAPI {
         return $response;
     }
 
-    private function createStatic(){
+    private function createActivity(){
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
         $input_array = $this->createArray($input);
@@ -77,10 +77,10 @@ class ActivityAPI {
             return $this->unprocessableEntityResponse();
 
         $query = "
-        INSERT INTO static
-            (sess_id, user_agent, language, cookies, inner_width, inner_height, outer_width, outer_height, downlink, effective_type, rtt, save_data)
+        INSERT INTO activity
+            (sess_id, activity_type, activity_info, alt_key, ctrl_key, shift_key, timestamp)
         VALUES
-            (:sess_id, :user_agent, :language, :cookies, :inner_width, :inner_height, :outer_width, :outer_height, :downlink, :effective_type, :rtt, :save_data);
+            (:sess_id, :activity_type, :activity_info, :alt_key, :ctrl_key, :shift_key, :timestamp);
         ";
 
         try {
@@ -90,12 +90,12 @@ class ActivityAPI {
         }
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = json_encode(['message' => 'Post Created']);
+        $response['body'] = json_encode(['message' => 'Activity Created']);
         return $response;
     }
 
-    private function updateStatic($sess_id){
-        $result = $this->find($sess_id);
+    private function updateActivity($id){
+        $result = $this->find($id);
         if (!$result)
             return $this->notFoundResponse();
 
@@ -106,21 +106,19 @@ class ActivityAPI {
         if (!$this->validateInput($input_array))
             return $this->unprocessableEntityResponse();
         
+        $input_array = array('id' => $id) + $input_array;
+        
         $query = "
-        UPDATE static
+        UPDATE activity
         SET
-            user_agent = :user_agent,
-            language = :language,
-            cookies = :cookies,
-            inner_width = :inner_width,
-            inner_height = :inner_height,
-            outer_width = :outer_width,
-            outer_height = :outer_height,
-            downlink = :downlink,
-            effective_type = :effective_type,
-            rtt = :rtt,
-            save_data = :save_data
-        WHERE sess_id = :sess_id;
+            sess_id = :sess_id,
+            activity_type = :activity_type, 
+            activity_info = :activity_info,
+            alt_key = :alt_key,
+            ctrl_key = :ctrl_key,
+            shift_key = :shift_key,
+            timestamp = :timestamp
+        WHERE id = :id;
         ";
 
         try {
@@ -130,46 +128,46 @@ class ActivityAPI {
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(['message' => 'Post Updated!']);
+        $response['body'] = json_encode(['message' => 'Activity Updated!']);
         return $response;
     }
 
-    private function deleteStatic($sess_id){
-        $result = $this->find($sess_id);
+    private function deleteActivity($id){
+        $result = $this->find($id);
         if (!$result)
             return $this->notFoundResponse();
 
         $query = "
-        DELETE FROM static
-        WHERE sess_id = :sess_id;
+        DELETE FROM activity
+        WHERE id = :id;
         ";
 
         try {
             $statement = $this->db->prepare($query);
-            $statement->execute(array('sess_id' => $sess_id));
+            $statement->execute(array('id' => $id));
             $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(['message' => 'Post Deleted!']);
+        $response['body'] = json_encode(['message' => 'Activity Deleted!']);
         return $response;
     }
 
-    public function find($sess_id)
+    public function find($id)
     {
         $query = "
         SELECT
             *
         FROM
-            static
-        WHERE sess_id = :sess_id;
+            activity
+        WHERE id = :id;
         ";
 
         try {
             $statement = $this->db->prepare($query);
-            $statement->execute(array('sess_id' => $sess_id));
+            $statement->execute(array('id' => $id));
             $result = $statement->fetch(\PDO::FETCH_ASSOC);
             return $result;
         } catch (\PDOException $e) {
@@ -179,18 +177,13 @@ class ActivityAPI {
 
     private function createArray($input){
         $input_array = [
-            'sess_id'        => $input['sess_id'],
-            'user_agent'     => $input['userAgent'],
-            'language'       => $input['language'],
-            'cookies'        => (int) $input['acceptsCookies'],
-            'inner_width'    => (int) $input['screenDimensions']['inner']['innerWidth'],
-            'inner_height'   => (int) $input['screenDimensions']['inner']['innerHeight'],
-            'outer_width'    => (int) $input['screenDimensions']['outer']['outerWidth'],
-            'outer_height'   => (int) $input['screenDimensions']['outer']['outerWidth'],
-            'downlink'       => floatval($input['connection']['downlink']),
-            'effective_type' => $input['connection']['effectiveType'],
-            'rtt'            => (int) $input['connection']['rtt'],
-            'save_data'      => (int) $input['connection']['saveData']
+            'sess_id'       => $input['sess_id'],
+            'activity_type' => $input['activityType'],
+            'activity_info' => $input['activityInfo'],
+            'alt_key'       => (int) $input['altKey'],
+            'ctrl_key'      => (int) $input['ctrlKey'],
+            'shift_key'     => (int) $input['shiftKey'],
+            'timestamp'     => floatval($input['timestamp']),
         ];
         return $input_array;
     }

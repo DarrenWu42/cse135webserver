@@ -90,7 +90,7 @@ class PerformanceAPI {
         }
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = json_encode(['message' => 'Post Created']);
+        $response['body'] = json_encode(['message' => 'Performance Created']);
         return $response;
     }
 
@@ -133,7 +133,7 @@ class PerformanceAPI {
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(['message' => 'Post Updated!']);
+        $response['body'] = json_encode(['message' => 'Performance Updated!']);
         return $response;
     }
 
@@ -157,7 +157,7 @@ class PerformanceAPI {
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(['message' => 'Post Deleted!']);
+        $response['body'] = json_encode(['message' => 'Performance Deleted!']);
         return $response;
     }
 
@@ -184,18 +184,18 @@ class PerformanceAPI {
     private function createArray($input){
         $input_array = [
             'sess_id'           => $input['sess_id'],
-            'start_time'        => $input['startTime'],
-            'fetch_start'       => $input['fetchStart'],
-            'request_start'     => $input['requestStart'],
-            'response_start'    => $input['responseStart'],
-            'response_end'      => $input['responseEnd'],
-            'dom_interactive'   => $input['domInteractive'],
-            'dom_loaded_start'  => $input['domContentLoadedEventStart'],
-            'dom_loaded_end'    => $input['domContentLoadedEventEnd'],
-            'dom_complete'      => $input['domComplete'],
-            'load_event_start'  => $input['loadEventStart'],
-            'load_event_end'    => $input['loadEventEnd'],
-            'duration'          => $input['duration'],
+            'start_time'        => floatval($input['startTime']),
+            'fetch_start'       => floatval($input['fetchStart']),
+            'request_start'     => floatval($input['requestStart']),
+            'response_start'    => floatval($input['responseStart']),
+            'response_end'      => floatval($input['responseEnd']),
+            'dom_interactive'   => floatval($input['domInteractive']),
+            'dom_loaded_start'  => floatval($input['domContentLoadedEventStart']),
+            'dom_loaded_end'    => floatval($input['domContentLoadedEventEnd']),
+            'dom_complete'      => floatval($input['domComplete']),
+            'load_event_start'  => floatval($input['loadEventStart']),
+            'load_event_end'    => floatval($input['loadEventEnd']),
+            'duration'          => floatval($input['duration']),
             'transfer_size'     => $input['transferSize'],
             'decoded_body_size' => $input['decodedBodySize']
         ];

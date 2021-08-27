@@ -46,3 +46,8 @@ if(in_array($uri[1], $perf_routes)){
     $controller = new PerformanceAPI($dbConnection, $requestMethod, $sess_id);
     $controller->processRequest();
 }
+
+if(in_array($uri[1], $act_routes)){
+    $controller = new ActivityAPI($dbConnection, $requestMethod, $sess_id);
+    $controller->processRequest();
+}
