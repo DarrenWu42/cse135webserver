@@ -202,7 +202,7 @@ class PerformanceAPI {
             'decoded_body_size' => ((int) $input['decodedBodySize']) ?? null
         ];
 
-        fwrite(STDOUT, var_dump($input_array));
+        fwrite(STDOUT, var_export($input_array, true));
         return $input_array;
     }
 
