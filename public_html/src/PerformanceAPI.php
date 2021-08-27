@@ -84,7 +84,9 @@ class PerformanceAPI {
         ";
 
         try {
-            $this->executeSet($query, $input_array);
+            $statement = $this->db->prepare($query);
+            $statement->execute($input_array);
+            $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
