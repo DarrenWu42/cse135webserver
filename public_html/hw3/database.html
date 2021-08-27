@@ -41,7 +41,7 @@
   <script>
     async function fetchData(){
         try {
-            const response = await fetch('http://darrenwu.xyz/api/static', {
+            const response = await fetch('http://darrenwu.xyz/api/static/', {
                 method: 'GET',
             });
             const statics = await response.json();

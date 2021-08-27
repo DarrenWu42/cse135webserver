@@ -203,8 +203,9 @@ class PerformanceAPI {
     }
 
     private function validateInput($input_array){
-        foreach ($input_array as $value)
-            if(!isset($value))
+        $can_be_null = ['start_time', 'duration', 'transfer_size', 'decoded_body_size'];
+        foreach ($input_array as $key => $value)
+            if(!in_array($key, $can_be_null) && !isset($value))
                 return false;
         
         return true;
