@@ -201,8 +201,9 @@ class PerformanceAPI {
             'transfer_size'     => ((int) $input['transferSize']) ?? null,
             'decoded_body_size' => ((int) $input['decodedBodySize']) ?? null
         ];
-
-        fwrite(STDOUT, var_export($input_array, true));
+        
+        $stdout = fopen('php://stdout', 'w');
+        fwrite($stdout, var_export($input_array, true));
         return $input_array;
     }
 
