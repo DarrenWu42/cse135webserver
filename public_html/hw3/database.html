@@ -50,7 +50,7 @@
             console.error(error);
         }
     }
-    statics = fetchData();
+    statics = await fetchData();
     const gridConfig = {
       caption: 'Database Grid',
       data: statics
