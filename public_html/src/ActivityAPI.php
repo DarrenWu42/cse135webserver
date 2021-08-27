@@ -78,9 +78,9 @@ class ActivityAPI {
 
         $query = "
         INSERT INTO activity
-            (sess_id, activity_type, activity_info, alt_key, ctrl_key, shift_key, timestamp)
+            (id, sess_id, activity_type, activity_info, alt_key, ctrl_key, shift_key, timestamp)
         VALUES
-            (:sess_id, :activity_type, :activity_info, :alt_key, :ctrl_key, :shift_key, :timestamp);
+            (0, :sess_id, :activity_type, :activity_info, :alt_key, :ctrl_key, :shift_key, :timestamp);
         ";
 
         try {
