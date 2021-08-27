@@ -46,3 +46,6 @@ CREATE TABLE `activity`(
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`sess_id`) REFERENCES static(`sess_id`)
 );
+
+INSERT INTO `static` VALUES ('test','ssh browser','english',1,42,42,42,42,42.690,'5g',42,1);
+INSERT INTO `performance` VALUES ('test',0.0,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42,69);
