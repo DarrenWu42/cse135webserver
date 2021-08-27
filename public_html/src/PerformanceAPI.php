@@ -184,7 +184,7 @@ class PerformanceAPI {
     private function createArray($input){
         $input_array = [
             'sess_id'           => $input['sess_id'],
-            'start_time'        => $input['startTime'],
+            'start_time'        => $input['startTime'] ?? null,
             'fetch_start'       => floatval($input['fetchStart']),
             'request_start'     => floatval($input['requestStart']),
             'response_start'    => floatval($input['responseStart']),
@@ -195,9 +195,9 @@ class PerformanceAPI {
             'dom_complete'      => floatval($input['domComplete']),
             'load_event_start'  => floatval($input['loadEventStart']),
             'load_event_end'    => floatval($input['loadEventEnd']),
-            'duration'          => $input['duration'],
-            'transfer_size'     => (int) $input['transferSize'],
-            'decoded_body_size' => (int) $input['decodedBodySize']
+            'duration'          => $input['duration'] ?? null, //@$input['duration']
+            'transfer_size'     => (int) $input['transferSize'] ?? null,
+            'decoded_body_size' => (int) $input['decodedBodySize'] ?? null
         ];
         return $input_array;
     }
