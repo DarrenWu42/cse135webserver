@@ -179,7 +179,7 @@ class ActivityAPI {
         $input_array = [
             'sess_id'       => $input['sess_id'],
             'activity_type' => $input['activityType'],
-            'activity_info' => $input['activityInfo'],
+            'activity_info' => json_encode($input['activityInfo']),
             'alt_key'       => (int) $input['altKey'] ?? 0,
             'ctrl_key'      => (int) $input['ctrlKey'] ?? 0,
             'shift_key'     => (int) $input['shiftKey'] ?? 0,
