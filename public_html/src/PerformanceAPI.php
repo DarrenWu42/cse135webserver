@@ -80,7 +80,7 @@ class PerformanceAPI {
         INSERT INTO performance
             (sess_id, start_time, fetch_start, request_start, response_start, response_end, dom_interactive, dom_loaded_start, dom_loaded_end, dom_complete, load_event_start, load_event_end, duration, transfer_size, decoded_body_size)
         VALUES
-        (:sess_id, :start_time, :fetch_start, :request_start, :response_start, :response_end, :dom_interactive, :dom_loaded_start, :dom_loaded_end, :dom_complete, :load_event_start, :load_event_end, :duration, :transfer_size, :decoded_body_size);
+            (:sess_id, :start_time, :fetch_start, :request_start, :response_start, :response_end, :dom_interactive, :dom_loaded_start, :dom_loaded_end, :dom_complete, :load_event_start, :load_event_end, :duration, :transfer_size, :decoded_body_size);
         ";
 
         try {
@@ -109,19 +109,19 @@ class PerformanceAPI {
         $query = "
         UPDATE performance
         SET
-            start_time = FROM_UNIXTIME(:start_time)
-            fetch_start = FROM_UNIXTIME(:fetch_start)
-            request_start = FROM_UNIXTIME(:request_start)
-            response_start = FROM_UNIXTIME(:response_start)
-            response_end = FROM_UNIXTIME(:response_end)
-            dom_interactive = FROM_UNIXTIME(:dom_interactive)
-            dom_loaded_start = FROM_UNIXTIME(:dom_loaded_start)
-            dom_loaded_end = FROM_UNIXTIME(:dom_loaded_end)
-            dom_complete = FROM_UNIXTIME(:dom_complete)
-            load_event_start = FROM_UNIXTIME(:load_event_start)
-            load_event_end = FROM_UNIXTIME(:load_event_end)
-            duration = :duration
-            transfer_size = :transfer_size
+            start_time = :start_time,
+            fetch_start = =:fetch_start,
+            request_start = :request_start,
+            response_start = :response_start,
+            response_end = :response_end,
+            dom_interactive = :dom_interactive,
+            dom_loaded_start = :dom_loaded_start,
+            dom_loaded_end = :dom_loaded_end,
+            dom_complete = :dom_complete,
+            load_event_start = :load_event_start,
+            load_event_end = :load_event_end,
+            duration = :duration,
+            transfer_size = :transfer_size,
             decoded_body_size = :decoded_body_size
         WHERE sess_id = :sess_id;
         ";
