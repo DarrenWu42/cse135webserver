@@ -80,7 +80,7 @@ class PerformanceAPI {
         INSERT INTO performance
             (sess_id, start_time, fetch_start, request_start, response_start, response_end, dom_interactive, dom_loaded_start, dom_loaded_end, dom_complete, load_event_start, load_event_end, duration, transfer_size, decoded_body_size)
         VALUES
-            (:sess_id, FROM_UNIXTIME(:start_time), FROM_UNIXTIME(:fetch_start), FROM_UNIXTIME(:request_start), FROM_UNIXTIME(:response_start), FROM_UNIXTIME(:response_end), FROM_UNIXTIME(:dom_interactive), FROM_UNIXTIME(:dom_loaded_start), FROM_UNIXTIME(:dom_loaded_end), FROM_UNIXTIME(:dom_complete), FROM_UNIXTIME(:load_event_start), FROM_UNIXTIME(:load_event_end), :duration, :transfer_size, :decoded_body_size);
+        (:sess_id, :start_time, :fetch_start, :request_start, :response_start, :response_end, :dom_interactive, :dom_loaded_start, :dom_loaded_end, :dom_complete, :load_event_start, :load_event_end, :duration, :transfer_size, :decoded_body_size);
         ";
 
         try {
