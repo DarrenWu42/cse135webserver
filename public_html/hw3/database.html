@@ -37,25 +37,6 @@
     <script src="https://cdn.zinggrid.com/zinggrid.min.js"></script>
 </head>
 <body>
-    <div id="ZingGridDB"></div>
-  <script>
-    async function fetchData(){
-        try {
-            const response = await fetch('http://darrenwu.xyz/api/static/', {
-                method: 'GET',
-            });
-            const statics = await response.json();
-            return statics;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    statics = await fetchData();
-    const gridConfig = {
-      caption: 'Database Grid',
-      data: statics
-    };
-    let zingGridRef = new ZingGrid('ZingGridDB', gridConfig);
-  </script>
+    <zing-grid src="https://darrenwu.xyz/api/static/"></zing-grid>
 </body>
 </html>
