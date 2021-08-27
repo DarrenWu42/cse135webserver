@@ -101,12 +101,12 @@ class ActivityAPI {
 
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
-        $input_array = $this->createArray($input);
+        $input_array = $this->createArray($id, $input);
 
         if (!$this->validateInput($input_array))
             return $this->unprocessableEntityResponse();
         
-        $input_array = array('id' => $id) + $input_array;
+        $input_array = ['id' => $id] + $input_array;
         
         $query = "
         UPDATE activity

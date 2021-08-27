@@ -30,8 +30,7 @@ CREATE TABLE `performance`(
 	`duration` DECIMAL(10, 3) UNSIGNED,
 	`transfer_size` MEDIUMINT(6) UNSIGNED,
 	`decoded_body_size` MEDIUMINT(6) UNSIGNED,
-	PRIMARY KEY (`sess_id`),
-	FOREIGN KEY (`sess_id`) REFERENCES static(`sess_id`)
+	PRIMARY KEY (`sess_id`)
 );
 
 CREATE TABLE `activity`(
@@ -43,8 +42,7 @@ CREATE TABLE `activity`(
 	`ctrl_key` TINYINT(1) NULL,
 	`shift_key` TINYINT(1) NULL,
 	`timestamp` DECIMAL(10, 3) UNSIGNED NULL,
-	PRIMARY KEY (`id`),
-	FOREIGN KEY (`sess_id`) REFERENCES static(`sess_id`)
+	PRIMARY KEY (`id`)
 );
 
 INSERT INTO `static` VALUES ('test','ssh browser','english',1,42,42,42,42,42.690,'5g',42,1);
