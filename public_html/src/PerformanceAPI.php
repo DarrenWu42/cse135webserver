@@ -198,8 +198,8 @@ class PerformanceAPI {
             'load_event_start'  => floatval($input['loadEventStart']),
             'load_event_end'    => floatval($input['loadEventEnd']),
             'duration'          => $input['duration'] ?? null, //@$input['duration']
-            'transfer_size'     => (int) $input['transferSize'] ?? null,
-            'decoded_body_size' => (int) $input['decodedBodySize'] ?? null
+            'transfer_size'     => ((int) $input['transferSize']) ?? null,
+            'decoded_body_size' => ((int) $input['decodedBodySize']) ?? null
         ];
         return $input_array;
     }
