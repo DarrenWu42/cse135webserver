@@ -182,8 +182,7 @@ class PerformanceAPI {
     }
 
     private function from_unixtime($timestamp){
-        $timems = $timestamp*.001;
-        $dt = new DateTime("$timems");
+        $dt = DateTime::createFromFormat("U.u", $timestamp*.001);
         return date_format($dt, "Y-m-d H:i:s.u");
     }
 
