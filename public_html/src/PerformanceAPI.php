@@ -1,5 +1,6 @@
 <?php
 namespace Src;
+use \Datetime;
 
 class PerformanceAPI {
     private $db;
@@ -181,7 +182,9 @@ class PerformanceAPI {
     }
 
     private function from_unixtime($timestamp){
-        return date("Y-M-D H:M:I", $timestamp * .001);
+        $timems = $timestamp*.001;
+        $dt = new DateTime("$timems");
+        return date_format($dt, "Y-m-d H:i:s.u");
     }
 
     private function createArray($input){
