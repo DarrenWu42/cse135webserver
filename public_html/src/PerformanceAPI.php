@@ -84,11 +84,13 @@ class PerformanceAPI {
         ";
 
         try {
-            $statement = $this->db->prepare($query);
-            $statement->execute($input_array);
-            $statement->rowCount();
+            $this->executeSet($query, $input_array);
+            $stdout = fopen('php://stdout', 'w');
+            fwrite($stdout, "\nExecuted query");
         } catch (\PDOException $e) {
             exit($e->getMessage());
+            $stdout = fopen('php://stdout', 'w');
+            fwrite($stdout, "\nError with executing query");
         }
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
@@ -139,8 +141,7 @@ class PerformanceAPI {
         return $response;
     }
 
-    private function deletePerformance($sess_id)
-    {
+    private function deletePerformance($sess_id){
         $result = $this->find($sess_id);
         if (!$result)
             return $this->notFoundResponse();
