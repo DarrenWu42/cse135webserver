@@ -85,12 +85,8 @@ class PerformanceAPI {
 
         try {
             $this->executeSet($query, $input_array);
-            $stdout = fopen('php://stdout', 'w');
-            fwrite($stdout, "\nExecuted query");
         } catch (\PDOException $e) {
             exit($e->getMessage());
-            $stdout = fopen('php://stdout', 'w');
-            fwrite($stdout, "\nError with executing query");
         }
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
