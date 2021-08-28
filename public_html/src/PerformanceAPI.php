@@ -180,20 +180,24 @@ class PerformanceAPI {
         }
     }
 
+    private function from_unixtime($timestamp){
+        return date("YY-MM-DD HH:MM:II", $timestamp);
+    }
+
     private function createArray($input){
         $input_array = [
             'sess_id'           => $input['sess_id'],
-            'start_time'        => $input['startTime'] ?? null,
-            'fetch_start'       => floatval($input['fetchStart']),
-            'request_start'     => floatval($input['requestStart']),
-            'response_start'    => floatval($input['responseStart']),
-            'response_end'      => floatval($input['responseEnd']),
-            'dom_interactive'   => floatval($input['domInteractive']),
-            'dom_loaded_start'  => floatval($input['domContentLoadedEventStart']),
-            'dom_loaded_end'    => floatval($input['domContentLoadedEventEnd']),
-            'dom_complete'      => floatval($input['domComplete']),
-            'load_event_start'  => floatval($input['loadEventStart']),
-            'load_event_end'    => floatval($input['loadEventEnd']),
+            'start_time'        => $this->from_unixtime(floatval($input['startTime'])) ?? null,
+            'fetch_start'       => $this->from_unixtime(floatval($input['fetchStart'])),
+            'request_start'     => $this->from_unixtime(floatval($input['requestStart'])),
+            'response_start'    => $this->from_unixtime(floatval($input['responseStart'])),
+            'response_end'      => $this->from_unixtime(floatval($input['responseEnd'])),
+            'dom_interactive'   => $this->from_unixtime(floatval($input['domInteractive'])),
+            'dom_loaded_start'  => $this->from_unixtime(floatval($input['domContentLoadedEventStart'])),
+            'dom_loaded_end'    => $this->from_unixtime(floatval($input['domContentLoadedEventEnd'])),
+            'dom_complete'      => $this->from_unixtime(floatval($input['domComplete'])),
+            'load_event_start'  => $this->from_unixtime(floatval($input['loadEventStart'])),
+            'load_event_end'    => $this->from_unixtime(floatval($input['loadEventEnd'])),
             'duration'          => $input['duration'] ?? null, //@$input['duration']
             'transfer_size'     => ((int) $input['transferSize']) ?? null,
             'decoded_body_size' => ((int) $input['decodedBodySize']) ?? null
