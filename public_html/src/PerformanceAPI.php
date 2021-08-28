@@ -189,7 +189,7 @@ class PerformanceAPI {
     private function createArray($input){
         $input_array = [
             'sess_id'           => $input['sess_id'],
-            'start_time'        => $this->from_unixtime(floatval($input['startTime'])) ?? null,
+            'start_time'        => $this->from_unixtime(floatval($input['startTime'] ?? null)),
             'fetch_start'       => $this->from_unixtime(floatval($input['fetchStart'])),
             'request_start'     => $this->from_unixtime(floatval($input['requestStart'])),
             'response_start'    => $this->from_unixtime(floatval($input['responseStart'])),
@@ -200,7 +200,7 @@ class PerformanceAPI {
             'dom_complete'      => $this->from_unixtime(floatval($input['domComplete'])),
             'load_event_start'  => $this->from_unixtime(floatval($input['loadEventStart'])),
             'load_event_end'    => $this->from_unixtime(floatval($input['loadEventEnd'])),
-            'duration'          => $input['duration'] ?? null, //@$input['duration']
+            'duration'          => floatval($input['duration']) ?? null, //@$input['duration']
             'transfer_size'     => ((int) $input['transferSize']) ?? null,
             'decoded_body_size' => ((int) $input['decodedBodySize']) ?? null
         ];
