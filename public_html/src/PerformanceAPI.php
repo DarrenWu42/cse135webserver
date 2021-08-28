@@ -181,7 +181,7 @@ class PerformanceAPI {
     }
 
     private function from_unixtime($timestamp){
-        return date("YY-MM-DD HH:MM:II", $timestamp);
+        return date("Y-M-D H:M:I", $timestamp * .001);
     }
 
     private function createArray($input){
