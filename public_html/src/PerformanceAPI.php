@@ -182,14 +182,20 @@ class PerformanceAPI {
     }
 
     private function from_unixtime($timestamp){
-        $dt = DateTime::createFromFormat("U.u", $timestamp*.001);
+        if(!isset($timestamp))
+            return null;
+        $dt = DateTime::createFromFormat("U.u", ((float)($timestamp))*.001);
         return date_format($dt, "Y-m-d H:i:s.u");
+    }
+
+    private function floatval($timestamp){
+        return isset($timestamp) ? floatval($timestamp) : null;
     }
 
     private function createArray($input){
         $input_array = [
             'sess_id'           => $input['sess_id'],
-            'start_time'        => $this->from_unixtime(floatval($input['startTime'] ?? null)),
+            'start_time'        => $this->from_unixtime($this->floatval($input['startTime'] ?? null)),
             'fetch_start'       => $this->from_unixtime(floatval($input['fetchStart'])),
             'request_start'     => $this->from_unixtime(floatval($input['requestStart'])),
             'response_start'    => $this->from_unixtime(floatval($input['responseStart'])),
@@ -200,7 +206,7 @@ class PerformanceAPI {
             'dom_complete'      => $this->from_unixtime(floatval($input['domComplete'])),
             'load_event_start'  => $this->from_unixtime(floatval($input['loadEventStart'])),
             'load_event_end'    => $this->from_unixtime(floatval($input['loadEventEnd'])),
-            'duration'          => floatval($input['duration']) ?? null, //@$input['duration']
+            'duration'          => floatval($input['duration'] ?? null), //@$input['duration']
             'transfer_size'     => ((int) $input['transferSize']) ?? null,
             'decoded_body_size' => ((int) $input['decodedBodySize']) ?? null
         ];
