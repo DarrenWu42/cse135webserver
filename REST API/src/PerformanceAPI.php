@@ -1,5 +1,6 @@
 <?php
 namespace Src;
+use \Datetime;
 
 class PerformanceAPI {
     private $db;
@@ -84,9 +85,7 @@ class PerformanceAPI {
         ";
 
         try {
-            $statement = $this->db->prepare($query);
-            $statement->execute($input_array);
-            $statement->rowCount();
+            $this->executeSet($query, $input_array);
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
@@ -139,8 +138,7 @@ class PerformanceAPI {
         return $response;
     }
 
-    private function deletePerformance($sess_id)
-    {
+    private function deletePerformance($sess_id){
         $result = $this->find($sess_id);
         if (!$result)
             return $this->notFoundResponse();
@@ -183,21 +181,32 @@ class PerformanceAPI {
         }
     }
 
+    private function from_unixtime($timestamp){
+        if(!isset($timestamp))
+            return null;
+        $dt = DateTime::createFromFormat("U.u", ((float)($timestamp))*.001);
+        return date_format($dt, "Y-m-d H:i:s.u");
+    }
+
+    private function floatval($timestamp){
+        return isset($timestamp) ? floatval($timestamp) : null;
+    }
+
     private function createArray($input){
         $input_array = [
             'sess_id'           => $input['sess_id'],
-            'start_time'        => $input['startTime'] ?? null,
-            'fetch_start'       => floatval($input['fetchStart']),
-            'request_start'     => floatval($input['requestStart']),
-            'response_start'    => floatval($input['responseStart']),
-            'response_end'      => floatval($input['responseEnd']),
-            'dom_interactive'   => floatval($input['domInteractive']),
-            'dom_loaded_start'  => floatval($input['domContentLoadedEventStart']),
-            'dom_loaded_end'    => floatval($input['domContentLoadedEventEnd']),
-            'dom_complete'      => floatval($input['domComplete']),
-            'load_event_start'  => floatval($input['loadEventStart']),
-            'load_event_end'    => floatval($input['loadEventEnd']),
-            'duration'          => $input['duration'] ?? null, //@$input['duration']
+            'start_time'        => $this->from_unixtime($this->floatval($input['startTime'] ?? null)),
+            'fetch_start'       => $this->from_unixtime(floatval($input['fetchStart'])),
+            'request_start'     => $this->from_unixtime(floatval($input['requestStart'])),
+            'response_start'    => $this->from_unixtime(floatval($input['responseStart'])),
+            'response_end'      => $this->from_unixtime(floatval($input['responseEnd'])),
+            'dom_interactive'   => $this->from_unixtime(floatval($input['domInteractive'])),
+            'dom_loaded_start'  => $this->from_unixtime(floatval($input['domContentLoadedEventStart'])),
+            'dom_loaded_end'    => $this->from_unixtime(floatval($input['domContentLoadedEventEnd'])),
+            'dom_complete'      => $this->from_unixtime(floatval($input['domComplete'])),
+            'load_event_start'  => $this->from_unixtime(floatval($input['loadEventStart'])),
+            'load_event_end'    => $this->from_unixtime(floatval($input['loadEventEnd'])),
+            'duration'          => floatval($input['duration'] ?? null), //@$input['duration']
             'transfer_size'     => ((int) $input['transferSize']) ?? null,
             'decoded_body_size' => ((int) $input['decodedBodySize']) ?? null
         ];

@@ -1,0 +1,1 @@
+nohup php -S darrenwu.xyz:8000 -t api > php_api.log 2>&1 &
