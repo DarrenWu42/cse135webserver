@@ -3,20 +3,15 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Login</title>
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-        <link href="style.css" rel="stylesheet" type="text/css">
+		<link href="style.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<div class="login">
 			<h1>Login</h1>
-			<form method="post" action="/login_check.html">
-				<label for="username">
-					<i class="fas fa-user"></i>
-				</label>
+			<form method="POST" action="/login_check.html">
+				<label for="username">👤</label>
 				<input type="text" name="username" placeholder="Username" id="username" required>
-				<label for="password">
-					<i class="fas fa-lock"></i>
-				</label>
+				<label for="password">🔒</label>
 				<input type="password" name="password" placeholder="Password" id="password" required>
 				<input type="submit" name="login" value="Login">
 			</form>
