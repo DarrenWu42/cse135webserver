@@ -2,6 +2,5 @@ AuthType Basic
 AuthName "Restricted Content"
 AuthBasicProvider socache dbd
 AuthnCacheProvideFor dbd
-AuthnCacheContext my-server
 Require valid-user
 AuthDBDUserPWQuery "SELECT password FROM dwu_users WHERE username = %s"
