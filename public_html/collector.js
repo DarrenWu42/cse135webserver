@@ -97,6 +97,7 @@ let headers = {
   type: 'application/json'
 };
 
+// https://usefulangle.com/post/334/javascript-implement-analytics-sessions
 var current_ts = Math.floor(Date.now() / 1000);
 
 if(localStorage.getItem('session-id') === null || localStorage.getItem('expiry-ts') === null || current_ts > parseInt(localStorage.getItem('expiry-ts'), 10)) {
