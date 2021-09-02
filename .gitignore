@@ -1,5 +1,5 @@
 public_html/hw1/report.html
-reporting_html/matomo
+reporting_html/.htpasswd
 public_html/matomo
 public_html/cgi-bin/c/*.cgi
 public_html/cgi-bin/go/*.cgi

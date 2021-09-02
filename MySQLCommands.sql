@@ -48,3 +48,9 @@ CREATE TABLE `activity`(
 INSERT INTO `static` VALUES ('test','ssh browser','english',1,42,42,42,42,42.690,'5g',42,1);
 INSERT INTO `performance` VALUES ('test',0.0,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42.690,42,69);
 INSERT INTO `activity`(sess_id, activity_type, activity_info, alt_key, ctrl_key, shift_key, timestamp)  VALUES (0,'test','timing','{"pageEnter":0,"pageLeave":42,"currPage":"test.com"}',,,,);
+
+CREATE TABLE `dwu_users`(
+	`username` VARCHAR(255) NOT NULL,
+	`password` VARCHAR(255) NOT NULL,
+	PRIMARY KEY (`username`)
+);
