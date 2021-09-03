@@ -110,7 +110,7 @@ class UserAPI {
             return $this->unprocessableEntityResponse();
         
         $query = "
-        UPDATE dwu_user
+        UPDATE dwu_users
         SET
             username = :username,
             password = :password,
@@ -141,7 +141,7 @@ class UserAPI {
             $input_array[$key] = $value == null ? $result[$key] : $value;
         
         $query = "
-        UPDATE dwu_user
+        UPDATE dwu_users
         SET
             :username = :username,
             :password = :password,
