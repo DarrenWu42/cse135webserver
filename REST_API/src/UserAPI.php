@@ -81,7 +81,6 @@ class UserAPI {
 
         $query = "
         INSERT INTO dwu_users
-            (username, password, group)
         VALUES
             (:username, :password, :group);
         ";
