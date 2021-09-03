@@ -4,7 +4,7 @@ namespace Src;
 class UserAPI {
     private $db;
     private $requestMethod;
-    private $userID;
+    private $username;
 
     public function __construct($db, $requestMethod, $username){
         $this->db = $db;
