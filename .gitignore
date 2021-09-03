@@ -11,3 +11,4 @@ REST_API/.env
 REST_API/php_api.log
 .jshintrc
 self_notes
+reporting_html/example*
