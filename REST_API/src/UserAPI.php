@@ -81,9 +81,9 @@ class UserAPI {
 
         $query = "
         INSERT INTO dwu_users
-            (`username`, `password`, `group`)
+            (`username`, `email`, `password`, `group`)
         VALUES
-            (:username, :password, :group);
+            (:username, :email, :password, :group);
         ";
 
         try {
@@ -113,6 +113,7 @@ class UserAPI {
         UPDATE dwu_users
         SET
             `username` = :username,
+            `email`    = :email,
             `password` = :password,
             `group`    = :group
         WHERE username = :username;
@@ -144,6 +145,7 @@ class UserAPI {
         UPDATE dwu_users
         SET
             `username` = :username,
+            `email`    = :email,
             `password` = :password,
             `group`    = :group
         WHERE username = :username;
@@ -208,6 +210,7 @@ class UserAPI {
     private function createArray($input){
         $input_array = [
             'username' => $input['username'] ?? null,
+            'email'    => $input['email'] ?? null,
             'password' => $this->encode_pw($input['password'] ?? null),
             'group'    => $input['group'] ?? null
         ];
