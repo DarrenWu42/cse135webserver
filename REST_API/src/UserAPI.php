@@ -81,6 +81,7 @@ class UserAPI {
 
         $query = "
         INSERT INTO dwu_users
+            (`username`, `password`, `group`)
         VALUES
             (:username, :password, :group);
         ";
@@ -111,9 +112,9 @@ class UserAPI {
         $query = "
         UPDATE dwu_users
         SET
-            username = :username,
-            password = :password,
-            group    = :group
+            `username` = :username,
+            `password` = :password,
+            `group`    = :group
         WHERE username = :username;
         ";
 
@@ -142,9 +143,9 @@ class UserAPI {
         $query = "
         UPDATE dwu_users
         SET
-            :username = :username,
-            :password = :password,
-            :group    = :group
+            `username` = :username,
+            `password` = :password,
+            `group`    = :group
         WHERE username = :username;
         ";
 
