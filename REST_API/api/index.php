@@ -51,7 +51,7 @@ if(in_array($uri[1], $perf_routes))
 if(in_array($uri[1], $act_routes))
     $controller = new ActivityAPI($dbConnection, $requestMethod, $sess_id);
 
-if(in_array($uri[1], $users_routes))
+if(in_array($uri[1], $user_routes))
     $controller = new UserAPI($dbConnection, $requestMethod, $sess_id);
 
 $controller->processRequest();
