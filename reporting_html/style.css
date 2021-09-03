@@ -1,60 +1,66 @@
-* {
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+img {
+    width:70%
 }
-body {
-    background-color: darkgrey;
+a:link {
+    color: black;
+    background-color: transparent;
 }
-.login {
-    width: 400px;
-    background-color: #ffffff;
-    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-    margin: 100px auto;
+a:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
 }
-.login h1 {
-    text-align: center;
-    color: #5b6574;
-    font-size: 24px;
-    padding: 20px 0 20px 0;
-    border-bottom: 1px solid #dee0e4;
+a:hover {
+    color: grey;
+    background-color: lightgray;
+    text-decoration: underline;
 }
-.login form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding-top: 20px;
+a:active {
+    color: lightblue;
+    background-color: transparent;
+    text-decoration: underline;
 }
-.login form label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
+section{
+    width: 70%;
+    float: left;
+    background-color:darkgrey; 
+    padding:1%; 
+    margin:1%;
+}
+main{
+    width: 50%;
+    background-color:darkgrey; 
+    padding:1%; 
+    margin:1%;
+}
+body{
+    margin:0;
+}
+nav{
     height: 50px;
-    background-color: lightgrey;
-    color: #ffffff;
+    background: rgba(143, 143, 143, 0.8);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
 }
-.login form input[type="password"], .login form input[type="text"] {
-    width: 310px;
-    height: 50px;
-    border: 1px solid #dee0e4;
-    margin-bottom: 20px;
-    padding: 0 15px;
+nav ul {
+    display: flex;
+    margin: 0;
+    justify-content: flex-end;
 }
-.login form input[type="submit"] {
-    width: 100%;
-    padding: 15px;
-   margin-top: 20px;
-    background-color: lightgrey;
-    border: 0;
-    cursor: pointer;
+nav ul li {
+    list-style: none;
+}
+nav ul li a {
+    display: block;
+    color: #fff;
+    padding: 0 10px;
+    text-decoration: none;
+    text-transform: uppercase;
     font-weight: bold;
-    color: #ffffff;
-    transition: background-color 0.2s;
+    line-height: 50px; /**  Rarely used! **/
 }
-.login form input[type="submit"]:hover {
-  background-color: grey;
-    transition: background-color 0.2s;
-}
+nav ul li a.active {
+    background: lightgrey;    
+} 
