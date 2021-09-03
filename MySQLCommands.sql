@@ -51,6 +51,8 @@ INSERT INTO `activity`(sess_id, activity_type, activity_info, alt_key, ctrl_key,
 
 CREATE TABLE `dwu_users`(
 	`username` VARCHAR(255) NOT NULL,
-	`password` VARCHAR(255) NOT NULL,
+	`email` VARCHAR(255),
+	`password` VARCHAR(255),
+	`group` ENUM("user","admin"),
 	PRIMARY KEY (`username`)
 );
