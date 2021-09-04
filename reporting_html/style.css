@@ -47,18 +47,19 @@ nav ul li a.active {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    min-width: 90%;
 }
 .column {
     display : flex;
     flex-direction: row;
     flex-grow: 1;
-    flex-wrap: wrap;
+    flex-wrap:wrap;
 }
 .item {
     margin: 5px;
     flex-grow: 1;
-    min-height: 40%;
-    min-width: 40%;
+    min-height: 50%;
+    min-width: 50%;
   }
 a:link {
     color: black;
