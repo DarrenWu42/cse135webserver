@@ -195,8 +195,8 @@ function agentsChart(){
 
 async function get(endpoint){
     fetch('https://darrenwu.xyz/api/' + endpoint + '/')
-    .then(response => response.json()
-    .then(data => {return data.results;}));
+    .then(response => response.json())
+    .then(data => {return data.results;});
 }
 
 function initData(){
