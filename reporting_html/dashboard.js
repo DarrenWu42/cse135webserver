@@ -164,15 +164,7 @@ function languageChart(){
 }
 
 async function get(endpoint){
-    fetch('https://darrenwu.xyz/api/' + endpoint + '/').then(res => 
-        res.json().then(data => ({
-            data: data,
-            status: res.status
-        })
-    ).then(res => {
-        returnData = res.data;
-        return returnData;
-    }));
+    fetch('https://darrenwu.xyz/api/' + endpoint + '/').then(res => res.json().then(data => {return data;}));
 }
 
 function initData(){
