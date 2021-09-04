@@ -101,13 +101,11 @@ function loadTimesChart(){
 }
 
 async function get(endpoint){
-    const response = await fetch('https://darrenwu.xyz/api/' + endpoint + '/');
-    const myJson = await response.json();
-    return myJson;
+    return fetch('https://darrenwu.xyz/api/' + endpoint + '/').then(res => res.json());
 }
 
 function initData(){
-    get('static').then(myJson => staticData);
+    staticData = get('static');
     console.log(staticData);
     perfData = get('performance');
     activityData = get('activity');
