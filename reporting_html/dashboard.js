@@ -71,7 +71,6 @@ var baseConfigPie = {
         text: '%npv%'
     },
     plot:{
-        layout: 'auto',
         detach: false
     },
     series:null
@@ -102,7 +101,6 @@ var baseConfigRing = {
         text: '%npv%'
     },
     plot:{
-        layout: 'auto',
         detach: false
     },
     series:null
