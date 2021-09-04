@@ -297,7 +297,7 @@ function percentCookiesChart(){
 }
 
 function percentPerformanceChart(){
-    percentCookieConfig={
+    percentPerformanceConfig={
         type:"ring",
         plot:{
             slice:"80%",
