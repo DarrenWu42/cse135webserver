@@ -67,7 +67,8 @@ var baseConfigPie = {
         fontFamily: 'Open Sans',
         padding: '5 10',
         text: '%npv%'
-    }
+    },
+    series:null
 };
 
 function loadTimesChart(){
@@ -100,12 +101,42 @@ function loadTimesChart(){
     });
 }
 
+function connectionsChart(){
+    let connectionsData = [{text:"Slow 2g",backgroundColor:"#ff6969"},
+                         {text:"2g",backgroundColor:"#d17719"},
+                         {text:"3g",backgroundColor:"#888500"},
+                         {text:"4g",backgroundColor:"#00880B"}];
+    let connectionsValues = [0,0,0,0];
+    for(const connection_type of connection_types){
+        if(connection_type == "slow-2g")
+            connectionsValues[0]++;
+        else if(connection_type == "2g")
+            connectionsValues[1]++;
+        else if(connection_type == "3g")
+            connectionsValues[2]++;
+        else
+            connectionsValues[3]++;
+    }
+
+    connectionsValues = connectionsValues.map(x => (x/connection_types.length)*100);
+
+    for(var i = 0; i < connectionsValues.length; i++)
+        connectionsData[i].values=connectionsValues[i];
+    
+    baseConfigPie.series = connectionsData;
+    
+    zingchart.render({
+        id: 'connectionsChart',
+        data: baseConfigPie
+    });
+}
+
 async function get(endpoint){
     return fetch('https://darrenwu.xyz/api/' + endpoint + '/').then(res => res.json());
 }
 
 function initData(){
-    staticData = get('static');
+    get('static').then(json => staticData = json);
     console.log(staticData);
     perfData = get('performance');
     activityData = get('activity');
