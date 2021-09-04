@@ -200,11 +200,11 @@ function agentsChart(){
         }
     }
 
-    agentsCounts = agentsCounts.map(x => (x/agents.length)*100);
+    agentsCounts = agentsCounts.map(x => (x/user_agents.length)*100);
 
     let lowerValue = agentsCounts.length < 7 ? agentsCounts.length : 7;
 
-    for(var i = 0; i < 7; i++){
+    for(var i = 0; i < lowerValue; i++){
         agentsData[i]={value:[agentsCounts[i]],
                        text:agentsValues[i],
                        backgroundColor:colors[i]};
