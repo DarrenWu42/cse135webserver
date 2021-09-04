@@ -133,7 +133,7 @@ function connectionsChart(){
     });
 }
 
-function languageChart(){
+function languagesChart(){
     let languagesData = [];
 
     let languagesValues = [];
@@ -158,7 +158,37 @@ function languageChart(){
     baseConfigPie.series = languagesData;
     
     zingchart.render({
-        id: 'languageChart',
+        id: 'languagesChart',
+        data: baseConfigPie
+    });
+}
+
+function agentsChart(){
+    let agentsData = [];
+
+    let agentsValues = [];
+    let agentsCounts = [];
+    for(const agent of agents){
+        if(agentsValues.includes(agent))
+            agentsCounts[agentsValues.indexOf(agent)]++;
+        else{
+            agentsValues.push(agent);
+            agentsCounts.push(1);
+        }
+    }
+
+    agentsCounts = agentsCounts.map(x => (x/agents.length)*100);
+
+    for(var i = 0; i < 7; i++){
+        agentsData[i]={value:[agentsCounts[i]],
+                       text:agentsValues[i],
+                       color:colors[i]};
+    }
+    
+    baseConfigPie.series = agentsData;
+    
+    zingchart.render({
+        id: 'agentChart',
         data: baseConfigPie
     });
 }
@@ -169,6 +199,7 @@ async function get(endpoint){
 
 function initData(){
     staticData = get('static');
+    console.log(staticData);
     perfData = get('performance');
     activityData = get('activity');
   
@@ -178,7 +209,7 @@ function initData(){
 
     loadTimesChart();
     connectionsChart();
-    //languageChart();
+    languageChart();
     //agentChart();
     //
 }
