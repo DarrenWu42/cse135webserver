@@ -108,7 +108,9 @@ function loadTimesChart(){
     
     zingchart.render({
         id: 'loadTimesChart',
-        data: baseConfigPie
+        data: baseConfigPie,
+        height: '100%',
+        width: '100%'
     });
 }
 
@@ -144,7 +146,9 @@ function connectionsChart(){
     
     zingchart.render({
         id: 'connectionsChart',
-        data: baseConfigPie
+        data: baseConfigPie,
+        height: '100%',
+        width: '100%'
     });
 }
 
@@ -169,14 +173,16 @@ function languagesChart(){
     for(var i = 0; i < lowerValue; i++){
         languagesData[i]={value:[languagesCounts[i]],
                           text:languagesValues[i],
-                          color:colors[i]};
+                          backgroundColor:colors[i]};
     }
     
     baseConfigPie.series = languagesData;
     
     zingchart.render({
         id: 'languagesChart',
-        data: baseConfigPie
+        data: baseConfigPie,
+        height: '100%',
+        width: '100%'
     });
 }
 
@@ -185,7 +191,7 @@ function agentsChart(){
 
     let agentsValues = [];
     let agentsCounts = [];
-    for(const agent of agents){
+    for(const agent of user_agents){
         if(agentsValues.includes(agent))
             agentsCounts[agentsValues.indexOf(agent)]++;
         else{
@@ -201,14 +207,16 @@ function agentsChart(){
     for(var i = 0; i < 7; i++){
         agentsData[i]={value:[agentsCounts[i]],
                        text:agentsValues[i],
-                       color:colors[i]};
+                       backgroundColor:colors[i]};
     }
     
     baseConfigPie.series = agentsData;
     
     zingchart.render({
         id: 'agentsChart',
-        data: baseConfigPie
+        data: baseConfigPie,
+        height: '100%',
+        width: '100%'
     });
 }
 
