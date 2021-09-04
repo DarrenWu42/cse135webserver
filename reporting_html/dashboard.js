@@ -1,3 +1,5 @@
+import { data } from "../public_html/collector";
+
 staticData = [];
 perfData = [];
 activityData = [];
@@ -162,8 +164,8 @@ async function get(endpoint){
             status: res.status
         })
     ).then(res => {
-        console.log(res.data);
-        return res.data;
+        returnData = res.data;
+        return data;
     }));
 }
 
