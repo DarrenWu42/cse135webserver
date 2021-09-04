@@ -108,6 +108,7 @@ async function get(endpoint){
 
 function initData(){
     staticData = get('static');
+    console.log(staticData);
     perfData = get('performance');
     activityData = get('activity');
   
