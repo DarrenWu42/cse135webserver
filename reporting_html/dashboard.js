@@ -76,6 +76,36 @@ var baseConfigPie = {
     series:null
 };
 
+var baseConfigRing = {
+    type: 'ring',
+    title: {
+        text: '',
+        align: 'center',
+        offsetX: 10,
+        fontSize: 25
+    },
+    valueBox: {
+        placement: 'out',
+        text: '%t\n%npv%',
+        fontFamily: 'Open Sans'
+    },
+    legend: {
+        backgroundColor: '#eee',
+        fontSize: '1.5em',
+        width: '150em'
+    },
+    tooltip: {
+        fontSize: '18',
+        fontFamily: 'Open Sans',
+        padding: '5 10',
+        text: '%npv%'
+    },
+    plot:{
+        layout: 'auto'
+    },
+    series:null
+};
+
 function loadTimesChart(){
     let loadTimesData = [{text:"<200ms",backgroundColor:"#00880B"},
                          {text:"200-500ms",backgroundColor:"#888500"},
@@ -146,7 +176,7 @@ function connectionsChart(){
     
     zingchart.render({
         id: 'connectionsChart',
-        data: baseConfigPie,
+        data: baseConfigRing,
         height: '100%',
         width: '100%'
     });
@@ -180,7 +210,7 @@ function languagesChart(){
     
     zingchart.render({
         id: 'languagesChart',
-        data: baseConfigPie,
+        data: baseConfigRing,
         height: '100%',
         width: '100%'
     });
