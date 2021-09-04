@@ -132,12 +132,19 @@ function connectionsChart(){
 }
 
 async function get(endpoint){
-    return fetch('https://darrenwu.xyz/api/' + endpoint + '/').then(res => res.json());
+    fetch('https://darrenwu.xyz/api/' + endpoint + '/').then(res => 
+        res.json().then(data => ({
+            data: data,
+            status: response.status
+        })
+    ).then(res => {
+        consoel.log(res.data);
+        return res.data;
+    }));
 }
 
 function initData(){
-    get('static').then(json => staticData = json);
-    console.log(staticData);
+    staticData = get('static');
     perfData = get('performance');
     activityData = get('activity');
   
