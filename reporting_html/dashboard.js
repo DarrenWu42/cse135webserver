@@ -64,6 +64,43 @@ var baseConfigPie = {
     series:null
 };
 
+var baseConfigSemi = {
+    type:"ring",
+    plot:{
+        slice:"80%",
+        detach:false,
+        valueBox:[
+            {
+                type:"first",
+                text:"",
+                connected:false,
+                fontColor:"",
+                fontSize:"35px",
+                placement:"center",
+                visible:true,
+                offsetY:"-65px"
+                },
+            {
+                type:"first",
+                text:"",
+                connected:false,
+                fontColor:"",
+                fontSize:"20px",
+                placement:"center",
+                visible:true,
+                offsetY:"-25px"
+                }
+        ],
+    scaleR:{
+        refAngle:180,
+        aperture:180
+        },
+    tooltip:{
+        visible:false
+        },
+    }
+};
+
 function loadTimesChart(){
     let loadTimesData = [{text:"<200ms",backgroundColor:"#00880B"},
                          {text:"200-500ms",backgroundColor:"#888500"},
@@ -91,6 +128,7 @@ function loadTimesChart(){
     }
     
     baseConfigPie.series = loadTimesData;
+    baseConfigPie.title.text = "Load Times";
     
     zingchart.render({
         id: 'loadTimesChart',
@@ -127,6 +165,7 @@ function connectionsChart(){
     }
     
     baseConfigPie.series = connectionsData;
+    baseConfigPie.title.text = "Connection Types";
     
     zingchart.render({
         id: 'connectionsChart',
@@ -157,6 +196,7 @@ function languagesChart(){
     }
     
     baseConfigPie.series = languagesData;
+    baseConfigPie.title.text = "Languages";
     
     zingchart.render({
         id: 'languagesChart',
@@ -200,6 +240,118 @@ function languagesChart(){
     });
 } */
 
+function percentCookiesChart(){
+    percentCookieConfig={
+        type:"ring",
+        plot:{
+            slice:"80%",
+            detach:false,
+            valueBox:[
+                {
+                    type:"first",
+                    text:cookied_sessions/total_sessions,
+                    connected:false,
+                    fontColor:"#E3C099",
+                    fontSize:"35px",
+                    placement:"center",
+                    visible:true,
+                    offsetY:"-65px"
+                    },
+                {
+                    type:"first",
+                    text:"% Cookies",
+                    connected:false,
+                    fontColor:"#EDF2F7",
+                    fontSize:"20px",
+                    placement:"center",
+                    visible:true,
+                    offsetY:"-25px"
+                    }
+            ],
+        scaleR:{
+            refAngle:180,
+            aperture:180
+            },
+        tooltip:{
+            visible:false
+            },
+        },
+        series:[
+            {
+                values:[cookied_sessions],
+                backgroundColor:"#E3C099"
+                },
+            {
+                values:[total_sessions-cookied_sessions],
+                backgroundColor:"#EDF2F7"
+                }
+        ]
+    };
+
+    zingchart.render({
+        id: 'percentCookies',
+        data: percentCookieConfig,
+        height: '100%',
+        width: '100%'
+    });
+}
+
+function percentPerformanceChart(){
+    percentCookieConfig={
+        type:"ring",
+        plot:{
+            slice:"80%",
+            detach:false,
+            valueBox:[
+                {
+                    type:"first",
+                    text:start_times.length/total_sessions,
+                    connected:false,
+                    fontColor:"#00880B",
+                    fontSize:"35px",
+                    placement:"center",
+                    visible:true,
+                    offsetY:"-65px"
+                    },
+                {
+                    type:"first",
+                    text:"% Performance",
+                    connected:false,
+                    fontColor:"#EDF2F7",
+                    fontSize:"20px",
+                    placement:"center",
+                    visible:true,
+                    offsetY:"-25px"
+                    }
+            ],
+        scaleR:{
+            refAngle:180,
+            aperture:180
+            },
+        tooltip:{
+            visible:false
+            },
+        },
+        series:[
+            {
+                values:[start_times.length],
+                backgroundColor:"#00880B"
+                },
+            {
+                values:[total_sessions],
+                backgroundColor:"#EDF2F7"
+                }
+        ]
+    };
+
+    zingchart.render({
+        id: 'percentPerformance',
+        data: percentPerformanceConfig,
+        height: '100%',
+        width: '100%'
+    });
+}
+
 const get = async (endpoint) => {
     let request  = await fetch('https://reporting.darrenwu.xyz/api/' + endpoint);
     let jsonData = await request.json();
@@ -218,7 +370,8 @@ async function initData(){
     loadTimesChart();
     connectionsChart();
     languagesChart();
-    //agentsChart();
+    percentCookiesChart();
+    percentPerformanceChart();
 }
 
 window.addEventListener('DOMContentLoaded', initData);
