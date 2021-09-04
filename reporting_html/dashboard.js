@@ -93,7 +93,7 @@ function loadTimesChart(){
     loadTimesValues = loadTimesValues.map(x => (x/durations.length)*100);
 
     for(var i = 0; i < loadTimesValues.length; i++)
-        loadTimesData[i].values=loadTimesValues[i];
+        loadTimesData[i].values=[loadTimesValues[i]];
     
     baseConfigPie.series = loadTimesData;
     
@@ -123,7 +123,7 @@ function connectionsChart(){
     connectionsValues =     connectionsValues.map(x => (x/connection_types.length)*100);
 
     for(var i = 0; i < connectionsValues.length; i++)
-        connectionsData[i].values=connectionsValues[i];
+        connectionsData[i].values=[connectionsValues[i]];
     
     baseConfigPie.series = connectionsData;
     
@@ -149,16 +149,16 @@ function languageChart(){
 
     languagesCounts = languagesCounts.map(x => (x/languages.length)*100);
 
-    for(var i = 0; i < 6; i++){
-        languagesData[i]={value:languagesCounts[i],
+    for(var i = 0; i < 7; i++){
+        languagesData[i]={value:[languagesCounts[i]],
                           text:languagesValues[i],
                           color:colors[i]};
     }
     
-    baseConfigPie.series = connectionsData;
+    baseConfigPie.series = languagesData;
     
     zingchart.render({
-        id: 'connectionsChart',
+        id: 'languageChart',
         data: baseConfigPie
     });
 }
