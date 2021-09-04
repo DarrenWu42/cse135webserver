@@ -41,7 +41,7 @@ nav ul li a.active {
     display : flex;
     flex-direction: row;
     flex-grow: 1;
-    flex-wrap:nowrap;
+    flex-wrap:wrap;
 }
 .item {
     margin: 5px;
