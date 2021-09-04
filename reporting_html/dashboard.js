@@ -99,6 +99,7 @@ function loadTimesChart(){
         loadTimesData[i].values=[loadTimesValues[i]];
         if(loadTimesValues[i] == 0){
             loadTimesData.splice(i, 1);
+            loadTimesValues.splice(i, 1);
             i--;
         }
     }
@@ -134,6 +135,7 @@ function connectionsChart(){
         connectionsData[i].values=[connectionsValues[i]];
         if(connectionsValues[i] == 0){
             connectionsData.splice(i, 1);
+            connectionsValues.splice(i, 1);
             i--;
         }
     }
@@ -194,6 +196,8 @@ function agentsChart(){
 
     agentsCounts = agentsCounts.map(x => (x/agents.length)*100);
 
+    let lowerValue = agentsCounts.length < 7 ? agentsCounts.length : 7;
+
     for(var i = 0; i < 7; i++){
         agentsData[i]={value:[agentsCounts[i]],
                        text:agentsValues[i],
@@ -203,7 +207,7 @@ function agentsChart(){
     baseConfigPie.series = agentsData;
     
     zingchart.render({
-        id: 'agentChart',
+        id: 'agentsChart',
         data: baseConfigPie
     });
 }
