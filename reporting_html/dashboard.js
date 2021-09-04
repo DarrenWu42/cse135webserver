@@ -176,7 +176,7 @@ function connectionsChart(){
     
     zingchart.render({
         id: 'connectionsChart',
-        data: baseConfigRing,
+        data: baseConfigPie,
         height: '100%',
         width: '100%'
     });
@@ -210,7 +210,7 @@ function languagesChart(){
     
     zingchart.render({
         id: 'languagesChart',
-        data: baseConfigRing,
+        data: baseConfigPie,
         height: '100%',
         width: '100%'
     });
