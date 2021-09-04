@@ -128,8 +128,6 @@ function loadTimesChart(){
     zingchart.render({
         id: 'loadTimesChart',
         data: baseConfigPie,
-        height: '100%',
-        width: '100%'
     });
 }
 
@@ -185,9 +183,7 @@ function languagesChart(){
     
     zingchart.render({
         id: 'languagesChart',
-        data: baseConfigPie,
-        height: '100%',
-        width: '100%'
+        data: baseConfigPie
     });
 }
 
