@@ -174,7 +174,7 @@ function collectPerformanceData() {
     data.performance.domComplete = perf.domComplete;
     data.performance.loadEventStart = perf.loadEventStart;
     data.performance.loadEventEnd = perf.loadEventEnd;
-    data.performance.duration = perf.duration;
+    data.performance.duration = data.performance.loadEventEnd - data.performance.fetchStart;
     data.performance.transferSize = perf.transferSize;
     data.performance.decodedBodySize = perf.decodedBodySize;
     data.performance.ready = true;
