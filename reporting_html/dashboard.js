@@ -150,7 +150,7 @@ function languagesChart(){
         }
     }
     
-    for(var i = 0; i < lowerValue; i++){
+    for(var i = 0; i < languagesValues.length; i++){
         languagesData[i]={value:[languagesCounts[i]],
                           text:languagesValues[i],
                           backgroundColor:colors[i%7]};
