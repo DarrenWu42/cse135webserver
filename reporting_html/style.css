@@ -35,6 +35,7 @@ nav ul li a.active {
     flex-direction: row;
     flex-wrap: wrap;
     min-width: 300px;
+    max-width: 1000px;
 }
 .column {
     display : flex;
@@ -46,7 +47,7 @@ nav ul li a.active {
     margin: 5px;
     flex-grow: 1;
     min-height: 250px;
-    min-width:250px;
+    min-width: 250px;
   }
   
   .small.item {
