@@ -6,7 +6,7 @@ start_times = [];
 end_times = [];
 durations = [];
 languages = [];
-connection_type = [];
+connection_types = [];
 user_agents = [];
 
 cookied_sessions = 0;
@@ -201,7 +201,6 @@ const get = async (endpoint) => {
    
 async function initData(){
     staticData = await get('static');
-    console.log(staticData);
     perfData = await get('performance');
     activityData = await get('activity');
   
