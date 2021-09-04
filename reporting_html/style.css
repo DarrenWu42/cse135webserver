@@ -47,7 +47,6 @@ nav ul li a.active {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    min-width: 90%;
 }
 .column {
     display : flex;
@@ -58,8 +57,8 @@ nav ul li a.active {
 .item {
     margin: 5px;
     flex-grow: 1;
-    min-height: 50%;
-    min-width: 50%;
+    min-height: 400px;
+    min-width: 400px;
   }
 a:link {
     color: black;
