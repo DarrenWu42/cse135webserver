@@ -198,6 +198,7 @@ async function get(endpoint){
     request.open('GET', 'https://reporting.darrenwu.xyz/api/' + endpoint, true);
     request.send();
     request.onload = () =>{
+        console.log(request.response);
         return JSON.parse(request.response);
     };
 }
