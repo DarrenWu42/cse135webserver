@@ -70,6 +70,9 @@ var baseConfigPie = {
         padding: '5 10',
         text: '%npv%'
     },
+    plot:{
+        layout: 'auto'
+    },
     series:null
 };
 
@@ -92,8 +95,13 @@ function loadTimesChart(){
 
     loadTimesValues = loadTimesValues.map(x => (x/durations.length)*100);
 
-    for(var i = 0; i < loadTimesValues.length; i++)
+    for(var i = 0; i < loadTimesValues.length; i++){
         loadTimesData[i].values=[loadTimesValues[i]];
+        if(loadTimesValues[i] == 0){
+            loadTimesData.splice(i, 1);
+            i--;
+        }
+    }
     
     baseConfigPie.series = loadTimesData;
     
@@ -120,10 +128,15 @@ function connectionsChart(){
             connectionsValues[3]++;
     }
 
-    connectionsValues =     connectionsValues.map(x => (x/connection_types.length)*100);
+    connectionsValues = connectionsValues.map(x => (x/connection_types.length)*100);
 
-    for(var i = 0; i < connectionsValues.length; i++)
+    for(var i = 0; i < connectionsValues.length; i++){
         connectionsData[i].values=[connectionsValues[i]];
+        if(connectionsValues[i] == 0){
+            connectionsData.splice(i, 1);
+            i--;
+        }
+    }
     
     baseConfigPie.series = connectionsData;
     
@@ -149,7 +162,9 @@ function languagesChart(){
 
     languagesCounts = languagesCounts.map(x => (x/languages.length)*100);
 
-    for(var i = 0; i < 7; i++){
+    let lowerValue = languagesCounts.length < 7 ? languagesCounts.length : 7;
+    
+    for(var i = 0; i < lowerValue; i++){
         languagesData[i]={value:[languagesCounts[i]],
                           text:languagesValues[i],
                           color:colors[i]};
