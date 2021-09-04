@@ -30,7 +30,7 @@ function parseData(){
         connection_types.push(static.effective_type);
     }
 
-    for(const performance of performanceData){
+    for(const performance of perfData){
         let start_time = parseDate(performance.fetch_start);
         start_times.push(start_time);
 
