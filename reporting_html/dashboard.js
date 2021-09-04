@@ -210,9 +210,8 @@ async function initData(){
 
     loadTimesChart();
     connectionsChart();
-    languageChart();
-    //agentChart();
-    //
+    languagesChart();
+    agentsChart();
 }
 
 window.addEventListener('DOMContentLoaded', initData);
