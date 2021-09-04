@@ -12,6 +12,8 @@ user_agents = [];
 cookied_sessions = 0;
 total_sessions = 0;
 
+colors=["#5165ff","#cb53e4","#ff4abd","#ff6094","#ff8870","#ffb35a","#ffdb5c","#f4ff7b"];
+
 function parseDate(dt){
     var t = dt.split(/[- : \.]/);
     var d = new Date(Date.UTC(t[0],t[1]-1,t[2],t[3],t[4],t[5],t[6]/1000));
@@ -131,11 +133,39 @@ function connectionsChart(){
     });
 }
 
+/*
+function languageChart(){
+    let connectionsData = [];
+    let connectionsValues = [0,0,0,0];
+    for(const connection_type of connection_types){
+        if(connection_type == "slow-2g")
+            connectionsValues[0]++;
+        else if(connection_type == "2g")
+            connectionsValues[1]++;
+        else if(connection_type == "3g")
+            connectionsValues[2]++;
+        else
+            connectionsValues[3]++;
+    }
+
+    connectionsValues = connectionsValues.map(x => (x/connection_types.length)*100);
+
+    for(var i = 0; i < connectionsValues.length; i++)
+        connectionsData[i].values=connectionsValues[i];
+    
+    baseConfigPie.series = connectionsData;
+    
+    zingchart.render({
+        id: 'connectionsChart',
+        data: baseConfigPie
+    });
+}*/
+
 async function get(endpoint){
     fetch('https://darrenwu.xyz/api/' + endpoint + '/').then(res => 
         res.json().then(data => ({
             data: data,
-            status: response.status
+            status: res.status
         })
     ).then(res => {
         consoel.log(res.data);
@@ -151,6 +181,12 @@ function initData(){
     total_sessions = staticData.length;
 
     parseData();
+
+    loadTimesChart();
+    connectionsChart();
+    //languageChart();
+    //agentChart();
+    //
 }
 
 window.addEventListener('DOMContentLoaded', initData);
