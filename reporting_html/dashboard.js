@@ -54,11 +54,6 @@ var baseConfigPie = {
         offsetX: 10,
         fontSize: 25
     },
-    valueBox: {
-        placement: 'out',
-        text: '%t\n%npv%',
-        fontFamily: 'Open Sans'
-    },
     legend: {
         backgroundColor: '#eee',
         fontSize: '1.5em',
@@ -216,7 +211,7 @@ function languagesChart(){
     });
 }
 
-function agentsChart(){
+/* function agentsChart(){
     let agentsData = [];
 
     let agentsValues = [];
@@ -241,8 +236,6 @@ function agentsChart(){
     }
     
     baseConfigPie.series = agentsData;
-
-    console.log(agentsData);
     
     zingchart.render({
         id: 'agentsChart',
@@ -250,7 +243,7 @@ function agentsChart(){
         height: '100%',
         width: '100%'
     });
-}
+} */
 
 const get = async (endpoint) => {
     let request  = await fetch('https://reporting.darrenwu.xyz/api/' + endpoint);
@@ -270,7 +263,7 @@ async function initData(){
     loadTimesChart();
     connectionsChart();
     languagesChart();
-    agentsChart();
+    //agentsChart();
 }
 
 window.addEventListener('DOMContentLoaded', initData);
