@@ -1,5 +1,3 @@
-import { data } from "../public_html/collector";
-
 staticData = [];
 perfData = [];
 activityData = [];
