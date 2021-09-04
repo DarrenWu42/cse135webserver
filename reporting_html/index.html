@@ -20,37 +20,28 @@
         <li><a href="/logout"><i class="fas fa-door-open"></i> Logout</a></li>
       </ul>
     </nav>
-    <h1 align="center">Analytics Dashboard</h1>
-    <div class='dashboard'>
-      <div class='column'>
-        <div id="loadTimesChart" class='item'></div>
-        <div id="connectionsChart" class='item'></div>
-      </div>
-      <div class='column'>
-        <div id="languagesChart" class='item'></div>
-        <div id="agentsChart" class='item'></div>
-      </div>
-      <div class='column'>
-        <div id="percentCookies" class='item'></div>
-        <div id="percentPerformance" class='item'></div>
-      </div>
-      <div class='column'>
-        <div id="visits8Chart" class='item'></div>
-      </div>
-      <div class='column'>
-        <div id="visitsAvgChart" class='item'></div>
-      </div>
-    </div>
-    <h2 align="center">Database Data</h2>
-    <zing-grid>
-      <zg-data>
-          <zg-param name="src" value="https://reporting.darrenwu.xyz/api/static"></zg-param>
-      </zg-data>
-    </zing-grid>
-    <zing-grid>
-      <zg-data>
-          <zg-param name="src" value="https://reporting.darrenwu.xyz/api/performance"></zg-param>
-      </zg-data>
-    </zing-grid>
+    <main>
+      <h1 align="center">Analytics Dashboard</h1>
+      <div id="loadTimesChart" class='item'></div>
+      <div id="connectionsChart" class='item'></div>
+      <div id="languagesChart" class='item'></div>
+      <div id="percentCookies" class='small-item'></div>
+      <div id="percentPerformance" class='small-item'></div>
+      <div id="visits8Chart" class='big-item'></div>
+      <div id="visitsAvgChart" class='big-item'></div>
+
+      <h2 align="center">Database Data</h2>
+      <zing-grid>
+        <zg-data>
+            <zg-param name="src" value="https://reporting.darrenwu.xyz/api/static"></zg-param>
+        </zg-data>
+      </zing-grid>
+      <zing-grid>
+        <zg-data>
+            <zg-param name="src" value="https://reporting.darrenwu.xyz/api/performance"></zg-param>
+        </zg-data>
+      </zing-grid>
+
+    </main>
   </body>
 </html>

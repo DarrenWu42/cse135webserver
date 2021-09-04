@@ -43,23 +43,21 @@ nav ul li a {
 nav ul li a.active {
     background: lightgrey;    
 }
-.dashboard {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-.column {
-    display : flex;
-    flex-direction: row;
-    flex-grow: 1;
-    flex-wrap:wrap;
-}
 .item {
     margin: 5px;
-    flex-grow: 1;
-    min-height: 400px;
-    min-width: 400px;
-  }
+    min-width: 40%;
+    align-content: center;
+}
+.small-item {
+    margin: 5px;
+    min-width: 20%;
+    align-content: center;
+}
+.big-item {
+    margin: 5px;
+    min-width: 85%;
+    align-content: center;
+}
 a:link {
     color: black;
     background-color: transparent;
