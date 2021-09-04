@@ -185,6 +185,9 @@ class ActivityAPI {
             'shift_key'     => (int) $input['shiftKey'] ?? 0,
             'timestamp'     => floatval($input['timestamp']) ?? null,
         ];
+
+        $stdout = fopen('php://stdout', 'w');
+        fwrite($stdout, var_export($input_array, true));
         return $input_array;
     }
 
