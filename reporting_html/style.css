@@ -1,24 +1,6 @@
-img {
-    width:70%
-}
-a:link {
-    color: black;
-    background-color: transparent;
-}
-a:visited {
-    color: black;
-    background-color: transparent;
-    text-decoration: none;
-}
-a:hover {
-    color: grey;
-    background-color: lightgray;
-    text-decoration: underline;
-}
-a:active {
-    color: lightblue;
-    background-color: transparent;
-    text-decoration: underline;
+body{
+    margin:0;
+    font-family: sans-serif;
 }
 section{
     width: 70%;
@@ -32,9 +14,6 @@ main{
     background-color:darkgrey; 
     padding:1%; 
     margin:1%;
-}
-body{
-    margin:0;
 }
 nav{
     height: 50px;
@@ -63,4 +42,45 @@ nav ul li a {
 }
 nav ul li a.active {
     background: lightgrey;    
-} 
+}
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 300px;
+}
+.column {
+    display : flex;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-wrap:wrap;
+}
+.item {
+    margin: 5px;
+    flex-grow: 1;
+    min-height: 250px;
+    min-width:250px;
+  }
+  
+  .small.item {
+    min-width: 305px;
+  }
+a:link {
+    color: black;
+    background-color: transparent;
+}
+a:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+}
+a:hover {
+    color: grey;
+    background-color: lightgray;
+    text-decoration: underline;
+}
+a:active {
+    color: lightblue;
+    background-color: transparent;
+    text-decoration: underline;
+}

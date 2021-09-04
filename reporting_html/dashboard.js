@@ -2,7 +2,7 @@ staticData = null;
 perfData = null;
 activityData = null;
 
-function init(){
+function initData(){
   staticData = get('static');
   perfData = get('performance');
   activityData = get('activity');
