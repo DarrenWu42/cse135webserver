@@ -194,7 +194,7 @@ function agentsChart(){
 }
 
 const get = async (endpoint) => {
-    let request  = await fetch('https://reporting.darrenwu.xyz/api/' + endpoint)
+    let request  = await fetch('https://reporting.darrenwu.xyz/api/' + endpoint);
     let jsonData = await request.json();
     return jsonData;
    };
