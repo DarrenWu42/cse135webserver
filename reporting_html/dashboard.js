@@ -211,6 +211,8 @@ function agentsChart(){
     }
     
     baseConfigPie.series = agentsData;
+
+    console.log(agentsData);
     
     zingchart.render({
         id: 'agentsChart',
