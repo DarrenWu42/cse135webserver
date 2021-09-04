@@ -108,22 +108,22 @@ function connectionsChart(){
                          {text:"2g",backgroundColor:"#d17719"},
                          {text:"3g",backgroundColor:"#888500"},
                          {text:"4g",backgroundColor:"#00880B"}];
-    let connectionsCounts = [0,0,0,0];
+    let connectionsValues = [0,0,0,0];
     for(const connection_type of connection_types){
         if(connection_type == "slow-2g")
-            connectionsCounts[0]++;
+            connectionsValues[0]++;
         else if(connection_type == "2g")
-            connectionsCounts[1]++;
+            connectionsValues[1]++;
         else if(connection_type == "3g")
-            connectionsCounts[2]++;
+            connectionsValues[2]++;
         else
-            connectionsCounts[3]++;
+            connectionsValues[3]++;
     }
 
-    connectionsCounts = connectionsCounts.map(x => (x/connection_types.length)*100);
+    connectionsValues =     connectionsValues.map(x => (x/connection_types.length)*100);
 
-    for(var i = 0; i < connectionsCounts.length; i++)
-        connectionsData[i].values=connectionsCounts[i];
+    for(var i = 0; i < connectionsValues.length; i++)
+        connectionsData[i].values=connectionsValues[i];
     
     baseConfigPie.series = connectionsData;
     
@@ -139,13 +139,21 @@ function languageChart(){
     let languagesValues = [];
     let languagesCounts = [];
     for(const language of languages){
-        
+        if(languagesValues.includes(language))
+            languagesCounts[languagesValues.indexOf(language)]++;
+        else{
+            languagesValues.push(language);
+            languagesCounts.push(1);
+        }
     }
 
-    connectionsValues = connectionsValues.map(x => (x/connection_types.length)*100);
+    languagesCounts = languagesCounts.map(x => (x/languages.length)*100);
 
-    for(var i = 0; i < connectionsValues.length; i++)
-        connectionsData[i].values=connectionsValues[i];
+    for(var i = 0; i < 6; i++){
+        languagesData[i]={value:languagesCounts[i],
+                          text:languagesValues[i],
+                          color:colors[i]};
+    }
     
     baseConfigPie.series = connectionsData;
     
@@ -163,7 +171,7 @@ async function get(endpoint){
         })
     ).then(res => {
         returnData = res.data;
-        return data;
+        return returnData;
     }));
 }
 
