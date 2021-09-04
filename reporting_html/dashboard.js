@@ -194,9 +194,12 @@ function agentsChart(){
 }
 
 async function get(endpoint){
-    fetch('https://darrenwu.xyz/api/' + endpoint + '/')
-    .then(response => response.json())
-    .then(data => {return data.results;});
+    var request = new XMLHttpRequest();
+    request.open('GET', 'https://reporting.darrenwu.xyz/api/' + endpoint, true);
+    request.send();
+    request.onload = () =>{
+        return JSON.parse(request.response);
+    };
 }
 
 function initData(){
