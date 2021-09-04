@@ -108,16 +108,38 @@ function connectionsChart(){
                          {text:"2g",backgroundColor:"#d17719"},
                          {text:"3g",backgroundColor:"#888500"},
                          {text:"4g",backgroundColor:"#00880B"}];
-    let connectionsValues = [0,0,0,0];
+    let connectionsCounts = [0,0,0,0];
     for(const connection_type of connection_types){
         if(connection_type == "slow-2g")
-            connectionsValues[0]++;
+            connectionsCounts[0]++;
         else if(connection_type == "2g")
-            connectionsValues[1]++;
+            connectionsCounts[1]++;
         else if(connection_type == "3g")
-            connectionsValues[2]++;
+            connectionsCounts[2]++;
         else
-            connectionsValues[3]++;
+            connectionsCounts[3]++;
+    }
+
+    connectionsCounts = connectionsCounts.map(x => (x/connection_types.length)*100);
+
+    for(var i = 0; i < connectionsCounts.length; i++)
+        connectionsData[i].values=connectionsCounts[i];
+    
+    baseConfigPie.series = connectionsData;
+    
+    zingchart.render({
+        id: 'connectionsChart',
+        data: baseConfigPie
+    });
+}
+
+function languageChart(){
+    let languagesData = [];
+
+    let languagesValues = [];
+    let languagesCounts = [];
+    for(const language of languages){
+        
     }
 
     connectionsValues = connectionsValues.map(x => (x/connection_types.length)*100);
@@ -133,34 +155,6 @@ function connectionsChart(){
     });
 }
 
-/*
-function languageChart(){
-    let connectionsData = [];
-    let connectionsValues = [0,0,0,0];
-    for(const connection_type of connection_types){
-        if(connection_type == "slow-2g")
-            connectionsValues[0]++;
-        else if(connection_type == "2g")
-            connectionsValues[1]++;
-        else if(connection_type == "3g")
-            connectionsValues[2]++;
-        else
-            connectionsValues[3]++;
-    }
-
-    connectionsValues = connectionsValues.map(x => (x/connection_types.length)*100);
-
-    for(var i = 0; i < connectionsValues.length; i++)
-        connectionsData[i].values=connectionsValues[i];
-    
-    baseConfigPie.series = connectionsData;
-    
-    zingchart.render({
-        id: 'connectionsChart',
-        data: baseConfigPie
-    });
-}*/
-
 async function get(endpoint){
     fetch('https://darrenwu.xyz/api/' + endpoint + '/').then(res => 
         res.json().then(data => ({
@@ -168,7 +162,7 @@ async function get(endpoint){
             status: res.status
         })
     ).then(res => {
-        consoel.log(res.data);
+        console.log(res.data);
         return res.data;
     }));
 }
