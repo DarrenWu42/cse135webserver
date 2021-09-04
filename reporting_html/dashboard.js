@@ -59,12 +59,6 @@ var baseConfigPie = {
         fontSize: '1.5em',
         width: '150em'
     },
-    tooltip: {
-        fontSize: '18',
-        fontFamily: 'Open Sans',
-        padding: '5 10',
-        text: '%npv%'
-    },
     plot:{
         detach: false
     },
@@ -140,40 +134,26 @@ function loadTimesChart(){
 }
 
 function connectionsChart(){
-    let connectionsData = [{text:"Slow 2g",backgroundColor:"#ff6969"},
-                         {text:"2g",backgroundColor:"#d17719"},
-                         {text:"3g",backgroundColor:"#888500"},
-                         {text:"4g",backgroundColor:"#00880B"}];
-    let connectionsValues = [0,0,0,0];
+    let connectionsData = [{values:[0],text:"Slow 2g",backgroundColor:"#ff6969"},
+                         {values:[0],text:"2g",backgroundColor:"#d17719"},
+                         {values:[0],text:"3g",backgroundColor:"#888500"},
+                         {values:[0],text:"4g",backgroundColor:"#00880B"}];
     for(const connection_type of connection_types){
         if(connection_type == "slow-2g")
-            connectionsValues[0]++;
+            connectionsData[0].values[0]++;
         else if(connection_type == "2g")
-            connectionsValues[1]++;
+            connectionsData[1].values[0]++;
         else if(connection_type == "3g")
-            connectionsValues[2]++;
+            connectionsData[2].values[0]++;
         else
-            connectionsValues[3]++;
-    }
-
-    connectionsValues = connectionsValues.map(x => (x/connection_types.length)*100);
-
-    for(var i = 0; i < connectionsValues.length; i++){
-        connectionsData[i].values=[connectionsValues[i]];
-        if(connectionsValues[i] == 0){
-            connectionsData.splice(i, 1);
-            connectionsValues.splice(i, 1);
-            i--;
-        }
+            connectionsData[3].values[0]++;
     }
     
     baseConfigPie.series = connectionsData;
     
     zingchart.render({
         id: 'connectionsChart',
-        data: baseConfigPie,
-        height: '100%',
-        width: '100%'
+        data: baseConfigPie
     });
 }
 
