@@ -193,21 +193,17 @@ function agentsChart(){
     });
 }
 
-async function get(endpoint){
-    var request = new XMLHttpRequest();
-    request.open('GET', 'https://reporting.darrenwu.xyz/api/' + endpoint, true);
-    request.send();
-    request.onload = () =>{
-        console.log(request.response);
-        return JSON.parse(request.response);
-    };
-}
-
-function initData(){
-    staticData = get('static');
+const get = async (endpoint) => {
+    let request  = await fetch('https://reporting.darrenwu.xyz/api/' + endpoint)
+    let jsonData = await request.json();
+    return jsonData;
+   };
+   
+async function initData(){
+    staticData = await get('static');
     console.log(staticData);
-    perfData = get('performance');
-    activityData = get('activity');
+    perfData = await get('performance');
+    activityData = await get('activity');
   
     total_sessions = staticData.length;
 
